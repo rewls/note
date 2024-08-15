@@ -70,11 +70,29 @@
 
 	- Print the pattern space.
 
+- 's/REGEXP/REPLACEMENT/[FLAGS]' (substitute)
+
+	- Match the regular-expression against the content of the pattern space.
+
+	- If found, replace matched string with REPLACEMENT.
+
 - 'd'
 
-    - Delete the pattern space; immediately start next cycle.
+	- Delete the pattern space; immediately start next cycle.
 
-## 4. Addresses: selecting lines
+### 3.3 The 's' Command
+
+- The 's' command can be followed by zero or more of the following FLAGS:
+
+	- 'g'
+
+		- Apply the replacement to _all_ matches to the REGEXP, not just the first.
+
+	- 'p'
+
+		- If the substitution was made, then print the new pattern space.
+
+## 4 Addresses: selecting lines
 
 ### 4.1 Addresses overview
 
