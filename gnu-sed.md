@@ -54,7 +54,7 @@
 
 - Commands within a SCRIPT or SCRIPT-FILE can be separated by semicolons or newlines.
 
-## 3.2 'sed' commands summary
+### 3.2 'sed' commands summary
 
 - The following commands are supported in GNU 'sed'.
 
@@ -69,3 +69,37 @@
 - 'p'
 
 	- Print the pattern space.
+
+- 'd'
+
+    - Delete the pattern space; immediately start next cycle.
+
+## 4. Addresses: selecting lines
+
+### 4.1 Addresses overview
+
+- Addresses determine on which line(s) the 'sed' command will be executed.
+
+- If no address is specified, the command is performed on all lines.
+
+- Addresses can contain regular expressions to match lines based on content instead of line numbers.
+
+- An address range is specified with two addresses separated by a comma(',').
+
+- Addresses can be numeric, regular expressions, or a mix of both.
+
+### 4.2 Selecting lines by numbers
+
+- Addresses in a 'sed' script can be in any of the following forms:
+
+    - 'NUMBER'
+
+        - Specifyign a line number will match only that line in the input.
+
+### 4.3 Selecting lines by text matching
+
+- GNU 'sed' supports the following regulare expression addresses.
+
+    - '/REGEXP/'
+
+        - This will select any line which matches the regular expression REGEXP.
