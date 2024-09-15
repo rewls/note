@@ -474,8 +474,8 @@ $$
 |-|-|
 |`\text{Ab0}`|$\text{Ab0}$|
 |`\Bbb{AB}`|$\Bbb{AB}$|
-|`\bf{Ab0}`|$\bf{Ab0}$|
-|`\tt{Ab0}`|$\tt{Ab0}$|
+|`\bold{Ab0}`|$\bold{Ab0}$|
+|`\texttt{Ab0}`|$\texttt{Ab0}$|
 
 ### Style
 
