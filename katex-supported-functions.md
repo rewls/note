@@ -493,7 +493,8 @@ $$
 |`% comment`|$% comment$|
 |`\_`|$\_$|
 |`\S`|$\S$|
-|`\circledS`|$\circledS$|
+|`\text{\textcircled a}`|$\text{\textcircled a}$|
+|`\textcircled a`|$\textcircled a$|
 |`\dots`|$\dots$|
 |`\cdots`|$\cdots$|
 |`\ddots`|$\ddots$|
