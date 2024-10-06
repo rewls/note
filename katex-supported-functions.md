@@ -120,6 +120,20 @@ x = \begin{cases}
 $$
 
 ```tex
+x = \begin{rcases}
+    a &\text{if } b \\
+    c &\text{if } d
+\end{rcases} \Rightarrow \dots
+```
+
+$$
+x = \begin{rcases}
+    a &\text{if } b \\
+    c &\text{if } d
+\end{rcases} \Rightarrow \dots
+$$
+
+```tex
 \begin{array}{cc}
     a & b \\
     c & d
@@ -476,6 +490,7 @@ $$
 |`\Bbb{AB}`|$\Bbb{AB}$|
 |`\bold{Ab0}`|$\bold{Ab0}$|
 |`\texttt{Ab0}`|$\texttt{Ab0}$|
+|`\mathcal{E}`|$\mathcal{E}$|
 
 ### Style
 
