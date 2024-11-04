@@ -260,6 +260,8 @@ $$
 \end{alignat}
 $$
 
+- `\tag` can be applied to individual rows of top-level environments (`align`)
+
 ## Letters and Unicode
 
 ### Greek Letters
@@ -300,6 +302,7 @@ $$
 |`\hbar`|$\hbar$|
 |`\R`|$\R$|
 |`\partial`|$\partial$|
+|`\hslash`|$\hslash$|
 
 ## Layout
 
