@@ -260,7 +260,16 @@ $$
 \end{alignat}
 $$
 
+<<<<<<< Updated upstream
 - `\tag` can be applied to individual rows of top-level environments (`align`)
+=======
+#### Other KaTex Environments
+
+|Environments|How they differ from those shown above|
+|-|-|
+|`matrix*`, `pmatrix*`, `bmatrix*`, `Bmatrix*`, `vmatrix*`|... take an optional argument to set column alignment, as in `\begin{matrix*}[r]`|
+|`aligned`|... do not need to be in display mode.<br>...  have no automatic numbering.|
+>>>>>>> Stashed changes
 
 ## Letters and Unicode
 
@@ -482,6 +491,7 @@ $$
 |-|-|
 |`\gets`|$\gets$|
 |`\to`|$\to$|
+|`\Rarr`|$\Rarr$|
 
 ## Style, Color, Size, and Font
 
