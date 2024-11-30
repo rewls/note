@@ -8,7 +8,7 @@
 
 - [Raspberry Pi operating system images][raspios]
 
-## Raspberry Pi OS Bullseye
+## Raspberry Pi OS Bullseye Lite
 
 - Release date: October 22nd 2024
 
@@ -19,27 +19,27 @@
 - Debian version: 11 (bullseye)
 
 ```sh
-$ wget https://downloads.raspberrypi.com/raspios_oldstable_armhf/images/raspios_oldstable_armhf-2024-10-28/2024-10-22-raspios-bullseye-armhf.img.xz
-$ xz -d 2024-10-22-raspios-bullseye-armhf.img.xz
+$ wget https://downloads.raspberrypi.com/raspios_oldstable_lite_armhf/images/raspios_oldstable_lite_armhf-2024-10-28/2024-10-22-raspios-bullseye-armhf-lite.img.xz
+$ xz -d 2024-10-22-raspios-bullseye-armhf-lite.img.xz
 ```
 
 ```sh
-$ file 2024-10-22-raspios-bullseye-armhf.img
-2024-10-22-raspios-bullseye-armhf.img: DOS/MBR boot sector; partition 1 : ID=0xc, start-CHS (0x40,0,1), end-CHS (0x3ff,3,32), startsector 8192, 524288 sectors; partition 2 : ID=0x83, start-CHS (0x3ff,3,32), end-CHS (0x3ff,3,32), startsector 532480, 7872512 sectors
+$ file 2024-10-22-raspios-bullseye-armhf-lite.img
+2024-10-22-raspios-bullseye-armhf-lite.img: DOS/MBR boot sector; partition 1 : ID=0xc, start-CHS (0x40,0,1), end-CHS (0x3ff,3,32), startsector 8192, 524288 sectors; partition 2 : ID=0x83, start-CHS (0x3ff,3,32), end-CHS (0x3ff,3,32), startsector 532480, 3317760 sectors
 ```
 
 ```sh
-$ fdisk -l 2024-10-22-raspios-bullseye-armhf.img
-Disk 2024-10-22-raspios-bullseye-armhf.img: 8 GiB, 8589934592 bytes, 16777216 sectors
+$ fdisk -l 2024-10-22-raspios-bullseye-armhf-lite.img
+Disk 2024-10-22-raspios-bullseye-armhf-lite.img: 1.84 GiB, 1971322880 bytes, 3850240 sectors
 Units: sectors of 1 * 512 = 512 bytes
 Sector size (logical/physical): 512 bytes / 512 bytes
 I/O size (minimum/optimal): 512 bytes / 512 bytes
 Disklabel type: dos
-Disk identifier: 0x2bc2872b
+Disk identifier: 0x194375f9
 
-Device                                 Boot  Start     End Sectors  Size Id Type
-2024-10-22-raspios-bullseye-armhf.img1        8192  532479  524288  256M  c W95 FAT32 (LBA)
-2024-10-22-raspios-bullseye-armhf.img2      532480 8404991 7872512  3.8G 83 Linux
+Device                                      Boot  Start     End Sectors  Size Id Type
+2024-10-22-raspios-bullseye-armhf-lite.img1        8192  532479  524288  256M  c W95 FAT32 (LBA)
+2024-10-22-raspios-bullseye-armhf-lite.img2      532480 3850239 3317760  1.6G 83 Linux
 ```
 
 ```sh
@@ -52,7 +52,7 @@ $ bc
 
 ```sh
 # mkdir /mnt/raspios-bullseye
-# mount -o offset=4194304 2024-10-22-raspios-bullseye-armhf.img /mnt/raspios-bullseye
+# mount -o offset=4194304 2024-10-22-raspios-bullseye-armhf-lite.img /mnt/raspios-bullseye
 ```
 
 - [Raspberry Pi Docs > Computer > Configuration][raspi conf]
@@ -72,6 +72,12 @@ $ openssl passwd -6
 $ echo '<username>:<password>' | sudo tee /mnt/raspios-bullseye/userconf.txt
 ```
 
+- [Raspberry Pi Docs > Computer > Getting started][start]
+
+```sh
+$ qemu-img resize 2024-10-22-raspios-bullseye-armhf-lite.img 16G
+```
+
 - [Raspberry Pi Docs > Computer > Configuration][raspi conf]
 
 - [QEMU Docs > System Emulation > QEMU System Emulator Targets > Arm System emulator][arm emul]
@@ -80,28 +86,7 @@ $ echo '<username>:<password>' | sudo tee /mnt/raspios-bullseye/userconf.txt
 
 ```sh
 $ qemu-system-aarch64 -machine raspi0 \
--sd 2024-10-22-raspios-bullseye-armhf.img \
--nographic \
--kernel kernel.img \
--append "console=ttyAMA0,115200
-root=/dev/mmcblk0p2" \
--dtb bcm2708-rpi-zero-w.dtb
-WARNING: Image format was not specified for '2024-10-22-raspios-bullseye-armhf.img' and probing guessed raw.
-         Automatically detecting the format is dangerous for raw images, write operations on block 0 will be restricted.
-         Specify the 'raw' format explicitly to remove the restrictions.
-qemu-system-aarch64: Invalid SD card size: 4.01 GiB
-SD card size has to be a power of 2, e.g. 8 GiB.
-You can resize disk images with 'qemu-img resize <imagefile> <new-size>'
-(note that this will lose data if you make the image smaller than it currently is).
-```
-
-```sh
-$ qemu-img resize 2024-10-22-raspios-bullseye-armhf.img 8G
-```
-
-```sh
-$ qemu-system-aarch64 -machine raspi0 \
--sd 2024-10-22-raspios-bullseye-armhf.img \
+-sd 2024-10-22-raspios-bullseye-armhf-lite.img \
 -nographic \
 -kernel kernel.img \
 -append "console=ttyAMA0,115200
@@ -116,7 +101,7 @@ root=/dev/mmcblk0p2" \
 
 ```sh
 $ qemu-system-aarch64 -machine raspi0 \
--sd 2024-10-22-raspios-bullseye-armhf.img \
+-sd 2024-10-22-raspios-bullseye-armhf-lite.img \
 -nographic \
 -kernel kernel.img \
 -append "console=ttyAMA0,115200
@@ -226,7 +211,7 @@ earlycon=pl011,mmio32,0x20201000" \
 
 ```sh
 $ qemu-system-aarch64 -machine raspi0 \
--sd 2024-10-22-raspios-bullseye-armhf.img \
+-sd 2024-10-22-raspios-bullseye-armhf-lite.img \
 -nographic \
 -kernel kernel.img \
 -append "console=ttyAMA0,115200
@@ -294,7 +279,7 @@ initcall_blacklist=bcm2835_pm_driver_init" \
 
 ```sh
 $ qemu-system-aarch64 -machine raspi0 \
--sd 2024-10-22-raspios-bullseye-armhf.img \
+-sd 2024-10-22-raspios-bullseye-armhf-lite.img \
 -nographic \
 -kernel kernel.img \
 -append "console=ttyAMA0,115200
@@ -326,7 +311,7 @@ pi@raspberrypi:~$
 
 ```sh
 $ qemu-system-aarch64 -machine raspi0 \
--sd 2024-10-22-raspios-bullseye-armhf.img \
+-sd 2024-10-22-raspios-bullseye-armhf-lite.img \
 -nographic \
 -kernel kernel.img \
 -append "console=ttyAMA0,115200
@@ -341,7 +326,7 @@ pi@raspberrypi:~$ ls
 Bookshelf  Documents  Music     Public     Videos
 Desktop    Downloads  Pictures  Templates
 pi@raspberrypi:~$ touch test
-pi@raspberrypi:~$ ping archlinux.org
+pi@raspberrypi:~$ ping -c1 archlinux.org
 ping: archlinux.org: Temporary failure in name resolution
 pi@raspberrypi:~$
 ```
@@ -359,7 +344,7 @@ Available NIC models for this configuration:
 
 ```sh
 $ qemu-system-aarch64 -machine raspi0 \
--sd 2024-10-22-raspios-bullseye-armhf.img \
+-sd 2024-10-22-raspios-bullseye-armhf-lite.img \
 -nographic \
 -kernel kernel.img \
 -append "console=ttyAMA0,115200
@@ -384,9 +369,11 @@ rw" \
 
     - Note that for the moment booting a Raspbian guest kernel requires adding "dwc_otg.fiq_fsm_enable=0" to the guest kernel command line.
 
+- [Raspberry Pi Docs > Computer > Configuration][raspi conf]
+
 ```sh
 $ qemu-system-aarch64 -machine raspi0 \
--sd 2024-10-22-raspios-bullseye-armhf.img \
+-sd 2024-10-22-raspios-bullseye-armhf-lite.img \
 -nographic \
 -kernel kernel.img \
 -append "console=ttyAMA0,115200
@@ -400,9 +387,98 @@ dwc_otg.fiq_fsm_enable=0" \
 -netdev user,id=net0 \
 -device usb-net,netdev=net0
 ...
-pi@raspberrypi:~$ ping archlinux.org
+pi@raspberrypi:~$ ping -c1 archlinux.org
 PING archlinux.org (95.217.163.246) 56(84) bytes of data.
-64 bytes from archlinux.org (95.217.163.246): icmp_seq=1 ttl=255 time=383 ms
+64 bytes from archlinux.org (95.217.163.246): icmp_seq=1 ttl=255 time=377 ms
+
+--- archlinux.org ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 376.677/376.677/376.677/0.000 ms
+pi@raspberrypi:~$ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root       1.6G  1.3G  162M  89% /
+...
+$ sudo raspi-config
+Raspberry Pi Zero W
+
+
+┌─────────┤ Raspberry Pi Software Configuration Tool (raspi-config) ├──────────┐
+│                                                                              │
+│       1 System Options       Configure system settings                       │
+│       2 Display Options      Configure display settings                      │
+│       3 Interface Options    Configure connections to peripherals            │
+│       4 Performance Options  Configure performance settings                  │
+│       5 Localisation Options Configure language and regional settings        │
+│       6 Advanced Options     Configure advanced settings                     │
+│       8 Update               Update this tool to the latest version          │
+│       9 About raspi-config   Information about this configuration tool       │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                     <Select>                     <Finish>                    │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+┌─────────┤ Raspberry Pi Software Configuration Tool (raspi-config) ├──────────┐
+│                                                                              │
+│   A1 Expand Filesystem       Ensures that all of the SD card is available    │
+│   A2 GL Driver               Enable/disable experimental desktop GL driver   │
+│   A4 Network Interface Names Enable/disable predictable network i/f names    │
+│   A5 Network Proxy Settings  Configure network proxy settings                │
+│   A8 Glamor                  Enable/disable glamor graphics acceleration     │
+│   AA Network Config          Set network configuration tool                  │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                                                                              │
+│                     <Select>                     <Back>                      │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+          ┌──────────────────────────────────────────────────────────┐
+          │                                                          │
+          │ Root partition has been resized.                         │
+          │ The filesystem will be enlarged upon the next reboot     │
+          │                                                          │
+          │                                                          │
+          │                                                          │
+          │                                                          │
+          │                                                          │
+          │                                                          │
+          │                                                          │
+          │                                                          │
+          │                                                          │
+          │                                                          │
+          │                                                          │
+          │                                                          │
+          │                                                          │
+          │                          <Ok>                            │
+          │                                                          │
+          └──────────────────────────────────────────────────────────┘
+```
+
+```sh
+$ qemu-system-aarch64 -machine raspi0 \
+-sd 2024-10-22-raspios-bullseye-armhf-lite.img \
+-nographic \
+-kernel kernel.img \
+-append "console=ttyAMA0,115200
+root=/dev/mmcblk0p2
+earlycon=pl011,mmio32,0x20201000
+initcall_blacklist=bcm2835_pm_driver_init
+rootwait
+rw
+dwc_otg.fiq_fsm_enable=0" \
+-dtb bcm2708-rpi-zero-w.dtb \
+-netdev user,id=net0 \
+-device usb-net,netdev=net0
+...
+pi@raspberrypi:~$ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root        16G  1.3G   14G   9% /
 ...
 ```
 
@@ -415,6 +491,8 @@ PING archlinux.org (95.217.163.246) 56(84) bytes of data.
 - [mount(8)][mount]
 
 - [losetup(8)][losetup]
+
+- [Raspberry Pi Docs > Computer > Getting started][start]
 
 - [QEMU Docs > System Emulation > QEMU System Emulator Targets > Arm System emulator][arm emul]
 
@@ -433,6 +511,8 @@ PING archlinux.org (95.217.163.246) 56(84) bytes of data.
 [mount]: https://github.com/rewls/system-reference-manual/blob/main/mount-8.md
 
 [losetup]: https://github.com/rewls/system-reference-manual/blob/main/losetup-8.md
+
+[start]: https://github.com/rewls/raspberry-pi-docs/blob/main/computers/getting-started.md
 
 [arm emul]: https://github.com/rewls/qemu-docs/blob/main/system-emulation/qemu-system-emulator-targets/arm-system-emulator.md
 
