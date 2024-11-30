@@ -1,4 +1,4 @@
-# Raspberry Pi in QEMU
+# Raspberry Pi Zero W in QEMU
 
 - Arch Linux
 
@@ -80,12 +80,12 @@ $ echo '<username>:<password>' | sudo tee /mnt/raspios-bullseye/userconf.txt
 
 ```sh
 $ qemu-system-aarch64 -machine raspi0 \
-    -sd 2024-10-22-raspios-bullseye-armhf.img \
-    -nographic \
-    -kernel kernel.img \
-    -append "console=ttyAMA0,115200 \
-        root=/dev/mmcblk0p2" \
-    -dtb bcm2708-rpi-zero-w.dtb
+-sd 2024-10-22-raspios-bullseye-armhf.img \
+-nographic \
+-kernel kernel.img \
+-append "console=ttyAMA0,115200
+root=/dev/mmcblk0p2" \
+-dtb bcm2708-rpi-zero-w.dtb
 WARNING: Image format was not specified for '2024-10-22-raspios-bullseye-armhf.img' and probing guessed raw.
          Automatically detecting the format is dangerous for raw images, write operations on block 0 will be restricted.
          Specify the 'raw' format explicitly to remove the restrictions.
@@ -101,12 +101,12 @@ $ qemu-img resize 2024-10-22-raspios-bullseye-armhf.img 8G
 
 ```sh
 $ qemu-system-aarch64 -machine raspi0 \
-    -sd 2024-10-22-raspios-bullseye-armhf.img \
-    -nographic \
-    -kernel kernel.img \
-    -append "console=ttyAMA0,115200 \
-        root=/dev/mmcblk0p2" \
-    -dtb bcm2708-rpi-zero-w.dtb
+-sd 2024-10-22-raspios-bullseye-armhf.img \
+-nographic \
+-kernel kernel.img \
+-append "console=ttyAMA0,115200
+root=/dev/mmcblk0p2" \
+-dtb bcm2708-rpi-zero-w.dtb
 
 ```
 
@@ -116,13 +116,13 @@ $ qemu-system-aarch64 -machine raspi0 \
 
 ```sh
 $ qemu-system-aarch64 -machine raspi0 \
-    -sd 2024-10-22-raspios-bullseye-armhf.img \
-    -nographic \
-    -kernel kernel.img \
-    -append "console=ttyAMA0,115200 \
-        root=/dev/mmcblk0p2 \
-        earlycon=pl011,mmio32,0x20201000" \
-    -dtb bcm2708-rpi-zero-w.dtb
+-sd 2024-10-22-raspios-bullseye-armhf.img \
+-nographic \
+-kernel kernel.img \
+-append "console=ttyAMA0,115200
+root=/dev/mmcblk0p2
+earlycon=pl011,mmio32,0x20201000" \
+-dtb bcm2708-rpi-zero-w.dtb
 ...
 [    2.127829] bcm2835-wdt bcm2835-wdt: Broadcom BCM2835 watchdog timer
 [    2.128367] 8<--- cut here ---
@@ -226,14 +226,14 @@ $ qemu-system-aarch64 -machine raspi0 \
 
 ```sh
 $ qemu-system-aarch64 -machine raspi0 \
-    -sd 2024-10-22-raspios-bullseye-armhf.img \
-    -nographic \
-    -kernel kernel.img \
-    -append "console=ttyAMA0,115200 \
-        root=/dev/mmcblk0p2 \
-        earlycon=pl011,mmio32,0x20201000 \
-        initcall_blacklist=bcm2835_pm_driver_init" \
-    -dtb bcm2708-rpi-zero-w.dtb
+-sd 2024-10-22-raspios-bullseye-armhf.img \
+-nographic \
+-kernel kernel.img \
+-append "console=ttyAMA0,115200
+root=/dev/mmcblk0p2
+earlycon=pl011,mmio32,0x20201000
+initcall_blacklist=bcm2835_pm_driver_init" \
+-dtb bcm2708-rpi-zero-w.dtb
 ...
 [    2.589029] mmcblk0: mmc0:cda9 QEMU! 8.00 GiB 
 [    2.597301] /dev/root: Can't open blockdev
@@ -294,15 +294,15 @@ $ qemu-system-aarch64 -machine raspi0 \
 
 ```sh
 $ qemu-system-aarch64 -machine raspi0 \
-    -sd 2024-10-22-raspios-bullseye-armhf.img \
-    -nographic \
-    -kernel kernel.img \
-    -append "console=ttyAMA0,115200 \
-        root=/dev/mmcblk0p2 \
-        earlycon=pl011,mmio32,0x20201000 \
-        initcall_blacklist=bcm2835_pm_driver_init \
-        rootwait" \
-    -dtb bcm2708-rpi-zero-w.dtb
+-sd 2024-10-22-raspios-bullseye-armhf.img \
+-nographic \
+-kernel kernel.img \
+-append "console=ttyAMA0,115200
+root=/dev/mmcblk0p2
+earlycon=pl011,mmio32,0x20201000
+initcall_blacklist=bcm2835_pm_driver_init
+rootwait" \
+-dtb bcm2708-rpi-zero-w.dtb
 ...
 Raspbian GNU/Linux 11 raspberrypi ttyAMA0
 
@@ -326,35 +326,84 @@ pi@raspberrypi:~$
 
 ```sh
 $ qemu-system-aarch64 -machine raspi0 \
-    -sd 2024-10-22-raspios-bullseye-armhf.img \
-    -nographic \
-    -kernel kernel.img \
-    -append "console=ttyAMA0,115200 \
-        root=/dev/mmcblk0p2 \
-        earlycon=pl011,mmio32,0x20201000 \
-        initcall_blacklist=bcm2835_pm_driver_init \
-        rootwait \
-        rw" \
-    -dtb bcm2708-rpi-zero-w.dtb
+-sd 2024-10-22-raspios-bullseye-armhf.img \
+-nographic \
+-kernel kernel.img \
+-append "console=ttyAMA0,115200
+root=/dev/mmcblk0p2
+earlycon=pl011,mmio32,0x20201000
+initcall_blacklist=bcm2835_pm_driver_init
+rootwait
+rw" \
+-dtb bcm2708-rpi-zero-w.dtb
 ...
-Raspbian GNU/Linux 11 raspberrypi ttyAMA0
-
-raspberrypi login: pi
-Password:
-Linux raspberrypi 6.1.21+ #1642 Mon Apr  3 17:19:14 BST 2023 armv6l
-
-The programs included with the Debian GNU/Linux system are free software;
-the exact distribution terms for each program are described in the
-individual files in /usr/share/doc/*/copyright.
-
-Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
-permitted by applicable law.
-Last login: Tue Oct 22 14:17:28 BST 2024 on tty1
 pi@raspberrypi:~$ ls
 Bookshelf  Documents  Music     Public     Videos
 Desktop    Downloads  Pictures  Templates
 pi@raspberrypi:~$ touch test
+pi@raspberrypi:~$ ping archlinux.org
+ping: archlinux.org: Temporary failure in name resolution
 pi@raspberrypi:~$
+```
+
+```sh
+$ qemu-system-aarch64 -machine raspi0 -nic model=help
+Available NIC models for this configuration:
+```
+
+- [QEMU Docs > System Emulation > Invocation][invoc]
+
+- [QEMU Docs > System Emulation > Device Emulation][dev emul]
+
+- [QEMU Docs > System Emulation > Device Emulation > USB emulation][usb emul]
+
+```sh
+$ qemu-system-aarch64 -machine raspi0 \
+-sd 2024-10-22-raspios-bullseye-armhf.img \
+-nographic \
+-kernel kernel.img \
+-append "console=ttyAMA0,115200
+root=/dev/mmcblk0p2
+earlycon=pl011,mmio32,0x20201000
+initcall_blacklist=bcm2835_pm_driver_init
+rootwait
+rw" \
+-dtb bcm2708-rpi-zero-w.dtb \
+-netdev user,id=net0 \
+-device usb-net,netdev=net0
+...
+[    2.457196] usb 1-1: new full-speed USB device number 2 using dwc_otg
+
+```
+
+- Not booting
+
+- QEMU ChangeLog/5.1:
+
+    - The Raspberry Pi boards now support the USB controller.
+
+    - Note that for the moment booting a Raspbian guest kernel requires adding "dwc_otg.fiq_fsm_enable=0" to the guest kernel command line.
+
+```sh
+$ qemu-system-aarch64 -machine raspi0 \
+-sd 2024-10-22-raspios-bullseye-armhf.img \
+-nographic \
+-kernel kernel.img \
+-append "console=ttyAMA0,115200
+root=/dev/mmcblk0p2
+earlycon=pl011,mmio32,0x20201000
+initcall_blacklist=bcm2835_pm_driver_init
+rootwait
+rw
+dwc_otg.fiq_fsm_enable=0" \
+-dtb bcm2708-rpi-zero-w.dtb \
+-netdev user,id=net0 \
+-device usb-net,netdev=net0
+...
+pi@raspberrypi:~$ ping archlinux.org
+PING archlinux.org (95.217.163.246) 56(84) bytes of data.
+64 bytes from archlinux.org (95.217.163.246): icmp_seq=1 ttl=255 time=383 ms
+...
 ```
 
 ## Reference
@@ -373,6 +422,10 @@ pi@raspberrypi:~$
 
 - [The kernel's command-line parameters][cmdline]
 
+- [QEMU Docs > System Emulation > Device Emulation][dev emul]
+
+- [QEMU Docs > System Emulation > Device Emulation > USB emulation][usb emul]
+
 [raspios]: https://www.raspberrypi.com/software/operating-systems/
 
 [raspi conf]: https://github.com/rewls/raspberry-pi-docs/blob/main/computers/configuration.md
@@ -386,3 +439,7 @@ pi@raspberrypi:~$
 [invoc]: https://github.com/rewls/qemu-docs/blob/main/system-emulation/invocation.md
 
 [cmdline]: https://github.com/rewls/the-linux-kernel-documentation/blob/main/administration/the-kernels-command-line-parameters.md
+
+[dev emul]: https://github.com/rewls/qemu-docs/blob/main/system-emulation/device-emulation/README.md
+
+[usb emul]: https://github.com/rewls/qemu-docs/blob/main/system-emulation/device-emulation/usb-emulation.md
