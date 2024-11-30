@@ -371,6 +371,8 @@ rw" \
 
 - [Raspberry Pi Docs > Computer > Configuration][raspi conf]
 
+- [QEMU Docs > System Emulation > Device Emulation > Network emulation][net emul]
+
 ```sh
 $ qemu-system-aarch64 -machine raspi0 \
 -sd 2024-10-22-raspios-bullseye-armhf-lite.img \
@@ -394,6 +396,12 @@ PING archlinux.org (95.217.163.246) 56(84) bytes of data.
 --- archlinux.org ping statistics ---
 1 packets transmitted, 1 received, 0% packet loss, time 0ms
 rtt min/avg/max/mdev = 376.677/376.677/376.677/0.000 ms
+pi@raspberrypi:~$ ip route
+default via 10.0.2.2 dev usb0 proto dhcp src 10.0.2.15 metric 202
+10.0.2.0/24 dev usb0 proto dhcp scope link src 10.0.2.15 metric 202
+```
+
+```sh
 pi@raspberrypi:~$ df -h
 Filesystem      Size  Used Avail Use% Mounted on
 /dev/root       1.6G  1.3G  162M  89% /
@@ -504,6 +512,8 @@ Filesystem      Size  Used Avail Use% Mounted on
 
 - [QEMU Docs > System Emulation > Device Emulation > USB emulation][usb emul]
 
+- [QEMU Docs > System Emulation > Device Emulation > Network emulation][net emul]
+
 [raspios]: https://www.raspberrypi.com/software/operating-systems/
 
 [raspi conf]: https://github.com/rewls/raspberry-pi-docs/blob/main/computers/configuration.md
@@ -523,3 +533,5 @@ Filesystem      Size  Used Avail Use% Mounted on
 [dev emul]: https://github.com/rewls/qemu-docs/blob/main/system-emulation/device-emulation/README.md
 
 [usb emul]: https://github.com/rewls/qemu-docs/blob/main/system-emulation/device-emulation/usb-emulation.md
+
+[net emul]: https://github.com/rewls/qemu-docs/blob/main/system-emulation/device-emulation/network-emulation.md
