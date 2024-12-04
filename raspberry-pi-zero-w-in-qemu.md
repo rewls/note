@@ -490,6 +490,35 @@ Filesystem      Size  Used Avail Use% Mounted on
 ...
 ```
 
+- [QEMU Docs > System Emulation > Device Emulation > Network emulation][net emul]
+
+- [QEMU Docs > System Emulation > Invocation][invoc]
+
+```sh
+$ qemu-system-aarch64 -machine raspi0 \
+-sd 2024-10-22-raspios-bullseye-armhf-lite.img \
+-nographic \
+-kernel kernel.img \
+-append "console=ttyAMA0,115200
+root=/dev/mmcblk0p2
+earlycon=pl011,mmio32,0x20201000
+initcall_blacklist=bcm2835_pm_driver_init
+rootwait
+rw
+dwc_otg.fiq_fsm_enable=0" \
+-dtb bcm2708-rpi-zero-w.dtb \
+-netdev user,id=net0,hostfwd=::2222-:22 \
+-device usb-net,netdev=net0
+...
+pi@raspberrypi:~$
+```
+
+```sh
+$ ssh -p 2222 pi@localhost
+...
+pi@raspberrypi:~ $
+```
+
 ## Reference
 
 - [Raspberry Pi operating system images][raspios]
