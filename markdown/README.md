@@ -1,6 +1,10 @@
 # Markdown
 
-> Markdown by John Gruber
+> Markdown 1.0.1 by John Gruber
+>
+> | Publication date |
+> | ---------------- |
+> | 17 Dec 2004      |
 
 ## Introduction
 
