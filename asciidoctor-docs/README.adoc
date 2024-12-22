@@ -6,7 +6,8 @@
 * If you're just starting out with AsciiDoc, or want to discover what it's all about, head over to the documentation for the AsciiDoc Language.
 * You'll learn everything from how to make your first AsciiDoc document to how to use advanced language features such as list continuations and tailoring substitutions.
 
-[]
+'''
+
 * If you need a condensed refresher, or want a glimpse of what AsciiDoc has to offer, check out the syntax quick reference.
 * You can also find a side-by-side comparison with Markdown if you're looking to upgrade.
 ****
@@ -17,7 +18,8 @@
 * Once you're done writing and want to publish your AsciiDoc document, you'll need an AsciiDoc processor.
 * That's where Asciidoctor fits in.
 
-[]
+'''
+
 * Asciidoctor is the core AsciiDoc processor.
 * It reads the AsciiDoc source, parses it into a document model, and converts it to a publishable format such as HTML using a converter.
 * Asciidoctor has both a CLI and an API that you can use to invoke a built-in converter (HTML, DocBook, man page) or an add-on converter.
