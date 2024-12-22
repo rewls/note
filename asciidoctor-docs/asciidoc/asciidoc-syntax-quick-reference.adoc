@@ -1,0 +1,2340 @@
+= AsciiDoc Syntax Quick Reference
+:toc:
+:experimental: true
+:source-highlighter: rouge
+
+[IMPORTANT]
+====
+* The examples on this page demonstrate the output produced by the built-in HTML converter.
+* An AsciiDoc converter is expected to produce complementary output when generating other output formats, such as PDF, EPUB, and DocBook.
+====
+
+== Paragraphs
+
+.Example 1. Paragraph
+--
+[source,asciidoc]
+----
+Paragraphs don't require special markup in AsciiDoc.
+A paragraph is defined by one or more consecutive lines of text.
+Line breaks within a paragraph are not displayed.
+
+Leave at least one empty line to begin a new paragraph.
+----
+
+====
+Paragraphs don't require special markup in AsciiDoc.
+A paragraph is defined by one or more consecutive lines of text.
+Line breaks within a paragraph are not displayed.
+
+Leave at least one empty line to begin a new paragraph.
+====
+--
+
+.Example 2. Literal paragraph
+--
+[source,asciidoc]
+----
+A normal paragraph.
+
+ A literal paragraph.
+ One or more consecutive lines indented by at least one space.
+
+ The text is shown in a fixed-width (typically monospace) font.
+ The lines are preformatted (i.e., as formatted in the source).
+ Spaces and newlines,
+ like the ones in this sentence,
+ are preserved.
+----
+
+====
+A normal paragraph.
+
+ A literal paragraph.
+ One or more consecutive lines indented by at least one space.
+
+ The text is shown in a fixed-width (typically monospace) font.
+ The lines are preformatted (i.e., as formatted in the source).
+ Spaces and newlines,
+ like the ones in this sentence,
+ are preserved.
+====
+--
+
+.Example 3. Hard line breaks
+--
+[source,asciidoc]
+----
+Roses are red, +
+violets are blue.
+
+[%hardbreaks]
+A ruby is red.
+Java is black.
+----
+
+====
+Roses are red, +
+violets are blue.
+
+[%hardbreaks]
+A ruby is red.
+Java is black.
+====
+--
+
+.Example 4. Lead paragraph
+--
+[source,asciidoc]
+----
+[.lead]
+This text will be styled as a lead paragraph (i.e., larger font).
+
+This paragraph will not be.
+----
+
+====
+[.lead]
+This text will be styled as a lead paragraph (i.e., larger font).
+
+This paragraph will not be.
+====
+--
+
+[TIP]
+====
+* The default Asciidoctor stylesheet automatically styles the first paragraph of the preamble as a lead paragraph if no role is specified on that paragraph.
+====
+
+== Text formatting
+
+.Example 5. Constrained bold, italic, and monospace
+--
+[source,asciidoc]
+----
+It has *strong* significance to me.
+
+I _cannot_ stress this enough.
+
+Type `OK` to accept.
+
+That *_really_* has to go.
+
+Can't pick one? Let's use them `*_all_*`.
+----
+
+====
+It has *strong* significance to me.
+
+I _cannot_ stress this enough.
+
+Type `OK` to accept.
+
+That *_really_* has to go.
+
+Can't pick one? Let's use them `*_all_*`.
+====
+--
+
+.Example 6. Unconstrained bold, italic, and monospace
+--
+[source,asciidoc]
+----
+**C**reate, **R**ead, **U**pdate, and **D**elete (CRUD)
+
+That's fan__freakin__tastic!
+
+Don't pass generic ``Object``s to methods that accept ``String``s!
+
+It was Beatle**__mania__**!
+----
+
+====
+**C**reate, **R**ead, **U**pdate, and **D**elete (CRUD)
+
+That's fan__freakin__tastic!
+
+Don't pass generic ``Object``s to methods that accept ``String``s!
+
+It was Beatle**__mania__**!
+====
+--
+
+.Example 7. Highlight, underline, strikethrough, and custom role
+--
+[source,asciidoc]
+----
+Mark my words, #automation is essential#.
+
+##Mark##up refers to text that contains formatting ##mark##s.
+
+Where did all the [.underline]#cores# go?
+
+We need [.line-through]#ten# twenty VMs.
+
+A [.myrole]#custom role# must be fulfilled by the theme.
+----
+
+====
+Mark my words, #automation is essential#.
+
+##Mark##up refers to text that contains formatting ##mark##s.
+
+Where did all the [.underline]#cores# go?
+
+We need [.line-through]#ten# twenty VMs.
+
+A [.myrole]#custom role# must be fulfilled by the theme.
+====
+--
+
+.Example 8. Superscript and subscript
+--
+[source,asciidoc]
+----
+^super^script
+
+~sub~script
+----
+
+====
+^super^script
+
+~sub~script
+====
+--
+
+.Example 9. Smart quotes and apostrophes
+--
+[source,asciidoc]
+----
+"`double curved quotes`"
+
+'`single curved quotes`'
+
+Olaf's desk was a mess.
+
+A ``std::vector```'s size is the number of items it contains.
+
+All of the werewolves`' desks were a mess.
+
+Olaf had been with the company since the `'00s.
+----
+
+====
+"`double curved quotes`"
+
+'`single curved quotes`'
+
+Olaf's desk was a mess.
+
+A ``std::vector```'s size is the number of items it contains.
+
+All of the werewolves`' desks were a mess.
+
+Olaf had been with the company since the `'00s.
+====
+--
+
+== Links
+
+.Example 10. Autolinks, URL macro, and mailto macro
+--
+[source,asciidoc]
+----
+https://asciidoctor.org - automatic!
+
+https://asciidoctor.org[Asciidoctor]
+
+devel@discuss.example.org
+
+mailto:devel@discuss.example.org[Discuss]
+
+mailto:join@discuss.example.org[Subscribe,Subscribe me,I want to join!]
+----
+
+====
+https://asciidoctor.org - automatic!
+
+https://asciidoctor.org[Asciidoctor]
+
+devel@discuss.example.org
+
+mailto:devel@discuss.example.org[Discuss]
+
+mailto:join@discuss.example.org[Subscribe,Subscribe me,I want to join!]
+====
+--
+
+.Example 11. URL macros with attributes
+--
+[source,asciidoc]
+----
+https://chat.asciidoc.org[Discuss AsciiDoc,role=external,window=_blank]
+
+https://chat.asciidoc.org[Discuss AsciiDoc^]
+----
+
+====
+https://chat.asciidoc.org[Discuss AsciiDoc,role=external,window=_blank]
+
+https://chat.asciidoc.org[Discuss AsciiDoc^]
+====
+--
+
+[IMPORTANT]
+====
+* The ``link:`` macro prefix is not required when the target starts with a URL scheme like ``https:``.
+* The URL scheme acts as an implicit macro prefix.
+====
+
+[CAUTION]
+====
+* If the link text contains a comma and the text is followed by one or more named attributes, you must enclose the text in double quotes.
+* Otherwise, the text will be cut off at the comma (and the remaining text will get pulled into the attribute parsing).
+====
+
+.Example 12. URLs with spaces and special characters
+--
+[source,asciidoc]
+----
+link:++https://example.org/?q=[a b]++[URL with special characters]
+
+https://example.org/?q=%5Ba%20b%5D[URL with special characters]
+----
+
+====
+link:++https://example.org/?q=[a b]++[URL with special characters]
+
+https://example.org/?q=%5Ba%20b%5D[URL with special characters]
+====
+--
+
+.Example 13. Link to relative file
+--
+[source,asciidoc]
+link:index.html[Docs]
+
+====
+link:index.html[Docs]
+====
+--
+
+.Example 14. Link using a Windows UNC path
+--
+[source,asciidoc]
+link:\\server\share\whitepaper.pdf[Whitepaper]
+
+====
+link:\\server\share\whitepaper.pdf[Whitepaper]
+====
+--
+
+.Example 15. Inline anchors
+--
+[source,asciidoc]
+----
+[[bookmark-a]]Inline anchors make arbitrary content referenceable.
+
+[#bookmark-b]#Inline anchors can be applied to a phrase like this one.#
+
+anchor:bookmark-c[]Use a cross reference to link to this location.
+
+[[bookmark-d,last paragraph]]The xreflabel attribute will be used as link text in the cross-reference link.
+----
+
+====
+[[bookmark-a]]Inline anchors make arbitrary content referenceable.
+
+[#bookmark-b]#Inline anchors can be applied to a phrase like this one.#
+
+anchor:bookmark-c[]Use a cross reference to link to this location.
+
+[[bookmark-d,last paragraph]]The xreflabel attribute will be used as link text in the cross-reference link.
+====
+--
+
+.Example 16. Cross references
+--
+[source,asciidoc]
+----
+See <<paragraphs>> to learn how to write paragraphs.
+
+Learn how to organize the document into <<section-titles,sections>>.
+----
+
+====
+See <<paragraphs>> to learn how to write paragraphs.
+
+Learn how to organize the document into <<section-titles,sections>>.
+====
+--
+
+.Example 17. Inter-document cross references
+--
+[source,asciidoc]
+----
+Refer to xref:document-b.adoc#section-b[Section B of Document B] for more information.
+
+If you never return from xref:document-b.adoc[Document B], we'll send help.
+----
+
+====
+Refer to xref:document-b.adoc#section-b[Section B of Document B] for more information.
+
+If you never return from xref:document-b.adoc[Document B], we'll send help.
+====
+--
+
+== Document header
+
+* The document header is optional.
+* The header may not contain any empty lines and must be separated from the content by at least one empty line.
+
+.Example 18. Title
+--
+[source,asciidoc]
+----
+= Document Title
+
+This document provides...
+----
+--
+
+.Example 19. Title and author line
+--
+[source,asciidoc]
+----
+= Document Title
+Author Name <author@email.org>
+
+This document provides...
+----
+--
+
+.Example 20. Title, author line, and revision line
+--
+[source,asciidoc]
+----
+= Document Title
+Author Name <author@email.org>; Another Author <a.author@email.org>
+v2.0, 2019-03-22
+
+This document provides...
+----
+--
+
+[IMPORTANT]
+====
+* You cannot have a revision line without an author line.
+====
+
+.Example 21. Document header with attribute entries
+--
+[source,asciidoc]
+----
+= Document Title
+Author Name <author@email.org>
+v2.0, 2019-03-22
+:toc:
+:homepage: https://example.org
+
+This document provides...
+----
+--
+
+== Section titles
+
+* When the document type is `article` (the default), the document can only have one level 0 section title (``=``), which is the document title (i.e., doctitle).
+
+.Example 22. Article section levels
+--
+[source,asciidoc]
+----
+= Document Title (Level 0)
+
+== Level 1 Section Title
+
+=== Level 2 Section Title
+
+==== Level 3 Section Title
+
+===== Level 4 Section Title
+
+====== Level 5 Section Title
+
+== Another Level 1 Section Title
+----
+--
+
+* The `book` document type can have additional level 0 section titles, which are interpreted as parts.
+* The presence of at least one part implicitly makes the document a multi-part book.
+
+.Example 23. Book section levels
+--
+[source,asciidoc]
+----
+= Document Title (Level 0)
+
+== Level 1 Section Title
+
+= Level 0 Section Title (Part)
+
+== Level 1 Section Title
+
+=== Level 2 Section Title
+
+==== Level 3 Section Title
+
+===== Level 4 Section Title
+
+====== Level 5 Section Title
+
+= Another Level 0 Section Title (Part)
+----
+--
+
+.Example 24. Discrete heading (not a section)
+--
+[source,asciidoc]
+----
+[discrete]
+=== I'm an independent heading!
+
+This paragraph is its sibling, not its child.
+----
+
+====
+[discrete]
+=== I'm an independent heading!
+
+This paragraph is its sibling, not its child.
+====
+--
+
+== Automatic TOC
+
+.Example 25. Activate Table of Contents for a document
+--
+[source,asciidoc]
+----
+= Document Title
+Doc Writer <doc.writer@email.org>
+:toc:
+----
+--
+
+* The Table of Contents' title, displayed section depth, and position can be customized.
+
+== Includes
+
+.Example 26. Include document parts
+--
+[source,asciidoc]
+----
+= Reference Documentation
+Lead Developer
+
+This is documentation for project X.
+
+\include::basics.adoc[]
+
+\include::installation.adoc[]
+
+\include::example.adoc[]
+----
+--
+
+.Example 27. Include content by tagged regions or lines
+--
+[source,asciidoc]
+----
+\include::filename.txt[tag=definition]
+
+\include::filename.txt[lines=5..10]
+----
+--
+
+.Example 28. Include content from a URL
+--
+[source,asciidoc]
+----
+\include::https://raw.githubusercontent.com/asciidoctor/asciidoctor/main/README.adoc[]
+----
+--
+
+[WARNING]
+====
+* Including content from a URL is potentially dangerous, so it's disabled if the safe mode is SECURE or greater.
+* Assuming the safe mode is less than SECURE, you must also set the `allow-uri-read` attribute to permit the AsciiDoc processor to read content from a URL.
+====
+
+== Lists
+
+.Example 29. Unordered list
+--
+[source,asciidoc]
+----
+* List item
+** Nested list item
+*** Deeper nested list item
+* List item
+ ** Another nested list item
+* List item
+----
+
+====
+* List item
+** Nested list item
+*** Deeper nested list item
+* List item
+ ** Another nested list item
+* List item
+====
+--
+
+[TIP]
+====
+* An empty line is required before and after a list to separate it from other blocks.
+* You can force two adjacent lists apart by adding an empty attribute list (i.e., []) above the second list or by inserting an empty line followed by a line comment after the first list.
+* If you use a line comment, the convention is to use //- to provide a hint to other authors that it's serving as a list divider.
+====
+
+.Example 30. Unordered list max level nesting
+--
+[source,asciidoc]
+----
+* Level 1 list item
+** Level 2 list item
+*** Level 3 list item
+**** Level 4 list item
+***** Level 5 list item
+****** etc.
+* Level 1 list item
+----
+
+====
+* Level 1 list item
+** Level 2 list item
+*** Level 3 list item
+**** Level 4 list item
+***** Level 5 list item
+****** etc.
+* Level 1 list item
+====
+--
+
+* The unordered list marker can be changed using a list style (e.g., square).
+
+.Example 31. Ordered list
+--
+[source,asciidoc]
+----
+. Step 1
+. Step 2
+.. Step 2a
+.. Step 2b
+. Step 3
+----
+
+====
+. Step 1
+. Step 2
+.. Step 2a
+.. Step 2b
+. Step 3
+====
+--
+
+.Example 32. Ordered list max level nesting
+--
+[source,asciidoc]
+----
+. Level 1 list item
+.. Level 2 list item
+... Level 3 list item
+.... Level 4 list item
+..... Level 5 list item
+. Level 1 list item
+----
+
+====
+. Level 1 list item
+.. Level 2 list item
+... Level 3 list item
+.... Level 4 list item
+..... Level 5 list item
+. Level 1 list item
+====
+--
+
+* Ordered lists support numeration styles such as lowergreek and decimal-leading-zero.
+
+.Example 33. Checklist
+--
+[source,asciidoc]
+----
+* [*] checked
+* [x] also checked
+* [ ] not checked
+* normal list item
+----
+
+====
+* [*] checked
+* [x] also checked
+* [ ] not checked
+* normal list item
+====
+--
+
+.Example 34. Description list
+--
+[source,asciidoc]
+----
+First term:: The description can be placed on the same line
+as the term.
+Second term::
+Description of the second term.
+The description can also start on its own line.
+----
+
+====
+First term:: The description can be placed on the same line
+as the term.
+Second term::
+Description of the second term.
+The description can also start on its own line.
+====
+--
+
+.Example 35. Question and answer list
+--
+[source,asciidoc]
+----
+[qanda]
+What is the answer?::
+This is the answer.
+
+Are cameras allowed?::
+Are backpacks allowed?::
+No.
+----
+
+====
+[qanda]
+What is the answer?::
+This is the answer.
+
+Are cameras allowed?::
+Are backpacks allowed?::
+No.
+====
+--
+
+.Example 36. Mixed
+--
+[source,asciidoc]
+----
+Operating Systems::
+  Linux:::
+    . Fedora
+      * Desktop
+    . Ubuntu
+      * Desktop
+      * Server
+  BSD:::
+    . FreeBSD
+    . NetBSD
+
+Cloud Providers::
+  PaaS:::
+    . OpenShift
+    . CloudBees
+  IaaS:::
+    . Amazon EC2
+    . Rackspace
+----
+
+====
+Operating Systems::
+  Linux:::
+    . Fedora
+      * Desktop
+    . Ubuntu
+      * Desktop
+      * Server
+  BSD:::
+    . FreeBSD
+    . NetBSD
+
+Cloud Providers::
+  PaaS:::
+    . OpenShift
+    . CloudBees
+  IaaS:::
+    . Amazon EC2
+    . Rackspace
+====
+--
+
+[TIP]
+====
+* Lists can be indented.
+* Leading whitespace is not significant.
+====
+
+.Example 37. Complex content in outline lists
+--
+[source,asciidoc]
+----
+* Every list item has at least one paragraph of content,
+  which may be wrapped, even using a hanging indent.
++
+Additional paragraphs or blocks are adjoined by putting
+a list continuation on a line adjacent to both blocks.
++
+list continuation:: a plus sign (`{plus}`) on a line by itself
+
+* A literal paragraph does not require a list continuation.
+
+ $ cd projects/my-book
+
+* AsciiDoc lists may contain any complex content.
++
+|===
+|Column 1, Header Row |Column 2, Header Row
+
+|Column 1, Row 1
+|Column 2, Row 1
+|===
+----
+
+====
+* Every list item has at least one paragraph of content,
+  which may be wrapped, even using a hanging indent.
++
+Additional paragraphs or blocks are adjoined by putting
+a list continuation on a line adjacent to both blocks.
++
+list continuation:: a plus sign (`{plus}`) on a line by itself
+
+* A literal paragraph does not require a list continuation.
+
+ $ cd projects/my-book
+
+* AsciiDoc lists may contain any complex content.
++
+|===
+|Column 1, Header Row |Column 2, Header Row
+
+|Column 1, Row 1
+|Column 2, Row 1
+|===
+====
+--
+
+== Images
+
+* You can use the imagesdir attribute to avoid hard coding the common path to your images in every image macro.
+* The value of this attribute can be an absolute path, relative path, or base URL.
+* If the image target is a relative path, the attribute's value is prepended (i.e., it's resolved relative to the value of the imagesdir attribute).
+* If the image target is a URL or absolute path, the attribute's value is not prepended.
+
+.Example 38. Block image macro
+--
+[source,asciidoc]
+----
+image::sunset.jpg[]
+
+image::sunset.jpg[Sunset]
+
+.A mountain sunset
+[#img-sunset,caption="Figure 1: ",link=https://www.flickr.com/photos/javh/5448336655]
+image::macros:sunset.jpg[Sunset,200,100]
+
+image::https://asciidoctor.org/images/octocat.jpg[GitHub mascot]
+----
+
+====
+image::sunset.jpg[]
+
+image::sunset.jpg[Sunset]
+
+.A mountain sunset
+[#img-sunset,caption="Figure 1: ",link=https://www.flickr.com/photos/javh/5448336655]
+image::macros:sunset.jpg[Sunset,200,100]
+
+image::https://asciidoctor.org/images/octocat.jpg[GitHub mascot]
+====
+--
+
+* Two colons following the image keyword in the macro (i.e., ``image::``) indicates a block image (aka figure), whereas one colon following the image keyword (i.e., `image:`) indicates an inline image.
+** All macros follow this pattern.
+* You use an inline image when you need to place the image in a line of text.
+* Otherwise, you should prefer the block form.
+
+.Example 39. Inline image macro
+--
+[source,asciidoc]
+----
+Click image:play.png[] to get the party started.
+
+Click image:pause.png[title=Pause] when you need a break.
+----
+
+====
+Click image:play.png[] to get the party started.
+
+Click image:pause.png[title=Pause] when you need a break.
+====
+--
+
+.Example 40. Inline image macro with positioning role
+--
+[source,asciidoc]
+----
+image:sunset.jpg[Sunset,150,150,role=right] What a beautiful sunset!
+----
+
+====
+image:sunset.jpg[Sunset,150,150,role=right] What a beautiful sunset!
+====
+--
+
+.Example 41. Embedded
+--
+[source,asciidoc]
+----
+= Document Title
+:data-uri:
+----
+
+====
+= Document Title
+:data-uri:
+====
+--
+
+* When the `data-uri` attribute is set, all images in the document -- including admonition icons -- are embedded into the document as data URIs.
+* You can also pass it as a command line argument using ``-a data-uri``.
+
+== Keyboard, button, and menu macros
+
+[IMPORTANT]
+====
+* You must set the `experimental` attribute in the document header to enable these macros.
+====
+
+.Example 46. Keyboard macro
+--
+[source,asciidoc]
+----
+|===
+|Shortcut |Purpose
+
+|kbd:[F11]
+|Toggle fullscreen
+
+|kbd:[Ctrl+T]
+|Open a new tab
+|===
+----
+
+====
+|===
+|Shortcut |Purpose
+
+|kbd:[F11]
+|Toggle fullscreen
+
+|kbd:[Ctrl+T]
+|Open a new tab
+|===
+====
+--
+
+.Example 47. Menu macro
+--
+[source,asciidoc]
+----
+To save the file, select menu:File[Save].
+
+Select menu:View[Zoom > Reset] to reset the zoom level to the default setting.
+----
+
+====
+To save the file, select menu:File[Save].
+
+Select menu:View[Zoom > Reset] to reset the zoom level to the default setting.
+====
+--
+
+.Example 48. Button macro
+--
+[source,asciidoc]
+----
+Press the btn:[OK] button when you are finished.
+
+Select a file in the file navigator and click btn:[Open].
+----
+
+====
+Press the btn:[OK] button when you are finished.
+
+Select a file in the file navigator and click btn:[Open].
+====
+--
+
+== Literals and source code
+
+.Example 49. Inline literal monospace
+--
+[source,asciidoc]
+----
+Output literal monospace text, such as `+{backtick}+` or `+http://localhost:8080+`, by enclosing the text in a pair of pluses surrounded by a pair backticks.
+----
+
+====
+Output literal monospace text, such as `+{backtick}+` or `+http://localhost:8080+`, by enclosing the text in a pair of pluses surrounded by a pair backticks.
+====
+--
+
+.Example 50. Literal paragraph
+--
+[source,asciidoc]
+----
+Normal line.
+
+ Indent line by one space to create a literal line.
+
+Normal line.
+----
+
+====
+Normal line.
+
+ Indent line by one space to create a literal line.
+
+Normal line.
+====
+--
+
+.Example 51. Literal block
+--
+[source,asciidoc]
+----
+....
+error: 1954 Forbidden search
+absolutely fatal: operation lost in the dodecahedron of doom
+
+Would you like to try again? y/n
+....
+----
+
+====
+....
+error: 1954 Forbidden search
+absolutely fatal: operation lost in the dodecahedron of doom
+
+Would you like to try again? y/n
+....
+====
+--
+
+.Example 52. Listing block with title
+--
+[source,asciidoc]
+-----
+.Gemfile.lock
+----
+GEM
+  remote: https://rubygems.org/
+  specs:
+    asciidoctor (2.0.15)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  asciidoctor (~> 2.0.15)
+----
+-----
+
+====
+.Gemfile.lock
+----
+GEM
+  remote: https://rubygems.org/
+  specs:
+    asciidoctor (2.0.15)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  asciidoctor (~> 2.0.15)
+----
+====
+--
+
+.Example 53. Source block with title and syntax highlighting
+--
+[source,asciidoc]
+-----
+.Some Ruby code
+[source,ruby]
+----
+require 'sinatra'
+
+get '/hi' do
+  "Hello World!"
+end
+----
+-----
+
+====
+.Some Ruby code
+[source,ruby]
+----
+require 'sinatra'
+
+get '/hi' do
+  "Hello World!"
+end
+----
+====
+--
+
+[IMPORTANT]
+====
+* You must enable source highlighting by setting the source-highlighter attribute in the document header, CLI, or API.
+
+ :source-highlighter: rouge
+
+* See Syntax Highlighting to learn which values are accepted when using Asciidoctor.
+====
+
+.Example 54. Source block with callouts
+--
+[source,asciidoc]
+-----
+[source,ruby]
+----
+require 'sinatra' // <1>
+
+get '/hi' do // <2>
+  "Hello World!" // <3>
+end
+----
+<1> Library import
+<2> URL mapping
+<3> HTTP response body
+View result of Example 54
+-----
+
+====
+[source,ruby]
+----
+require 'sinatra' // <1>
+
+get '/hi' do // <2>
+  "Hello World!" // <3>
+end
+----
+<1> Library import
+<2> URL mapping
+<3> HTTP response body
+View result of Example 54
+====
+--
+
+.Example 55. Make callouts non-selectable
+--
+[source,asciidoc]
+-----
+----
+line of code // <1>
+line of code # <2>
+line of code ;; <3>
+line of code <!--4-->
+----
+<1> A callout behind a line comment for C-style languages.
+<2> A callout behind a line comment for Ruby, Python, Perl, etc.
+<3> A callout behind a line comment for Clojure.
+<4> A callout behind a line comment for XML or SGML languages like HTML.
+-----
+
+====
+----
+line of code // <1>
+line of code # <2>
+line of code ;; <3>
+line of code <!--4-->
+----
+<1> A callout behind a line comment for C-style languages.
+<2> A callout behind a line comment for Ruby, Python, Perl, etc.
+<3> A callout behind a line comment for Clojure.
+<4> A callout behind a line comment for XML or SGML languages like HTML.
+====
+--
+
+.Example 56. Source block content included from a file
+--
+[source,asciidoc]
+-----
+[,ruby]
+----
+\include::app.rb[]
+----
+-----
+
+====
+[,ruby]
+----
+\include::app.rb[]
+----
+====
+--
+
+.Example 57. Source block content included from file relative to source directory
+--
+[source,asciidoc]
+-----
+:sourcedir: src/main/java
+
+[source,java]
+----
+\include::{sourcedir}/org/asciidoctor/Asciidoctor.java[]
+----
+-----
+
+====
+:sourcedir: src/main/java
+
+[source,java]
+----
+\include::{sourcedir}/org/asciidoctor/Asciidoctor.java[]
+----
+====
+--
+
+.Example 58. Strip leading indentation from partial file content
+--
+[source,asciidoc]
+-----
+[source,ruby]
+----
+\include::lib/app.rb[tag=main,indent=0]
+----
+-----
+
+====
+[source,ruby]
+----
+\include::lib/app.rb[tag=main,indent=0]
+----
+====
+--
+
+[NOTE]
+====
+* The indent attribute is frequently used when including source code by tagged region or lines.
+* It can be specified on the include directive itself or the enclosing literal, listing, or source block.
+
+[]
+* When indent is 0, the leading block indent is stripped.
+
+[]
+* When indent is greater than 0, the leading block indent is first stripped, then a block is indented by the number of columns equal to this value.
+====
+
+.Example 59. Source paragraph (no empty lines)
+--
+[source,asciidoc]
+----
+[source,xml]
+<meta name="viewport"
+  content="width=device-width, initial-scale=1.0">
+
+This is normal content.
+----
+
+====
+[source,xml]
+<meta name="viewport"
+  content="width=device-width, initial-scale=1.0">
+
+This is normal content.
+====
+--
+
+== Admonitions
+
+.Example 60. Admonition paragraph
+--
+[source,asciidoc]
+----
+NOTE: An admonition draws the reader's attention to auxiliary information.
+
+Here are the other built-in admonition types:
+
+IMPORTANT: Don't forget the children!
+
+TIP: Look for the warp zone under the bridge.
+
+CAUTION: Slippery when wet.
+
+WARNING: The software you're about to use is untested.
+
+IMPORTANT: Sign off before stepping away from your computer.
+----
+
+====
+NOTE: An admonition draws the reader's attention to auxiliary information.
+
+Here are the other built-in admonition types:
+
+IMPORTANT: Don't forget the children!
+
+TIP: Look for the warp zone under the bridge.
+
+CAUTION: Slippery when wet.
+
+WARNING: The software you're about to use is untested.
+
+IMPORTANT: Sign off before stepping away from your computer.
+====
+--
+
+.Example 61. Admonition block
+--
+[source,asciidoc]
+----
+[NOTE]
+====
+An admonition block may contain complex content.
+
+.A list
+- one
+- two
+- three
+
+Another paragraph.
+====
+----
+
+=====
+[NOTE]
+====
+An admonition block may contain complex content.
+
+.A list
+- one
+- two
+- three
+
+Another paragraph.
+====
+=====
+--
+
+== More delimited blocks
+
+* Any block can have a title.
+* A block title is defined using a line of text above the block that starts with a dot.
+* That dot cannot be followed by a space.
+* For block images, the title is displayed below the block.
+* For all other blocks, the title is typically displayed above it.
+
+.Example 62. Sidebar block
+--
+[source,asciidoc]
+----
+.Optional Title
+****
+Sidebars are used to visually separate auxiliary bits of content
+that supplement the main text.
+****
+----
+
+====
+.Optional Title
+****
+Sidebars are used to visually separate auxiliary bits of content
+that supplement the main text.
+****
+====
+--
+
+.Example 63. Example block
+--
+[source,asciidoc]
+-----
+====
+Here's a sample AsciiDoc document:
+
+----
+= Title of Document
+Doc Writer
+:toc:
+
+This guide provides...
+----
+
+The document header is useful, but not required.
+====
+-----
+
+=====
+====
+Here's a sample AsciiDoc document:
+
+----
+= Title of Document
+Doc Writer
+:toc:
+
+This guide provides...
+----
+
+The document header is useful, but not required.
+====
+=====
+--
+
+.Example 64. Blockquotes
+--
+[source,asciidoc]
+----
+[quote,Abraham Lincoln,Address delivered at the dedication of the Cemetery at Gettysburg]
+____
+Four score and seven years ago our fathers brought forth
+on this continent a new nation...
+____
+
+[quote,Albert Einstein]
+A person who never made a mistake never tried anything new.
+
+____
+A person who never made a mistake never tried anything new.
+____
+
+[quote,Charles Lutwidge Dodgson,'Mathematician and author, also known as https://en.wikipedia.org/wiki/Lewis_Carroll[Lewis Carroll]']
+____
+If you don't know where you are going, any road will get you there.
+____
+
+"I hold it that a little rebellion now and then is a good thing,
+and as necessary in the political world as storms in the physical."
+-- Thomas Jefferson, Papers of Thomas Jefferson: Volume 11
+----
+
+====
+[quote,Abraham Lincoln,Address delivered at the dedication of the Cemetery at Gettysburg]
+____
+Four score and seven years ago our fathers brought forth
+on this continent a new nation...
+____
+
+[quote,Albert Einstein]
+A person who never made a mistake never tried anything new.
+
+____
+A person who never made a mistake never tried anything new.
+____
+
+[quote,Charles Lutwidge Dodgson,'Mathematician and author, also known as https://en.wikipedia.org/wiki/Lewis_Carroll[Lewis Carroll]']
+____
+If you don't know where you are going, any road will get you there.
+____
+
+"I hold it that a little rebellion now and then is a good thing,
+and as necessary in the political world as storms in the physical."
+-- Thomas Jefferson, Papers of Thomas Jefferson: Volume 11
+====
+--
+
+.Example 65. Open blocks
+[source,asciidoc]
+----
+--
+An open block can be an anonymous container,
+or it can masquerade as any other block.
+--
+
+[source]
+--
+puts "I'm a source block!"
+--
+----
+
+====
+--
+An open block can be an anonymous container,
+or it can masquerade as any other block.
+--
+
+[source]
+--
+puts "I'm a source block!"
+--
+====
+
+.Example 66. Passthrough block
+--
+[source,asciidoc]
+----
+++++
+<p>
+Content in a passthrough block is passed to the output unprocessed.
+That means you can include raw HTML, like this embedded Gist:
+</p>
+
+<script src="https://gist.github.com/mojavelinux/5333524.js">
+</script>
+++++
+----
+
+====
+++++
+<p>
+Content in a passthrough block is passed to the output unprocessed.
+That means you can include raw HTML, like this embedded Gist:
+</p>
+
+<script src="https://gist.github.com/mojavelinux/5333524.js">
+</script>
+++++
+====
+--
+
+.Example 67. Customize block substitutions
+--
+[source,asciidoc]
+-----
+:release-version: 2.4.3
+
+[source,xml,subs=attributes+]
+----
+<dependency>
+  <groupId>org.asciidoctor</groupId>
+  <artifactId>asciidoctorj</artifactId>
+  <version>{release-version}</version>
+</dependency>
+----
+-----
+
+====
+:release-version: 2.4.3
+
+[source,xml,subs=attributes+]
+----
+<dependency>
+  <groupId>org.asciidoctor</groupId>
+  <artifactId>asciidoctorj</artifactId>
+  <version>{release-version}</version>
+</dependency>
+----
+====
+--
+
+== Tables
+
+.Example 68. Table with a title, two columns, a header row, and two rows of content
+--
+[source,asciidoc]
+----
+.Table Title
+|===
+|Column 1, Header Row |Column 2, Header Row // <1>
+// <2>
+|Cell in column 1, row 1
+|Cell in column 2, row 1
+
+|Cell in column 1, row 2
+|Cell in column 2, row 2
+|===
+----
+<1> Unless the `cols` attribute is specified, the number of columns is equal to the number of cell separators on the first (non-empty) line.
+<2> When an empty line immediately follows a non-empty line at the start of the table, the cells in the first line get promoted to the table header.
+
+====
+.Table Title
+|===
+|Column 1, Header Row |Column 2, Header Row
+
+|Cell in column 1, row 1
+|Cell in column 2, row 1
+
+|Cell in column 1, row 2
+|Cell in column 2, row 2
+|===
+====
+--
+
+.Example 69. Table with two columns, a header row, and two rows of content
+--
+[source,asciidoc]
+----
+[%header,cols=2*] // <1>
+|===
+|Name of Column 1
+|Name of Column 2
+
+|Cell in column 1, row 1
+|Cell in column 2, row 1
+
+|Cell in column 1, row 2
+|Cell in column 2, row 2
+|===
+----
+<1> The `*` in the `cols` attribute is the repeat operator.
++
+It means repeat the column specification across the remaining columns.
++
+In this case, we are repeating the default formatting across 2 columns.
++
+When the cells in the header are not defined on a single line, you must use the cols attribute to set the number of columns in the table and the `%header` option (or `options=header` attribute) to promote the first row to the table header.
+
+====
+[%header,cols=2*] 
+|===
+|Name of Column 1
+|Name of Column 2
+
+|Cell in column 1, row 1
+|Cell in column 2, row 1
+
+|Cell in column 1, row 2
+|Cell in column 2, row 2
+|===
+====
+--
+
+.Example 70. Table with three columns, a header row, and two rows of content
+--
+[source,asciidoc]
+----
+.Applications
+[cols="1,1,2"] // <1>
+|===
+|Name |Category |Description
+
+|Firefox
+|Browser
+|Mozilla Firefox is an open source web browser.
+It's designed for standards compliance,
+performance, portability.
+
+|Arquillian
+|Testing
+|An innovative and highly extensible testing platform.
+Empowers developers to easily create real, automated tests.
+|===
+----
+<1> In this example, the `cols` attribute has two functions.
++
+It specifies that this table has three columns, and it sets their relative widths.
+
+====
+.Applications
+[cols="1,1,2"] 
+|===
+|Name |Category |Description
+
+|Firefox
+|Browser
+|Mozilla Firefox is an open source web browser.
+It's designed for standards compliance,
+performance, portability.
+
+|Arquillian
+|Testing
+|An innovative and highly extensible testing platform.
+Empowers developers to easily create real, automated tests.
+|===
+====
+--
+
+.Example 71. Table with column containing AsciiDoc content
+--
+[source,asciidoc]
+----
+[cols="2,2,5a"]
+|===
+|Firefox
+|Browser
+|Mozilla Firefox is an open source web browser.
+
+It's designed for:
+
+* standards compliance
+* performance
+* portability
+
+https://getfirefox.com[Get Firefox]!
+|===
+----
+
+====
+[cols="2,2,5a"]
+|===
+|Firefox
+|Browser
+|Mozilla Firefox is an open source web browser.
+
+It's designed for:
+
+* standards compliance
+* performance
+* portability
+
+https://getfirefox.com[Get Firefox]!
+|===
+====
+--
+
+.Example 72. Table from CSV data using shorthand
+--
+[source,asciidoc]
+----
+,===
+Artist,Track,Genre
+
+Baauer,Harlem Shake,Hip Hop
+,===
+----
+
+====
+,===
+Artist,Track,Genre
+
+Baauer,Harlem Shake,Hip Hop
+,===
+====
+--
+
+.Example 73. Table from CSV data
+--
+[source,asciidoc]
+----
+[%header,format=csv]
+|===
+Artist,Track,Genre
+Baauer,Harlem Shake,Hip Hop
+The Lumineers,Ho Hey,Folk Rock
+|===
+----
+
+====
+[%header,format=csv]
+|===
+Artist,Track,Genre
+Baauer,Harlem Shake,Hip Hop
+The Lumineers,Ho Hey,Folk Rock
+|===
+====
+--
+
+.Example 74. Table from CSV data included from file
+--
+[source,asciidoc]
+----
+,===
+\include::customers.csv[]
+,===
+Example 75. Table from DSV data using shorthand
+:===
+Artist:Track:Genre
+
+Robyn:Indestructible:Dance
+:===
+----
+
+====
+Example 74. Table from CSV data included from file
+,===
+\include::customers.csv[]
+,===
+Example 75. Table from DSV data using shorthand
+:===
+Artist:Track:Genre
+
+Robyn:Indestructible:Dance
+:===
+====
+--
+
+.Example 76. Table with formatted, aligned and merged cells
+--
+[source,asciidoc]
+----
+[cols="e,m,^,>s",width="25%"]
+|===
+|1 >s|2 |3 |4
+^|5 2.2+^.^|6 .3+<.>m|7
+^|8
+|9 2+>|10
+|===
+----
+
+====
+[cols="e,m,^,>s",width="25%"]
+|===
+|1 >s|2 |3 |4
+^|5 2.2+^.^|6 .3+<.>m|7
+^|8
+|9 2+>|10
+|===
+====
+--
+
+== IDs, roles, and options
+
+.Example 77. Shorthand method for assigning block ID (anchor) and role
+--
+[source,asciidoc]
+----
+[#goals.incremental]
+* Goal 1
+* Goal 2
+----
+--
+
+[TIP]
+====
+* To specify multiple roles using the shorthand syntax, delimit them by dots.
+* The order of `id` and `role` values in the shorthand syntax does not matter.
+====
+
+.Example 78. Formal method for assigning block ID (anchor) and role
+--
+[source,asciidoc]
+----
+[id="goals",role="incremental"]
+* Goal 1
+* Goal 2
+----
+--
+
+.Example 79. Explicit section ID (anchor)
+--
+[source,asciidoc]
+----
+[#null-values]
+== Primitive types and null values
+----
+--
+
+.Example 80. Assign ID (anchor) and role to inline formatted text
+--
+[source,asciidoc]
+----
+[#id-name.role-name]`monospace text`
+
+[#free-world.goals]*free the world*
+----
+
+====
+[#id-name.role-name]`monospace text`
+
+[#free-world.goals]*free the world*
+====
+--
+
+.Example 81. Shorthand method for assigning block options
+--
+[source,asciidoc]
+----
+[%header%footer%autowidth]
+|===
+|Header A |Header B
+|Footer A |Footer B
+|===
+----
+
+====
+[%header%footer%autowidth]
+|===
+|Header A |Header B
+|Footer A |Footer B
+|===
+====
+--
+
+.Example 82. Formal method for assigning block options
+--
+[source,asciidoc]
+----
+[options="header,footer,autowidth"]
+|===
+|Header A |Header B
+|Footer A |Footer B
+|===
+
+// options can be shorted to opts
+[opts="header,footer,autowidth"]
+|===
+|Header A |Header B
+|Footer A |Footer B
+|===
+----
+
+====
+[options="header,footer,autowidth"]
+|===
+|Header A |Header B
+|Footer A |Footer B
+|===
+
+// options can be shorted to opts
+[opts="header,footer,autowidth"]
+|===
+|Header A |Header B
+|Footer A |Footer B
+|===
+====
+--
+
+== Comments
+
+.Example 83. Line and block comments
+--
+[source,asciidoc]
+----
+// A single-line comment
+
+////
+A multi-line comment.
+
+Notice it's a delimited block.
+////
+----
+
+====
+// A single-line comment
+
+////
+A multi-line comment.
+
+Notice it's a delimited block.
+////
+====
+--
+
+== Breaks
+
+.Example 84. Thematic break (aka horizontal rule)
+--
+[source,asciidoc]
+----
+before
+
+'''
+
+after
+----
+
+====
+before
+
+'''
+
+after
+====
+--
+
+.Example 85. Page break
+--
+[source,asciidoc]
+----
+<<<
+----
+--
+
+== Attributes and substitutions
+
+.Example 86. Attribute declaration and usage
+--
+[source,asciidoc]
+----
+:url-home: https://asciidoctor.org
+:link-docs: https://asciidoctor.org/docs[documentation]
+:summary: AsciiDoc is a mature, plain-text document format for \
+       writing notes, articles, documentation, books, and more. \
+       It's also a text processor & toolchain for translating \
+       documents into various output formats (i.e., backends), \
+       including HTML, DocBook, PDF and ePub.
+:checkedbox: pass:normal[{startsb}&#10004;{endsb}]
+
+Check out {url-home}[Asciidoctor]!
+
+{summary}
+
+Be sure to read the {link-docs} too!
+
+{checkedbox} That's done!
+----
+
+====
+:url-home: https://asciidoctor.org
+:link-docs: https://asciidoctor.org/docs[documentation]
+:summary: AsciiDoc is a mature, plain-text document format for \
+       writing notes, articles, documentation, books, and more. \
+       It's also a text processor & toolchain for translating \
+       documents into various output formats (i.e., backends), \
+       including HTML, DocBook, PDF and ePub.
+:checkedbox: pass:normal[{startsb}&#10004;{endsb}]
+
+Check out {url-home}[Asciidoctor]!
+
+{summary}
+
+Be sure to read the {link-docs} too!
+
+{checkedbox} That's done!
+====
+--
+
+* To learn more about the available attributes and substitution groups see:
+** Document Attributes Reference
+** Character Replacement Attributes Reference
+** Substitution Groups
+
+.Example 87. Counter attributes
+--
+[source,asciidoc]
+----
+.Parts{counter2:index:0}
+|===
+|Part Id |Description
+
+|PX-{counter:index}
+|Description of PX-{index}
+
+|PX-{counter:index}
+|Description of PX-{index}
+|===
+----
+
+====
+.Parts{counter2:index:0}
+|===
+|Part Id |Description
+
+|PX-{counter:index}
+|Description of PX-{index}
+
+|PX-{counter:index}
+|Description of PX-{index}
+|===
+====
+--
+
+== Text replacements
+
+.Textual symbol replacements
+[cols=",,,,a",options="autowidth"]
+|===
+|Name |Syntax |Unicode Replacement |Rendered |Notes
+
+|Copyright |\(C) |\&#169; |(C) |
+
+|Registered |\(R) |\&#174; |(R) |
+
+|Trademark |\(TM) |\&#8482; |(TM) |
+
+|Em dash |\-- |\&#8212; |-- |
+* Only replaced if between two word characters, between a word character and a line boundary, or flanked by spaces.
+* When flanked by space characters (e.g., a -- b), the normal spaces are replaced by thin spaces (&#8201;).
+* Otherwise, the em dash is followed by a zero-width space (&#8203;) to provide a break opportunity.
+
+|Ellipsis |\... |\&#8230; |...  |
+* The ellipsis is followed by a zero-width space (&#8203;) to provide a break opportunity.
+
+|Single right arrow |\-> |\&#8594; |-> |
+
+|Double right arrow |\=> |\&#8658; |=> |
+
+|Single left arrow |\<- |\&#8592; |<- |
+
+|Double left arrow |\<= |\&#8656; |<= |
+
+|Typographic apostrophe |Sam\'s |Sam\&#8217;s |Sam's |
+* The typewriter apostrophe is replaced with the typographic (aka curly or smart) apostrophe.
+|===
+
+* Any named, numeric or hexadecimal XML character reference is supported.
+
+== Escaping substitutions
+
+.Example 88. Backslash
+--
+[source,asciidoc]
+----
+In /items/\{id}, the id attribute isn't replaced.
+The curly braces around it are preserved.
+
+\*Stars* isn't displayed as bold text.
+The asterisks around it are preserved.
+
+\&sect; appears as an entity reference.
+It's not converted into the section symbol (&sect;).
+
+\=> The backslash prevents the equals sign followed by a greater
+than sign from combining to form a double arrow character (=>).
+
+\[[Word]] is not interpreted as an anchor.
+The double brackets around it are preserved.
+
+[\[[Word]]] is not interpreted as a bibliography anchor.
+The triple brackets around it are preserved.
+
+The URL \https://example.org isn't converted into an active link.
+----
+
+====
+In /items/\{id}, the id attribute isn't replaced.
+The curly braces around it are preserved.
+
+\*Stars* isn't displayed as bold text.
+The asterisks around it are preserved.
+
+\&sect; appears as an entity reference.
+It's not converted into the section symbol (&sect;).
+
+\=> The backslash prevents the equals sign followed by a greater
+than sign from combining to form a double arrow character (=>).
+
+\[[Word]] is not interpreted as an anchor.
+The double brackets around it are preserved.
+
+[\[[Word]]] is not interpreted as a bibliography anchor.
+The triple brackets around it are preserved.
+
+The URL \https://example.org isn't converted into an active link.
+====
+--
+
+.Example 89. Single and double plus inline passthroughs
+--
+[source,asciidoc]
+----
+A word or phrase between single pluses, such as +/user/{id}+,
+is not substituted.
+However, the special characters like +<+ and +>+ are still
+escaped in the output.
+
+An attribute reference within a word, such as dev++{conf}++,
+is not replaced.
+
+A plus passthrough will escape standalone formatting marks,
+like +``+, or formatting marks within a word, like all-natural++*++.
+----
+
+====
+A word or phrase between single pluses, such as +/user/{id}+,
+is not substituted.
+However, the special characters like +<+ and +>+ are still
+escaped in the output.
+
+An attribute reference within a word, such as dev++{conf}++,
+is not replaced.
+
+A plus passthrough will escape standalone formatting marks,
+like +``+, or formatting marks within a word, like all-natural++*++.
+====
+--
+
+.Example 90. Triple plus inline passthrough and inline pass macro
+--
+[source,asciidoc]
+----
++++<u>underline me</u>+++ is underlined.
+
+pass:[<u>underline me</u>] is also underlined.
+----
+
+====
++++<u>underline me</u>+++ is underlined.
+
+pass:[<u>underline me</u>] is also underlined.
+====
+--
+
+== Bibliography
+
+.Example 91. Bibliography with inbound references
+--
+[source,asciidoc]
+----
+_The Pragmatic Programmer_ <<pp>> should be required reading for all developers.
+To learn all about design patterns, refer to the book by the "`Gang of Four`" <<gof>>.
+
+[bibliography]
+== References
+
+* [[[pp]]] Andy Hunt & Dave Thomas. The Pragmatic Programmer:
+From Journeyman to Master. Addison-Wesley. 1999.
+* [[[gof,gang]]] Erich Gamma, Richard Helm, Ralph Johnson & John Vlissides.
+Design Patterns: Elements of Reusable Object-Oriented Software. Addison-Wesley. 1994.
+----
+
+====
+_The Pragmatic Programmer_ <<pp>> should be required reading for all developers.
+To learn all about design patterns, refer to the book by the "`Gang of Four`" <<gof>>.
+
+[bibliography]
+== References
+
+* [[[pp]]] Andy Hunt & Dave Thomas. The Pragmatic Programmer:
+From Journeyman to Master. Addison-Wesley. 1999.
+* [[[gof,gang]]] Erich Gamma, Richard Helm, Ralph Johnson & John Vlissides.
+Design Patterns: Elements of Reusable Object-Oriented Software. Addison-Wesley. 1994.
+====
+--
+
+== Footnotes
+
+.Example 92. Normal and reusable footnotes
+--
+[source,asciidoc]
+----
+A statement.footnote:[Clarification about this statement.]
+
+A bold statement!footnote:disclaimer[Opinions are my own.]
+
+Another bold statement.footnote:disclaimer[]
+----
+
+====
+A statement.footnote:[Clarification about this statement.]
+
+A bold statement!footnote:disclaimer[Opinions are my own.]
+
+Another bold statement.footnote:disclaimer[]
+====
+--
+
+== Markdown compatibility
+
+* Markdown compatible syntax is an optional feature of the AsciiDoc language and is currently only available when using Asciidoctor.
+
+.Example 93. Markdown-style headings
+--
+[source,asciidoc]
+----
+# Document Title (Level 0)
+
+## Section Level 1
+
+### Section Level 2
+
+#### Section Level 3
+
+##### Section Level 4
+
+###### Section Level 5
+----
+--
+
+.Example 94. Fenced code block with syntax highlighting
+--
+[source,asciidoc]
+----
+```ruby
+require 'sinatra'
+
+get '/hi' do
+  "Hello World!"
+end
+```
+----
+
+====
+```ruby
+require 'sinatra'
+
+get '/hi' do
+  "Hello World!"
+end
+```
+====
+--
+
+.Example 95. Markdown-style blockquote
+--
+[source,asciidoc]
+----
+> I hold it that a little rebellion now and then is a good thing,
+> and as necessary in the political world as storms in the physical.
+> -- Thomas Jefferson, Papers of Thomas Jefferson: Volume 11
+----
+
+====
+> I hold it that a little rebellion now and then is a good thing,
+> and as necessary in the political world as storms in the physical.
+> -- Thomas Jefferson, Papers of Thomas Jefferson: Volume 11
+====
+--
+
+.Example 96. Markdown-style blockquote with block content
+--
+[source,asciidoc]
+----
+> > What's new?
+>
+> I've got Markdown in my AsciiDoc!
+>
+> > Like what?
+>
+> * Blockquotes
+> * Headings
+> * Fenced code blocks
+>
+> > Is there more?
+>
+> Yep. AsciiDoc and Markdown share a lot of common syntax already.
+----
+
+====
+> > What's new?
+>
+> I've got Markdown in my AsciiDoc!
+>
+> > Like what?
+>
+> * Blockquotes
+> * Headings
+> * Fenced code blocks
+>
+> > Is there more?
+>
+> Yep. AsciiDoc and Markdown share a lot of common syntax already.
+====
+--
+
+.Example 97. Markdown-style thematic breaks
+--
+[source,asciidoc]
+----
+---
+
+- - -
+
+***
+
+* * *
+----
+
+====
+---
+
+- - -
+
+***
+
+* * *
+====
+--
