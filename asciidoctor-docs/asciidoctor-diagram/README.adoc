@@ -1,0 +1,15 @@
+= Overview
+
+* Asciidoctor Diagram is a set of Asciidoctor extensions that enable rendering of plain text diagrams that are embedded in your AsciiDoc document as part of the Asciidoctor conversion process.
+
+---
+
+* Each extensions will invoke the necessary external diagram rendering tools to produce an image file which is inserted into your converted document.
+
+---
+
+* The extensions support the Graphviz syntax.
+
+---
+
+* Asciidoctor Diagram was inspired by the AsciiDoc PlantUML filter.

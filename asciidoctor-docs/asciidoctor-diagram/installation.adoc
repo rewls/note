@@ -1,0 +1,34 @@
+= Installation
+
+* Asciidoctor Diagram is a RubyGem, which can be installed using the `gem` or `bundle` commands.
+
+---
+
+* You can install the Asciidoctor Diagram gem by typing `gem install` in the CLI.
+
+ $ gem install asciidoctor-diagram
+
+* To install the gem using Bundler, first add the following entry to your project's _Gemfile_.
+
+.Gemfile
+----
+gem 'asciidoctor-diagram'
+----
+
+* Then execute `bundle` in the CLI.
+
+ $ bundle
+
+== Diagram Renderer Installation Paths
+
+* Asciidoctor Diagram depends on external tools to generate images.
+* In most cases it will locate these tools automatically for you by looking for specific executables in each directory in the `PATH` environment variable.
+
+---
+
+* In case you've installed a tool in a way where the executable is not in the ``PATH``, you can override its location manually using document attributes.
+* If, for instance, you installed `diag_tool` in `/home/me/diag_tool/bin` and this path is not included in the PATH you can specify its location on the command line
+
+ $ asciidoctor -a diag_tool=/home/me/actdiag/bin/diag_tool -r asciidoctor-diagram sample.adoc
+
+* The exact document attributes to use are described in the documentation of each diagram type.

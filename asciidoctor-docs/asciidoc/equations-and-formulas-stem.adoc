@@ -10,6 +10,7 @@
 * To activate equation and formula support, set the `stem` attribute in the document's header (or by passing the attribute to the command line or API).
 
 .Example 1. Setting the stem attribute
+--
 [source,asciidoc]
 ----
 = My Diabolical Mathematical Opus
@@ -18,6 +19,7 @@ Jamie Moriarty
 ----
 
 <1> The default notation value, asciimath, is assigned implicitly.
+--
 
 * By default, AsciiDoc's stem integration assumes all equations are AsciiMath if not specified explicitly.
 * The HTML converter supports STEM content written in AsciiMath and TeX and LaTeX math notation.
@@ -25,7 +27,7 @@ Jamie Moriarty
 
 '''
 
-If you want to use the LaTeX notation by default, assign `latexmath` to the stem attribute.
+* If you want to use the LaTeX notation by default, assign `latexmath` to the stem attribute.
 
 .Example 2. Assigning an alternative notation to the stem attribute
 [source,asciidoc]
