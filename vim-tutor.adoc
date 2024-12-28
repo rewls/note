@@ -1,0 +1,719 @@
+= VIM Tutor
+:experimental:
+:tabsize: 8
+
+[quote]
+____
+VIM Tutor Version 1.7
+____
+
+* Vim is a very powerful editor that has many commands, too many to explain in a
+  tutor such as this.
+* This tutor is designed to describe enough of the commands that you will be
+  able to easily use Vim as an all-purpose editor.
+
+'''
+
+* The approximate time required to complete the tutor is 30 minutes, depending
+  upon how much time is spent with experimentation.
+
+== Lesson 1.1: Moving the cursor
+
+[.lead]
+To move the cursor, press the kbd:[h], kbd:[j], kbd:[k], kbd:[l] keys as indicated.
+
+....
+	     ^
+	     k
+       < h	 l >
+	     j
+	     v
+....
+
+. Hold down the down key (kbd:[j]) until it repeats.
+
+[NOTE]
+====
+* If you are ever unsure about something you typed, press kbd:[<ESC>] to place
+  you in Normal mode.
+* Then retype the command you wanted.
+====
+
+== Lesson 1.2: Exiting vim
+
+. Press the kbd:[<ESC>] key (to make sure you are in Normal mode).
+
+. Type: ``:q!``kbd:[<ENTER>].
+* This exits the editor, DISCARDING any changes you have made.
+. Get back here by executing the command that got you into this tutor.
+
+== Lesson 1.3: Text editing - deletion
+
+[.lead]
+Press kbd:[x] to delete the character under the cursor.
+
+. To fix the errors, move the cursor until it is on top of the character to be
+  deleted.
+. Press the kbd:[x] key to delete the unwanted character.
+
+== Lesson 1.4: Text editing - insertion
+
+[.lead]
+Press kbd:[i] to insert text.
+
+. Move the cursor on top of the character BEFORE which the text is to be
+  inserted.
+. Press kbd:[i] and type in the necessary additions.
+. As each error is fixed press kbd:[<ESC>] to return to Normal mode.
+
+== Lesson 1.5: Text editing - appending
+
+[.lead]
+Press kbd:[A] to append text.
+
+. Press kbd:[A] and type in the necessary additions.
+. As the text has been appended press kbd:[<ESC>] to return to Normal mode.
+
+== Lesson 1.6: Editing a file
+
+[.lead]
+Use `:wq` to save a file and exit.
+
+. At the shell prompt type this command: ``vim file.txt``kbd:[<ENTER>]
+* `vim` is the command to start the Vim editor, `file.txt` is the name of the
+  file you wish to edit.
+* Use the name of a file that you can change.
+. Insert and delete text as you learned in the previous lessons.
+. Save the file with changes and exit Vim with: ``wq``kbd:[<ENTER>]
+
+== Lesson 1 Summary
+
+. The cursor is moved using either the arrow keys or the
+  kbd:[h]kbd:[j]kbd:[k]kbd:[l] keys.
++
+```
+	 h (left)	j (down)       k (up)	    l (right)
+```
+. To start Vim from the shell prompt type:  ``vim _FILENAME_``kbd:[<ENTER>]
+. To exit Vim type: kbd:[<ESC>]``:q!``kbd:[<ENTER>] to trash all changes.
+* OR type: kbd:[<ESC>]``:wq``kbd:[<ENTER>] to save the changes.
+. To delete the character at the cursor type: kbd:[x]
+. To insert or append text type:
+* kbd:[i] type inserted text kbd:[<ESC>]: insert before the cursor
+* kbd:[A] type appended text kbd:[<ESC>]: append after the line
+
+[NOTE]
+====
+* Pressing kbd:[<ESC>] will place you in Normal mode or will cancel an unwanted
+  and partially completed command.
+====
+
+== Lesson 2.1: Deletion commands
+
+[.lead]
+Type kbd:[dw]  to delete a word.
+
+. Press kbd:[<ESC>] to make sure you are in Normal mode.
+. Move the cursor to the beginning of a word that needs to be deleted.
+. Type kbd:[dw] to make the word disappear.
+
+[NOTE]
+====
+* The letter kbd:[d] will appear on the last line of the screen as you type it.
+* Vim is waiting for you to type kbd:[w].
+* If you see another character than kbd:[d] you typed something wrong; press
+  kbd:[<ESC>] and start over.
+====
+
+== Lesson 2.2: More deletion commands
+
+[.lead]
+Type kbd:[d$] to delete to the end of the line.
+
+. Press kbd:[<ESC>] to make sure you are in Normal mode.
+. Type kbd:[d$] to delete to the end of the line.
+
+== Lesson 2.3: On operators and motions
+
+* Many commands that change text are made from an operator and a motion.
+* The format for a delete command with the kbd:[d] delete operator is as
+  follows:
++
+....
+  	d   motion
+....
+* Where:
+** `d` is the delete operator.
+** `motion` is what the operator will operate on (listed below).
+
+* A short list of motions:
+** kbd:[w] - until the start of the next word, EXCLUDING its first character.
+** kbd:[e] - to the end of the current word, INCLUDING the last character.
+** kbd:[$] - to the end of the line, INCLUDING the last character.
+
+* Thus typing kbd:[de] will delete from the cursor to the end of the word.
+
+[NOTE]
+====
+* Pressing just the motion while in Normal mode without an operator will move
+  the cursor as specified.
+====
+
+== Lesson 2.4: Using a count for a motion
+
+[.lead]
+Typing a number before a motion repeats it that many times.
+
+. Type kbd:[2w] to move the cursor two words forward.
+. Type kbd:[3e] to move the cursor to the end of the third word forward.
+. Type kbd:[0] (zero) to move to the start of the line.
+
+== Lesson 2.5: Using a count to delete more
+
+[.lead]
+Typing a number with an operator repeats it that many times.
+
+* In the combination of the delete operator and a motion mentioned above you
+  insert a count before the motion to delete more:
++
+....
+	 d   number   motion
+....
+
+[]
+. Type kbd:[d2w] to delete two words.
+. Repeat steps 1 and 2 with a different count to delete consecutive words with
+  one command.
+
+== Lesson 2.6: Operating on lines
+
+[.lead]
+Type kbd:[dd] to delete a whole line.
+
+* Due to the frequency of whole line deletion, the designers of Vi decided it
+  would be easier to simply type two kbd:[d]'s to delete a line.
+
+[]
+. Type kbd:[dd] to delete the line.
+. Type kbd:[2dd] to delete two lines.
+
+[]
+* Doubling to operate on a line also works for operators mentioned below.
+
+== Lesson 2.7: The undo command
+
+[.lead]
+Press kbd:[u] to undo the last commands, kbd:[U] to fix a whole line.
+
+. Place it on the first error.
+. Type kbd:[x] to delete the first unwanted character.
+. Now type kbd:[u] to undo the last command executed.
+. This time fix all the errors on the line using the kbd:[x] command.
+. Now type a capital kbd:[U] to return the line to its original state.
+. Now type kbd:[u] a few times to undo the kbd:[U] and preceding commands.
+. Now type kbd:[CTRL-R] (keeping kbd:[CTRL] key pressed while hitting kbd:[R]) a
+  few times to redo the commands (undo the undos).
+
+== Lesson 2 Summary
+
+. To delete from the cursor up to the next word type: kbd:[dw]
+. To delete from the cursor up to the end of the word type: kbd:[de]
+. To delete from the cursor to the end of a line type: kbd:[d$]
+. To delete a whole line type: kbd:[dd]
+
+. To repeat a motion prepend it with a number: kbd:[2w]
+. The format for a change command is:
++
+....
+               operator   [number]   motion
+....
+* where:
+** `operator` is what to do, such as kbd:[d] for delete
+** `[number]` is an optional count to repeat the motion
+** `motion` moves over the text to operate on, such as kbd:[w] (word), kbd:[e]
+   (end of word), kbd:[$] (end of the line), etc.
+
+. To move to the start of the line use a zero: kbd:[0]
+. To undo previous actions, type: kbd:[u] (lowercase u)
+* To undo all the changes on a line, type: kbd:[U] (capital U)
+* To undo the undos, type: kbd:[CTRL-R]
+
+== Lesson 3.1: The put command
+
+[.lead]
+Type kbd:[p] to put previously deleted text after the cursor.
+
+. Type kbd:[dd] to delete the line and store it in a Vim register.
+. Move the cursor to a line, ABOVE where the deleted line should go.
+. Type kbd:[p] to put the line below the cursor.
+
+== Lesson 3.2: The replace command
+
+[.lead]
+Type kbd:[rx] to replace the character at the cursor with x.
+
+. Move the cursor so that it is on top of the first error.
+. Type kbd:[r] and then the character which should be there.
+
+== Lesson 3.3: The change operator
+
+[.lead]
+To change until the end of a word, type kbd:[ce]. 
+
+. Type kbd:[ce] and the correct word.
+
+[]
+* Notice that kbd:[ce] deletes the word and places you in Insert mode.
+* kbd:[cc] does the same for the whole line.
+
+== Lesson 3.4: More changes using kbd:[c]
+
+[.lead]
+The change operator is used with the same motions as delete.
+
+. The change operator works in the same way as delete.
+* The format is:
++
+....
+         c    [number]   motion
+....
+. The motions are the same, such as kbd:[w] (word) and kbd:[$] (end of line).
+. Move the cursor to the first error.
+. Type kbd:[c$] and type the rest of the line and press kbd:[<ESC>].
+
+[NOTE]
+====
+* You can use the kbd:[Backspace] key to correct mistakes while typing.
+====
+
+== Lesson 3 Summary
+
+. To put back text that has just been deleted, type kbd:[p].
+* This puts the deleted text AFTER the cursor (if a line was deleted it will go
+  on the line below the cursor).
+. To replace the character under the cursor, type kbd:[r] and then the character
+  you want to have there.
+. The change operator allows you to change from the cursor to where the motion
+  takes you.
+* eg. Type kbd:[ce] to change from the cursor to the end of the word, kbd:[c$]
+  to change to the end of a line.
+. The format for change is:
++
+....
+	 c   [number]   motion
+....
+
+== Lesson 4.1: Cursor location and file status
+
+[.lead]
+Type kbd:[CTRL-G] to show your location in the file and the file status.
+Type kbd:[G] to move to a line in the file.
+
+. Hold down the kbd:[Ctrl] key and press kbd:[g].
+* We call this kbd:[CTRL-G].
+* A message will appear at the bottom of the page with the filename and the
+  position in the file.
+* Remember the line number for Step 3.
++
+[NOTE]
+====
+* You may see the cursor position in the lower right corner of the screen.
+* This happens when the 'ruler' option is set (see  `:help 'ruler'`)
+====
+. Press kbd:[G] to move you to the bottom of the file.
+* Type kbd:[gg] to move you to the start of the file.
+. Type the number of the line you were on and then kbd:[G].
+* This will return you to the line you were on when you first pressed
+  kbd:[CTRL-G].
+
+== Lesson 4.2: The search command
+
+[.lead]
+Type kbd:[/] followed by a phrase to search for the phrase.
+
+. In Normal mode type the kbd:[/] character.
+* Notice that it and the cursor appear at the bottom of the screen as with the
+  kbd:[:] command.
+. Now type 'errroor'kbd:[<ENTER>].
+* This is the word you want to search for.
+. To search for the same phrase again, simply type kbd:[n].
+* To search for the same phrase in the opposite direction, type kbd:[N].
+. To search for a phrase in the backward direction, use kbd:[?] instead of
+  kbd:[/] .
+. To go back to where you came from press kbd:[CTRL-O] (Keep kbd:[Ctrl] down
+  while pressing the letter kbd:[o]).
+* Repeat to go back further.
+* kbd:[CTRL-I] goes forward.
+
+[NOTE]
+====
+* When the search reaches the end of the file it will continue at the start,
+  unless the 'wrapscan' option has been reset.
+====
+
+== Lesson 4.3: Matching parentheses search
+
+[.lead]
+Type kbd:[%] to find a matching ), ], or }.
+
+. Place the cursor on any (, [, or {.
+. Now type the kbd:[%] character.
+. The cursor will move to the matching parenthesis or bracket.
+. Type kbd:[%] to move the cursor to the other matching bracket.
+. Move the cursor to another (, ), [, ], { or } and see what kbd:[%] does.
+
+[NOTE]
+====
+* This is very useful in debugging a program with unmatched parentheses!
+====
+
+== Lesson 4.4: The substitute command
+
+[.lead]
+Type `:s/old/new/g` to substitute 'new' for 'old'.
+
+. Type ``:s/thee/the``kbd:[<ENTER>].
+* Note that this command only changes the first occurrence of "thee" in the
+  line.
+. Now type `:s/thee/the/g`.
+* Adding the `g` flag means to substitute globally in the line, change all
+  occurrences of "thee" in the line.
+. To change every occurrence of a character string between two lines,
+* type `:\#,#s/old/new/g` where `#,#` are the line numbers of the range of lines
+  where the substitution is to be done.
+* Type `:%s/old/new/g` to change every occurrence in the whole file.
+* Type `:%s/old/new/gc` to find every occurrence in the whole file, with a
+  prompt whether to substitute or not.
+
+== Lesson 4 Summary
+
+. kbd:[CTRL-G] displays your location in the file and the file status.
+* kbd:[G] moves to the end of the file.
+* kbd:[__number__G] moves to that line number.
+* kbd:[gg] moves to the first line.
+. Typing kbd:[/] followed by a phrase searches FORWARD for the phrase.
+* Typing kbd:[?] followed by a phrase searches BACKWARD for the phrase.
+* After a search type kbd:[n] to find the next occurrence in the same direction
+  or kbd:[N] to search in the opposite direction.
+* kbd:[CTRL-O] takes you back to older positions, kbd:[CTRL-I] to newer
+  positions.
+. Typing kbd:[%] while the cursor is on a (, ), [, ], {, or } goes to its match.
+. To substitute new for the first old in a line type `:s/old/new`
+* To substitute new for all 'old's on a line type `:s/old/new/g`
+* To substitute phrases between two line \#'s type `:#,#s/old/new/g`
+* To substitute all occurrences in the file type `:%s/old/new/g`
+* To ask for confirmation each time add 'c' `:%s/old/new/gc`
+
+== Lesson 5.1: How to execute an external command
+
+[.lead]
+Type `:!` followed by an external command to execute that command.
+
+. Type the familiar command kbd:[:] to set the cursor at the bottom of the
+  screen.
+* This allows you to enter a command-line command.
+. Now type the kbd:[!] (exclamation point) character.
+* This allows you to execute any external shell command.
+. As an example type `ls` following the `!` and then hit kbd:[<ENTER>].
+* This will show you a listing of your directory, just as if you were at the
+  shell prompt.
+
+[NOTE]
+====
+* It is possible to execute any external command this way, also with arguments.
+====
+
+[NOTE]
+====
+* All kbd:[:] commands must be finished by hitting kbd:[<ENTER>]
+* From here on we will not always mention it.
+====
+
+== Lesson 5.2: More on writing files
+
+[.lead]
+To save the changes made to the text, type `:w _FILENAME_`
+
+. Type `:!ls` to get a listing of your directory.
+. Choose a filename that does not exist yet, such as `TEST`.
+. Now type: `:w TEST` (where `TEST` is the filename you chose.)
+. This saves the whole file (the Vim Tutor) under the name `TEST`.
+. To verify this, type or `:!ls` again to see your directory.
+. Now remove the file by typing (Unix):	`:!rm TEST`
+
+== Lesson 5.3: Selecting text to write
+
+[.lead]
+To save part of the file, type kbd:[v] motion `:w _FILENAME_`
+
+. Move the cursor to this line.
+. Press kbd:[v] and move the cursor to the fifth item below.
+* Notice that the text is highlighted.
+. Press the kbd:[:] character.
+* At the bottom of the screen `:'<,'>` will appear.
+. Type `w TEST`, where `TEST` is a filename that does not exist yet.
+* Verify that you see `:'<,'>w TEST` before you press kbd:[<ENTER>].
+. Vim will write the selected lines to the file TEST.
+* Use `:!ls` to see it.
+* Do not remove it yet!
+* We will use it in the next lesson.
+
+[NOTE]
+====
+* Pressing kbd:[v] starts Visual selection.
+* You can move the cursor around to make the selection bigger or smaller.
+* Then you can use an operator to do something with the text.
+* For example, kbd:[d] deletes the text.
+====
+
+== Lesson 5.4: Retrieving and merging files
+
+[.lead]
+To insert the contents of a file, type `:r _FILENAME_`
+
+. Place the cursor just above this line.
++
+[NOTE]
+====
+* After executing Step 2 you will see text from lesson 5.3.
+* Then move DOWN to see this lesson again.
+====
+. Now retrieve your `TEST` file using the command `:r TEST` where `TEST` is the
+  name of the file you used.
+* The file you retrieve is placed below the cursor line.
+. To verify that a file was retrieved, cursor back and notice that there are now
+  two copies of lesson 5.3, the original and the file version.
+
+[NOTE]
+====
+* You can also read the output of an external command.
+* For example, `:r !ls`  reads the output of the ls command and puts it below
+  the cursor.
+====
+
+== Lesson 5 Summary
+
+. `:!command`  executes an external command.
+* Some useful examples are:
+** (Unix)
+** `:!ls` shows a directory listing.
+** `:!rm _FILENAME_` removes file `_FILENAME_`.
+. `:w _FILENAME_` writes the current Vim file to disk with name `_FILENAME_`.
+. kbd:[v] motion `:w _FILENAME_` saves the Visually selected lines in file
+  `_FILENAME_`.
+. `:r _FILENAME_` retrieves disk file `_FILENAME_` and puts it below the cursor
+  position.
+. `:r !dir` reads the output of the `dir` command and puts it below the cursor
+  position.
+
+== Lesson 6.1: The open command
+
+[.lead]
+Type kbd:[o] to open a line below the cursor and place you in Insert mode.
+
+. Type the lowercase letter kbd:[o] to open up a line BELOW the cursor and place
+  you in Insert mode.
+. Now type some text and press kbd:[<ESC>] to exit Insert mode.
+. To open up a line ABOVE the cursor, simply type a capital kbd:[O], rather than
+  a lowercase kbd:[o].
+
+== Lesson 6.2: The append command
+
+[.lead]
+Type kbd:[a] to insert text AFTER the cursor.
+
+. Type an kbd:[a] (lowercase) to append text AFTER the cursor.
+. Complete the word.
+* Press kbd:[<ESC>] to exit Insert mode.
+
+[NOTE]
+====
+* kbd:[a], kbd:[i] and kbd:[A] all go to the same Insert mode, the only
+  difference is where the characters are inserted.
+====
+
+== Lesson 6.3: Another way to replace
+
+[.lead]
+Type a capital kbd:[R] to replace more than one character.
+
+. Now press kbd:[R].
+. Press kbd:[<ESC>] to leave Replace mode.
+* Notice that the rest of the line remains unmodified.
+
+[NOTE]
+====
+* Replace mode is like Insert mode, but every typed character deletes an
+  existing character.
+====
+
+== Lesson 6.4: Copy and paste text
+
+[.lead]
+Use the kbd:[y] operator to copy text and kbd:[p] to paste it
+
+. Start Visual mode with kbd:[v] and move the cursor
+. Type kbd:[y] to yank (copy) the highlighted text.
+. Type kbd:[p] to put (paste) the text.
+
+[NOTE]
+====
+* You can also use kbd:[y]  as an operator: kbd:[yw] yanks one word, kbd:[yy]
+  yanks the whole line, then  kbd:[p] puts that line.
+====
+
+== Lesson 6.5: Set option
+
+[.lead]
+Set an option so a search or substitute ignores case
+
+. Search for 'ignore' by entering: `/ignore` kbd:[<ENTER>]
+* Repeat several times by pressing  kbd:[n].
+. Set the 'ic' (Ignore case) option by entering: `:set ic`
+. Now search for 'ignore' again by pressing kbd:[n].
+* Notice that Ignore and IGNORE are now also found.
+. Set the 'hlsearch' and 'incsearch' options: `:set hls is`
+. Now type the search command again and see what happens: `/ignore`
+  kbd:[<ENTER>]
+. To disable ignoring case enter: `:set noic`
+
+[NOTE]
+====
+* To remove the highlighting of matches enter: `:nohlsearch`
+====
+
+[NOTE]
+====
+* If you want to ignore case for just one search command, use `\c` in the
+  phrase: `/ignore\c` kbd:[<ENTER>]
+====
+
+== Lesson 6 Summary
+
+. Type kbd:[o] to open a line BELOW the cursor and start Insert mode.
+* Type kbd:[O] to open a line ABOVE the cursor.
+. Type kbd:[a] to insert text AFTER the cursor.
+* Type kbd:[A] to insert text after the end of the line.
+. The kbd:[e] command moves to the end of a word.
+. The kbd:[y] operator yanks (copies) text, kbd:[p] puts (pastes) it.
+. Typing a capital kbd:[R] enters Replace mode until kbd:[<ESC>] is pressed.
+. Typing ":set xxx" sets the option "xxx".
+* Some options are:
+** 'ic' 'ignorecase' ignore upper/lower case when searching
+** 'is' 'incsearch' show partial matches for a search phrase
+** 'hls' 'hlsearch' highlight all matching phrases
+* You can either use the long or the short option name.
+. Prepend "no" to switch an option off: `:set noic`
+
+== Lesson 7.1: Getting help
+
+[.lead]
+Use the on-line help system
+
+* Vim has a comprehensive on-line help system.
+* To get started, try one of these three:
+** press the kbd:[<HELP>] key (if you have one)
+** press the kbd:[<F1>] key (if you have one)
+** type `:help` kbd:[<ENTER>]
+
+'''
+
+* Read the text in the help window to find out how the help works.
+* Type kbd:[CTRL-W CTRL-W]  to jump from one window to another.
+* Type `:q` kbd:[<ENTER>] to close the help window.
+
+'''
+
+* You can find help on just about any subject, by giving an argument to the
+  ":help" command.
+* Try these (don't forget pressing <ENTER>):
++
+[source,vim]
+:help w
+:help c_CTRL-D
+:help insert-index
+:help user-manual
+
+== Lesson 7.2: CREATE A STARTUP SCRIPT
+
+[.lead]
+Enable Vim features
+
+* Vim has many more features than Vi, but most of them are disabled by default.
+* To start using more features you should create a "vimrc" file.
+
+'''
+
+. Start editing the "vimrc" file.
+* This depends on your system:
+** `:e ~/.vimrc` for Unix
+. Now read the example "vimrc" file contents:
++
+[source,vim]
+:r $VIMRUNTIME/vimrc_example.vim
+
+. Write the file with:
++
+[source,vim]
+:w
+ 
+* The next time you start Vim it will use syntax highlighting.
+* You can add all your preferred settings to this "vimrc" file.
+* For more information type `:help vimrc-intro`
+
+== Lesson 7.3: Completion
+
+[.lead]
+Command line completion with kbd:[CTRL-D] and kbd:[<TAB>]
+
+. Make sure Vim is not in compatible mode: `:set nocp`
+. Look what files exist in the directory: `:!ls`
+. Type the start of a command: `:e`
+. Press kbd:[CTRL-D] and Vim will show a list of commands that start with "e".
+. Type kbd:[d<TAB>] and Vim will complete the command name to ":edit".
+. Now add a space and the start of an existing file name: `:edit FIL`
+. Press kbd:[<TAB>].
+* Vim will complete the name (if it is unique).
+
+[NOTE]
+====
+* Completion works for many commands.
+* Just try pressing kbd:[CTRL-D] and kbd:[<TAB>].
+* It is especially useful for `:help`.
+====
+
+== Lesson 7 Summary
+
+. Type `:help` or press kbd[<F1>] or kbd:[<HELP>] to open a help window.
+. Type `:help cmd` to find help on `cmd`.
+. Type  kbd:[CTRL-W CTRL-W] to jump to another window.
+. Type `:q` to close the help window.
+. Create a `vimrc` startup script to keep your preferred settings.
+. When typing a `:` command, press kbd:[CTRL-D] to see possible completions.
+* Press kbd:[<TAB>] to use one completion.
+
+'''
+
+* This concludes the Vim Tutor.
+* It was intended to give a brief overview of the Vim editor, just enough to
+  allow you to use the editor fairly easily.
+* It is far from complete as Vim has many many more commands.
+* Read the user manual next: ":help user-manual".
+
+'''
+
+* For further reading and studying, this book is recommended:
+** Vim - Vi Improved - by Steve Oualline
+** Publisher: New Riders
+* The first book completely dedicated to Vim.
+* Especially useful for beginners.
+* There are many examples and pictures.
+* See https://iccf-holland.org/click5.html
+
+'''
+
+* This book is older and more about Vi than Vim, but also recommended:
+** Learning the Vi Editor - by Linda Lamb
+** Publisher: O'Reilly & Associates Inc.
+* It is a good book to get to know almost anything you want to do with Vi.
+* The sixth edition also includes information on Vim.
