@@ -1,0 +1,827 @@
+= Documenting the code
+:source-highlighter: rouge
+
+* This chapter covers two topics:
+. How to put comments in your code such that Doxygen incorporates them in the
+  documentation it generates.
+** This is further detailed in the next section.
+. Ways to structure the contents of a comment block such that the output looks
+  good, as explained in section Anatomy of a comment block.
+
+== Special comment blocks
+
+* A special comment block is a C or C++ style comment block with some additional
+  markings, so Doxygen knows it is a piece of structured text that needs to end
+  up in the generated documentation.
+* The next section presents the various styles supported by Doxygen.
+
+'''
+
+* For Python code there are different commenting conventions, which can be found
+  in sections Comment blocks in Python.
+
+=== Comment blocks for C-like languages (C/C++/C#/Java)
+
+* For each entity in the code there are two (or in some cases three) types of
+  descriptions, which together form the documentation for that entity; a brief
+  description and detailed description, both are optional.
+* For methods and functions there is also a third type of description, the so
+  called in body description, which consists of the concatenation of all comment
+  blocks found within the body of the method or function.
+
+'''
+
+* Having more than one brief or detailed description is allowed (but not
+  recommended, as the order in which the descriptions will appear is not
+  specified).
+
+'''
+
+* As the name suggest, a brief description is a short one-liner, whereas the
+  detailed description provides longer, more detailed documentation.
+* An "in body" description can also act as a detailed description or can
+  describe a collection of implementation details.
+* For the HTML output brief descriptions are also used to provide tooltips at
+  places where an item is referenced.
+
+'''
+
+* There are several ways to mark a comment block as a detailed description:
+. You can use the Javadoc style, which consist of a C-style comment block
+  starting with two *'s, like this:
++
+[,c]
+----
+/**
+ * ... text ...
+ */
+----
+
+. or you can use the Qt style and add an exclamation mark (!) after the opening
+   of a C-style comment block, as shown in this example:
++
+[,c]
+----
+/*!
+ * ... text ...
+ */
+----
+
+** In both cases the intermediate *'s are optional, so
++
+[,c]
+----
+/*!
+ ... text ...
+*/
+----
+
+** is also valid.
++
+'''
+
+. A third alternative is to use a block of at least two C++ comment lines, where
+  each line starts with an additional slash or an exclamation mark.
+** Here are examples of the two cases:
++
+[,c]
+----
+///
+/// ... text ...
+///
+----
+
+*** or
++
+[,c]
+----
+//!
+//!... text ...
+//!
+----
+
+** Note that a blank line ends a documentation block in this case.
+
+. Some people like to make their comment blocks more visible in the
+  documentation.
+** For this purpose you can use the following:
++
+[,c]
+----
+/*******************************************//**
+ *  ... text
+ ***********************************************/
+----
+
+** Note: the 2 slashes to end the normal comment block and start a special
+  comment block.
+** or
++
+[,c]
+----
+/////////////////////////////////////////////////
+/// ... text ...
+/////////////////////////////////////////////////
+----
+
+** or
++
+[,c]
+----
+/***********************************************
+ *  ... text
+ ***********************************************/
+----
+
+** as long as JAVADOC_BANNER is set to YES.
++
+[,c]
+----
+/**
+ * A brief history of JavaDoc-style (C-style) comments.
+ *
+ * This is the typical JavaDoc-style C-style comment. It starts with two
+ * asterisks.
+ *
+ * @param theory Even if there is only one possible unified theory. it is just a
+ *               set of rules and equations.
+ */
+void cstyle( int theory );
+
+/******************************************************************************
+ * A brief history of JavaDoc-style (C-style) banner comments.
+ *
+ * This is the typical JavaDoc-style C-style "banner" comment. It starts with
+ * a forward slash followed by some number, n, of asterisks, where n > 2. It's
+ * written this way to be more "visible" to developers who are reading the
+ * source code.
+ *
+ * Often, developers are unaware that this is not (by default) a valid Doxygen
+ * comment block!
+ *
+ * However, as long as JAVADOC_BANNER = YES is added to the Doxyfile, it will
+ * work as expected.
+ *
+ * This style of commenting behaves well with clang-format.
+ *
+ * @param theory Even if there is only one possible unified theory. it is just a
+ *               set of rules and equations.
+ ******************************************************************************/
+void javadocBanner( int theory );
+
+/**************************************************************************//**
+ * A brief history of Doxygen-style banner comments.
+ *
+ * This is a Doxygen-style C-style "banner" comment. It starts with a "normal"
+ * comment and is then converted to a "special" comment block near the end of
+ * the first line. It is written this way to be more "visible" to developers
+ * who are reading the source code.
+ * This style of commenting behaves poorly with clang-format.
+ *
+ * @param theory Even if there is only one possible unified theory. it is just a
+ *               set of rules and equations.
+ ******************************************************************************/
+void doxygenBanner( int theory );
+----
+
+** Click
+   link:https://www.doxygen.nl/manual/examples/javadoc-banner/html/javadoc-banner_8h.html[here]
+   for the corresponding HTML documentation that is generated by Doxygen.
+
+* For the brief description there are also several possibilities:
+. One could use the \brief command with one of the above comment blocks.
+** This command ends at the end of a paragraph, so the detailed description
+   follows after an empty line.
++
+'''
+** Here is an example:
++
+[,c]
+----
+/*! \brief Brief description.
+ *         Brief description continued.
+ *
+ *  Detailed description starts here.
+ */
+----
+
+. If JAVADOC_AUTOBRIEF is set to YES in the configuration file, then using
+  Javadoc style comment blocks will automatically start a brief description
+  which ends at the first dot, question mark or exclamation mark followed by a
+  space or new line.
+** Here is an example:
++
+[,c]
+----
+/** Brief description which ends at this dot. Details follow
+ *  here.
+ */
+----
+
+** The option has the same effect for multi-line special C++ comments:
++
+[,c]
+----
+/// Brief description which ends at this dot. Details follow
+/// here.
+----
+
+. A third option is to use a special C++ style comment which does not span more
+  than one line.
+** Here are two examples:
++
+[,c]
+----
+/// Brief description.
+/** Detailed description. */
+----
+
+** or
++
+[,c]
+----
+//! Brief description.
+
+//! Detailed description
+//! starts here.
+----
+
+** Note the blank line in the last example, which is required to separate the
+   brief description from the block containing the detailed description.
+** The JAVADOC_AUTOBRIEF should also be set to NO for this case.
+
+* As you can see Doxygen is quite flexible.
+* If you have multiple detailed descriptions, like in the following example:
++
+[,c]
+----
+//! Brief description, which is
+//! really a detailed description since it spans multiple lines.
+/*! Another detailed description!
+ */
+----
+
+* They will be joined.
+* Note that this is also the case if the descriptions are at different places in
+  the code!
+* In this case the order will depend on the order in which Doxygen parses the
+  code.
+
+'''
+
+* Unlike most other documentation systems, Doxygen also allows you to put the
+  documentation of members (including global functions) in front of the
+  definition.
+* This way the documentation can be placed in the source file instead of the
+  header file.
+* This keeps the header file compact, and allows the implementer of the members
+  more direct access to the documentation.
+* As a compromise the brief description could be placed before the declaration
+  and the detailed description before the member definition.
+
+==== Putting documentation after members
+
+* If you want to document the members of a file, struct, union, class, or enum,
+  it is sometimes desired to place the documentation block after the member
+  instead of before.
+* For this purpose you have to put an additional < marker in the comment block.
+* Note that this also works for the parameters of a function.
+
+'''
+
+* Here are some examples:
++
+[,c]
+----
+int var; /*!< Detailed description after the member */
+----
+
+* This block can be used to put a Qt style detailed documentation block after a
+  member.
+* Other ways to do the same are:
++
+[,c]
+----
+int var; /**< Detailed description after the member */
+----
+
+** or
++
+[,c]
+----
+int var; //!< Detailed description after the member
+         //!<
+----
+
+** or
++
+[,c]
+----
+int var; ///< Detailed description after the member
+         ///<
+----
+
+* Most often one only wants to put a brief description after a member.
+* This is done as follows:
++
+[,c]
+----
+int var; //!< Brief description after the member
+----
+
+** or
++
+[,c]
+----
+int var; ///< Brief description after the member
+----
+
+* For functions one can use the @param command to document the parameters and
+  then use `[in]`, `[out]`, `[in,out]` to document the direction.
+* For inline documentation this is also possible by starting with the direction
+  attribute, e.g.
++
+[,c]
+----
+void foo(int v /**< [in] docs for input parameter v. */);
+----
+
+* Note that these blocks have the same structure and meaning as the special
+  comment blocks in the previous section only the < indicates that the member is
+  located in front of the block instead of after the block.
+
+'''
+
+* Here is an example of the use of these comment blocks:
++
+[,c++]
+----
+/*! A test class */
+ 
+class Afterdoc_Test
+{
+  public:
+    /** An enum type. 
+     *  The documentation block cannot be put after the enum! 
+     */
+    enum EnumType
+    {
+      int EVal1,     /**< enum value 1 */
+      int EVal2      /**< enum value 2 */
+    };
+    void member();   //!< a member function.
+    
+  protected:
+    int value;       /*!< an integer value */
+};
+----
+
+* Click
+  link:https://www.doxygen.nl/manual/examples/afterdoc/html/class_afterdoc___test.html[here]
+  for the corresponding HTML documentation that is generated by Doxygen.
+
+[WARNING]
+====
+* These blocks can only be used to document members and parameters.
+* They cannot be used to document files, classes, unions, structs, groups,
+  namespaces, macros, and enums themselves.
+* Furthermore, the structural commands mentioned in the next section (like
+  \class) are not allowed inside these comment blocks.
+
+'''
+
+* Be careful using this construct as part of a macro definition, because when
+  MACRO_EXPANSION is set to YES at the places where the macro is applied, also
+  the comment will be substituted and this comment is then used as documentation
+  for the last item encountered and not for the macro definition itself!
+====
+
+==== Examples
+
+* Here is an example of a documented piece of C++ code using the Qt style:
++
+[,c++]
+----
+//!  A test class. 
+/*!
+  A more elaborate class description.
+*/
+ 
+class QTstyle_Test
+{
+  public:
+ 
+    //! An enum.
+    /*! More detailed enum description. */
+    enum TEnum { 
+                 TVal1, /*!< Enum value TVal1. */  
+                 TVal2, /*!< Enum value TVal2. */  
+                 TVal3  /*!< Enum value TVal3. */  
+               } 
+         //! Enum pointer.
+         /*! Details. */
+         *enumPtr, 
+         //! Enum variable.
+         /*! Details. */
+         enumVar;  
+    
+    //! A constructor.
+    /*!
+      A more elaborate description of the constructor.
+    */
+    QTstyle_Test();
+ 
+    //! A destructor.
+    /*!
+      A more elaborate description of the destructor.
+    */
+   ~QTstyle_Test();
+    
+    //! A normal member taking two arguments and returning an integer value.
+    /*!
+      \param a an integer argument.
+      \param s a constant character pointer.
+      \return The test results
+      \sa QTstyle_Test(), ~QTstyle_Test(), testMeToo() and publicVar()
+    */
+    int testMe(int a,const char *s);
+       
+    //! A pure virtual member.
+    /*!
+      \sa testMe()
+      \param c1 the first argument.
+      \param c2 the second argument.
+    */
+    virtual void testMeToo(char c1,char c2) = 0;
+   
+    //! A public variable.
+    /*!
+      Details.
+    */
+    int publicVar;
+       
+    //! A function variable.
+    /*!
+      Details.
+    */
+    int (*handler)(int a,int b);
+};
+---- 
+
+* Click
+  link:https://www.doxygen.nl/manual/examples/qtstyle/html/class_q_tstyle___test.html[here]
+  for the corresponding HTML documentation that is generated by Doxygen.
+
+'''
+
+* The brief descriptions are included in the member overview of a class,
+  namespace or file and are printed using a small italic font (this description
+  can be hidden by setting BRIEF_MEMBER_DESC to NO in the configuration file).
+* By default the brief descriptions become the first sentence of the detailed
+  descriptions (but this can be changed by setting the REPEAT_BRIEF tag to NO).
+* Both the brief and the detailed descriptions are optional for the Qt style.
+
+'''
+
+* By default a Javadoc style documentation block behaves the same way as a Qt
+  style documentation block.
+* This is not according the Javadoc specification however, where the first
+  sentence of the documentation block is automatically treated as a brief
+  description.
+* To enable this behavior you should set JAVADOC_AUTOBRIEF to YES in the
+  configuration file.
+* If you enable this option and want to put a dot in the middle of a sentence
+  without ending it, you should put a backslash and a space after it.
+* Here is an example:
++
+[,c++]
+----
+  /** Brief description (e.g.\ using only a few words). Details follow. */
+----
+
+* Here is the same piece of code as shown above, this time documented using the
+  Javadoc style and JAVADOC_AUTOBRIEF set to YES:
++
+[,c++]
+----
+/**
+ *  A test class. A more elaborate class description.
+ */
+ 
+class Javadoc_Test
+{
+  public:
+ 
+    /** 
+     * An enum.
+     * More detailed enum description.
+     */
+ 
+    enum TEnum { 
+          TVal1, /**< enum value TVal1. */  
+          TVal2, /**< enum value TVal2. */  
+          TVal3  /**< enum value TVal3. */  
+         } 
+       *enumPtr, /**< enum pointer. Details. */
+       enumVar;  /**< enum variable. Details. */
+       
+      /**
+       * A constructor.
+       * A more elaborate description of the constructor.
+       */
+      Javadoc_Test();
+ 
+      /**
+       * A destructor.
+       * A more elaborate description of the destructor.
+       */
+     ~Javadoc_Test();
+    
+      /**
+       * a normal member taking two arguments and returning an integer value.
+       * @param a an integer argument.
+       * @param s a constant character pointer.
+       * @see Javadoc_Test()
+       * @see ~Javadoc_Test()
+       * @see testMeToo()
+       * @see publicVar()
+       * @return The test results
+       */
+       int testMe(int a,const char *s);
+       
+      /**
+       * A pure virtual member.
+       * @see testMe()
+       * @param c1 the first argument.
+       * @param c2 the second argument.
+       */
+       virtual void testMeToo(char c1,char c2) = 0;
+   
+      /** 
+       * a public variable.
+       * Details.
+       */
+       int publicVar;
+       
+      /**
+       * a function variable.
+       * Details.
+       */
+       int (*handler)(int a,int b);
+};
+---- 
+
+* Click
+  link:https://www.doxygen.nl/manual/examples/jdstyle/html/class_javadoc___test.html[here]
+  for the corresponding HTML documentation that is generated by Doxygen.
+
+'''
+
+* Similarly, if one wishes the first sentence of a Qt style documentation block
+  to automatically be treated as a brief description, one may set QT_AUTOBRIEF
+  to YES in the configuration file.
+
+==== Documentation at other places
+
+* In the examples in the previous section the comment blocks were always located
+  in front of the declaration or definition of a file, class or namespace or in
+  front or after one of its members.
+* Although this is often comfortable, there may sometimes be reasons to put the
+  documentation somewhere else.
+* For documenting a file this is even required since there is no such thing as
+  "in front of a file".
+
+'''
+
+* Doxygen allows you to put your documentation blocks practically anywhere (the
+  exception is inside the body of a function or inside a normal C style comment
+  block).
+
+'''
+
+* The price you pay for not putting the documentation block directly before (or
+  after) an item is the need to put a structural command inside the
+  documentation block, which leads to some duplication of information.
+* So in practice you should avoid the use of structural commands unless other
+  requirements force you to do so.
+
+'''
+
+* Structural commands (like all other commands) start with a backslash (\), or
+  an at-sign (@) if you prefer Javadoc style, followed by a command name and one
+  or more parameters.
+* For instance, if you want to document the class `Test` in the example above,
+  you could have also put the following documentation block somewhere in the
+  input that is read by Doxygen:
++
+[,c++]
+----
+/*! \class Test
+    \brief A test class.
+
+    A more detailed class description.
+*/
+----
+
+* Here the special command `\class` is used to indicate that the comment block
+  contains documentation for the class `Test`.
+* Other structural commands are:
+** `\struct` to document a C-struct.
+** `\union` to document a union.
+** `\enum` to document an enumeration type.
+** `\fn` to document a function.
+** `\var` to document a variable or typedef or enum value.
+** `\def` to document a #define.
+** `\typedef` to document a type definition.
+** `\file` to document a file.
+** `\namespace` to document a namespace.
+** `\package` to document a Java package.
+** `\interface` to document an IDL interface.
+
+* See section Special Commands for detailed information about these and many
+  other commands.
+
+'''
+
+* To document a member of a C++ class, you must also document the class itself.
+* The same holds for namespaces.
+* To document a global C function, typedef, enum or preprocessor definition you
+  must first document the file that contains it (usually this will be a header
+  file, because that file contains the information that is exported to other
+  source files).
+
+[WARNING]
+====
+* Let's repeat that, because it is often overlooked: to document global objects
+  (functions, typedefs, enum, macros, etc), you must document the file in which
+  they are defined.
+* In other words, there must at least be a
++
+[,c]
+----
+/*! \file */ 
+----
+
+** or a
++
+[,c]
+----
+/** @file */ 
+----
+
+** line in this file.
+====
+
+* Here is an example of a C header named `structcmd.h` that is documented using
+  structural commands:
++
+[,c]
+----
+/*! \file structcmd.h
+    \brief A Documented file.
+    
+    Details.
+*/
+ 
+/*! \def MAX(a,b)
+    \brief A macro that returns the maximum of \a a and \a b.
+   
+    Details.
+*/
+ 
+/*! \var typedef unsigned int UINT32
+    \brief A type definition for a .
+    
+    Details.
+*/
+ 
+/*! \var int errno
+    \brief Contains the last error code.
+ 
+    \warning Not thread safe!
+*/
+ 
+/*! \fn int open(const char *pathname,int flags)
+    \brief Opens a file descriptor.
+ 
+    \param pathname The name of the descriptor.
+    \param flags Opening flags.
+*/
+ 
+/*! \fn int close(int fd)
+    \brief Closes the file descriptor \a fd.
+    \param fd The descriptor to close.
+*/
+ 
+/*! \fn size_t write(int fd,const char *buf, size_t count)
+    \brief Writes \a count bytes from \a buf to the filedescriptor \a fd.
+    \param fd The descriptor to write to.
+    \param buf The data buffer to write.
+    \param count The number of bytes to write.
+*/
+ 
+/*! \fn int read(int fd,char *buf,size_t count)
+    \brief Read bytes from a file descriptor.
+    \param fd The descriptor to read from.
+    \param buf The buffer to read into.
+    \param count The number of bytes to read.
+*/
+ 
+#define MAX(a,b) (((a)>(b))?(a):(b))
+typedef unsigned int UINT32;
+int errno;
+int open(const char *,int);
+int close(int);
+size_t write(int,const char *, size_t);
+int read(int,char *,size_t);
+----
+
+* Click
+  link:https://www.doxygen.nl/manual/examples/structcmd/html/structcmd_8h.html[here]
+  for the corresponding HTML documentation that is generated by Doxygen.
+
+'''
+
+* Because each comment block in the example above contains a structural command,
+  all the comment blocks could be moved to another location or input file (the
+  source file for instance), without affecting the generated documentation.
+* The disadvantage of this approach is that prototypes are duplicated, so all
+  changes have to be made twice!
+* Because of this you should first consider if this is really needed, and avoid
+  structural commands if possible.
+* I often receive examples that contain \fn command in comment blocks which are
+  place in front of a function.
+* This is clearly a case where the \fn command is redundant and will only lead
+  to problems.
+
+'''
+
+* When you place a comment block in a file with one of the following extensions
+  `.dox`, `.txt`, `.doc`, `.md` or `.markdown` or when the extension maps to md
+  by means of the EXTENSION_MAPPING then Doxygen will hide this file from the
+  file list.
+
+'''
+
+* If you have a file that Doxygen cannot parse but still would like to document
+  it, you can show it as-is using \verbinclude, e.g.
++
+[,c]
+----
+/*! \file myscript.sh
+ *  Look at this nice script:
+ *  \verbinclude myscript.sh
+ */
+----
+
+* Make sure that the script is explicitly listed in the INPUT or that
+  FILE_PATTERNS includes the .sh extension and the script can be found in the
+  path set via EXAMPLE_PATH.
+
+== Anatomy of a comment block
+
+* The previous section focused on how to make the comments in your code known to
+  Doxygen, it explained the difference between a brief and a detailed
+  description, and the use of structural commands.
+
+'''
+
+* In this section we look at the contents of the comment block itself.
+
+'''
+
+* Doxygen supports various styles of formatting your comments.
+
+'''
+
+* The simplest form is to use plain text.
+* This will appear as-is in the output and is ideal for a short description.
+
+'''
+
+* For longer descriptions you often will find the need for some more structure,
+  like a block of verbatim text, a list, or a simple table.
+* For this Doxygen supports the Markdown syntax, including parts of the Markdown
+  Extra extension.
+
+'''
+
+* Markdown is designed to be very easy to read and write.
+* Its formatting is inspired by plain text mail.
+* Markdown works great for simple, generic formatting, like an introduction page
+  for your project.
+* Doxygen also supports reading of markdown files directly.
+* For more details see chapter Markdown support.
+
+'''
+
+* For programming language specific formatting Doxygen has two forms of
+  additional markup on top of Markdown formatting.
+** Javadoc like markup.
+*** See Special Commands for a complete overview of all commands supported by
+    Doxygen.
+** XML markup as specified in the C# standard.
+*** See XML Commands for the XML commands supported by Doxygen.
+
+* If this is still not enough Doxygen also supports a subset of the HTML markup
+  language.
