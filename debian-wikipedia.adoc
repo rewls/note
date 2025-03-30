@@ -1,0 +1,98 @@
+= Debian
+
+* Debian GNU/Linux (/ˈdɛbiən/), or simply Debian, is a free and open source
+  Linux distribution, developed by the Debian Project, which was established
+  by Ian Murdock in August 1993.
+* Debian is one of the oldest operating systems based on the Linux kernel, and
+  is the basis of many other Linux distributions.
+
+'''
+
+* As of September 2023, Debian is the second-oldest Linux distribution still in active development: only Slackware is older.
+* The project is coordinated over the Internet by a team of volunteers guided
+  by the Debian Project Leader and three foundational documents: the Debian
+  Social Contract, the Debian Constitution, and the Debian Free Software
+  Guidelines.
+
+'''
+
+* In general, Debian has been developed openly and distributed freely
+  according to some of the principles of the GNU Project and Free Software.
+* Because of this, the Free Software Foundation sponsored the project from
+  November 1994 to November 1995.
+* However, Debian is no longer endorsed by GNU and the FSF because of the
+  distribution's long-term practice of hosting non-free software repositories
+  and, since 2022, its inclusion of non-free firmware in its installation
+  media by default.
+* On June 16, 1997, the Debian Project founded the nonprofit organization
+  Software in the Public Interest to continue financing its development.
+
+== Features
+
+* Debian has access to online repositories that contain over 51,000 packages.
+* Debian officially contains only free software, but non-free software can be
+  downloaded and installed from the Debian repositories.
+* Debian includes popular free programs such as LibreOffice, Firefox web
+  browser, Evolution mail, K3b disc burner, VLC media player, GIMP image
+  editor, and Evince document viewer.
+* Debian is a popular choice for servers, for example as the operating system
+  component of a LAMP stack.
+
+=== Kernels
+
+* Several flavors of the Linux kernel exist for each port.
+* For example, the i386 port has flavors for IA-32 PCs supporting Physical
+  Address Extension and real-time computing, for older PCs, and for x86-64
+  PCs.
+* The Linux kernel does not officially contain firmware lacking source code,
+  although such firmware is available in non-free packages and alternative
+  installation media.
+
+=== Desktop environments
+
+* Xfce is default on CD images and non-Linux ports.
+* Debian offers CD and DVD images specifically built for Xfce, GNOME, KDE,
+  MATE, Cinnamon, LXDE, and LXQt.
+* MATE support was added in 2014, and Cinnamon support was added with Debian 8
+  Jessie.
+* Less common window managers such as Enlightenment, Openbox, Fluxbox, IceWM,
+  Window Maker and others are available.
+
+* The default desktop environment of version 7 Wheezy was temporarily switched
+  to Xfce, because GNOME 3 did not fit on the first CD of the set.
+* The default for the version 8 Jessie was changed again to Xfce in November
+  2013, and back to GNOME in September 2014.
+
+=== Localization
+
+* Several parts of Debian are translated into languages other than American
+  English, including package descriptions, configuration messages,
+  documentation and the website.
+* The level of software localization depends on the language, ranging from the
+  highly supported German and French to the barely translated Creek and
+  Samoan.
+* The Debian 10 installer is available in 76 languages.
+
+=== Multimedia support
+
+* Multimedia support has been problematic in Debian regarding codecs
+  threatened by possible patent infringements, lacking source code, or under
+  too restrictive licenses.
+* Even though packages with problems related to their distribution could go
+  into the non-free area, software such as libdvdcss is not hosted at Debian.
+
+'''
+
+* A notable third party repository exists, formerly named
+  Debian-multimedia.org, providing software not present in Debian such as
+  Windows codecs, libdvdcss and the Adobe Flash Player.
+* Even though this repository is maintained by Christian Marillat, a Debian
+  developer, it is not part of the project and is not hosted on a Debian
+  server.
+* The repository provides packages already included in Debian, interfering
+  with the official maintenance.
+* Eventually, project leader Stefano Zacchiroli asked Marillat to either
+  settle an agreement about the packaging or to stop using the "Debian" name.
+* Marillat chose the latter and renamed the repository to deb-multimedia.org.
+* The repository was so popular that the switchover was announced by the
+  official blog of the Debian project.
