@@ -1,0 +1,19 @@
+= Rocky Linux 
+
+* Rocky Linux is a Linux distribution developed by Rocky Enterprise Software
+  Foundation, which is a privately owned benefit corporation that describes
+  itself as a "self-imposed not-for-profit".
+* It is intended to be a downstream, complete binary-compatible release using
+  the Red Hat Enterprise Linux (RHEL) operating system source code.
+* The project's aim is to provide a community-supported, production-grade
+  enterprise operating system.
+* Rocky Linux, along with RHEL and SUSE Linux Enterprise (SLE), has become
+  popular for enterprise operating system use.
+
+'''
+
+* The first release candidate version of Rocky Linux was released on April 30,
+  2021, and its first general availability version was released on June 21,
+  2021.
+* Rocky Linux 8 will be supported through May 2029[8] and Rocky Linux 9
+  through May 2032.
