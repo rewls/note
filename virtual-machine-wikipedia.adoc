@@ -1,0 +1,182 @@
+= Virtual machine
+
+* In computing, a virtual machine (VM) is the virtualization or emulation of a
+  computer system.
+* Virtual machines are based on computer architectures and provide the
+  functionality of a physical computer.
+* Their implementations may involve specialized hardware, software, or a
+  combination of the two.
+* Virtual machines differ and are organized by their function, shown here:
+** _System virtual machines_ (also called full virtualization VMs,
+   SysVM,[citation needed] or SYS-VM[citation needed]) provide a substitute
+   for a real machine. +
+   They provide the functionality needed to execute entire operating
+   systems. +
+   A hypervisor uses native execution to share and manage hardware, allowing
+   for multiple environments that are isolated from one another yet exist on
+   the same physical machine. +
+   Modern hypervisors use hardware-assisted virtualization, with
+   virtualization-specific hardware features on the host CPUs providing
+   assistance to hypervisors.
+** _Process virtual machines_ are designed to execute computer programs in a
+   platform-independent environment.
+* Some virtual machine emulators, such as QEMU and video game console
+  emulators, are designed to also emulate (or "virtually imitate") different
+  system architectures, thus allowing execution of software applications and
+  operating systems written for another CPU or architecture.
+* OS-level virtualization allows the resources of a computer to be partitioned
+  via the kernel.
+* The terms are not universally interchangeable.
+
+== Definitions
+
+=== System virtual machines
+
+* _Main article: System virtual machine_
+* _See also: Hardware virtualization and comparison of platform virtualization
+  software_
+
+* A "virtual machine" was originally defined by Popek and Goldberg as "an
+  efficient, isolated duplicate of a real computer machine."
+* Current use includes virtual machines that have no direct correspondence to
+  any real hardware.
+* The physical, "real-world" hardware running the VM is generally referred to
+  as the 'host', and the virtual machine emulated on that machine is generally
+  referred to as the 'guest'.
+* A host can emulate several guests, each of which can emulate different
+  operating systems and hardware platforms.
+
+'''
+
+* The desire to run multiple operating systems was the initial motive for
+  virtual machines, so as to allow time-sharing among several single-tasking
+  operating systems.
+* In some respects, a system virtual machine can be considered a
+  generalization of the concept of virtual memory that historically preceded
+  it.
+* IBM's CP/CMS, the first systems to allow full virtualization, implemented
+  time sharing by providing each user with a single-user operating system, the
+  Conversational Monitor System (CMS).
+* Unlike virtual memory, a system virtual machine entitled the user to write
+  privileged instructions in their code.
+* This approach had certain advantages, such as adding input/output devices
+  not allowed by the standard system.
+
+'''
+
+* As technology evolves virtual memory for purposes of virtualization, new
+  systems of memory overcommitment may be applied to manage memory sharing
+  among multiple virtual machines on one computer operating system.
+* It may be possible to share memory pages that have identical contents among
+  multiple virtual machines that run on the same physical machine, what may
+  result in mapping them to the same physical page by a technique termed
+  kernel same-page merging (KSM).
+* This is especially useful for read-only pages, such as those holding code
+  segments, which is the case for multiple virtual machines running the same
+  or similar software, software libraries, web servers, middleware components,
+  etc.
+* The guest operating systems do not need to be compliant with the host
+  hardware, thus making it possible to run different operating systems on the
+  same computer (e.g., Windows, Linux, or prior versions of an operating
+  system) to support future software.
+
+'''
+
+* The use of virtual machines to support separate guest operating systems is
+  popular in regard to embedded systems.
+* A typical use would be to run a real-time operating system simultaneously
+  with a preferred complex operating system, such as Linux or Windows.
+* Another use would be for novel and unproven software still in the
+  developmental stage, so it runs inside a sandbox.
+* Virtual machines have other advantages for operating system development and
+  may include improved debugging access and faster reboots.
+
+'''
+
+* Multiple VMs running their own guest operating system are frequently engaged
+  for server consolidation.
+
+== Virtualization techniques
+
+* _Main article: Full virtualization_
+
+=== Full virtualization
+
+* In full virtualization, the virtual machine simulates enough hardware to allow an unmodified "guest" OS (one designed for the same instruction set) to be run in isolation.
+* This approach was pioneered in 1966 with the IBM CP-40 and CP-67, predecessors of the VM family.
+
+'''
+
+* Examples outside the mainframe field include Parallels Workstation, Parallels Desktop for Mac, VirtualBox, Virtual Iron, Oracle VM, Virtual PC, Virtual Server, Hyper-V, VMware Fusion, VMware Workstation, VMware Server (discontinued, formerly called GSX Server), VMware ESXi, QEMU, Adeos, Mac-on-Linux, Win4BSD, Win4Lin Pro, and Egenera vBlade technology.
+
+==== Hardware-assisted virtualization
+
+* _Main article: Hardware-assisted virtualization_
+
+* In hardware-assisted virtualization, the hardware provides architectural
+  support that facilitates building a virtual machine monitor and allows guest
+  OSes to be run in isolation.
+* Hardware-assisted virtualization was first introduced on the IBM System/370
+  in 1972, for use with VM/370, the first virtual machine operating system
+  offered by IBM as an official product.
+
+'''
+
+* In 2005 and 2006, Intel and AMD provided additional hardware to support
+  virtualization.
+* Sun Microsystems (now Oracle Corporation) added similar features in their
+  UltraSPARC T-Series processors in 2005.
+* Examples of virtualization platforms adapted to such hardware include KVM,
+  VMware Workstation, VMware Fusion, Hyper-V, Windows Virtual PC, Xen,
+  Parallels Desktop for Mac, Oracle VM Server for SPARC, VirtualBox and
+  Parallels Workstation.
+
+'''
+
+* In 2006, first-generation 32- and 64-bit x86 hardware support was found to
+  rarely offer performance advantages over software virtualization.
+
+== Snapshots
+
+* _Main article: Snapshot (computer storage)_
+
+* A _snapshot_ is a state of a virtual machine, and generally its storage
+  devices, at an exact point in time.
+* A snapshot enables the virtual machine's state at the time of the snapshot
+  to be restored later, effectively undoing any changes that occurred
+  afterwards.
+* This capability is useful as a backup technique, for example, prior to
+  performing a risky operation.
+
+'''
+
+* Virtual machines frequently use virtual disks for their storage; in a very
+  simple example, a 10-gigabyte hard disk drive is simulated with a
+  10-gigabyte flat file.
+* Any requests by the VM for a location on its physical disk are transparently
+  translated into an operation on the corresponding file.
+* Once such a translation layer is present, however, it is possible to
+  intercept the operations and send them to different files, depending on
+  various criteria.
+* Every time a snapshot is taken, a new file is created, and used as an
+  overlay for its predecessors.
+* New data is written to the topmost overlay; reading existing data, however,
+  needs the overlay hierarchy to be scanned, resulting in accessing the most
+  recent version.
+* Thus, the entire stack of snapshots is virtually a single coherent disk; in
+  that sense, creating snapshots works similarly to the incremental backup
+  technique.
+
+'''
+
+* Other components of a virtual machine can also be included in a snapshot,
+  such as the contents of its random-access memory (RAM), BIOS settings, or
+  its configuration settings.
+* "Save state" feature in video game console emulators is an example of such
+  snapshots.
+
+'''
+
+* Restoring a snapshot consists of discarding or disregarding all overlay
+  layers that are added after that snapshot, and directing all new changes to
+  a new overlay.
