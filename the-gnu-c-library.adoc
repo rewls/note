@@ -1,0 +1,53 @@
+= The GNU C Library
+
+* This is _The GNU C Library Reference Manual_, for version 2.38.
+
+== 12 Input/Output on Streams
+
+* This chapter describes the functions for creating streams and performing
+  input and output operations on them.
+* As discussed in Input/Output Overview, a stream is a fairly abstract,
+  high-level concept representing a communications channel to a file, device,
+  or process.
+
+=== 12.12 Formatted Output
+
+* The functions described in this section (printf and related functions)
+  provide a convenient way to perform formatted output.
+* You call `printf` with a _format string_ or _template string_ that specifies
+  how to format the values of the remaining arguments.
+
+'''
+
+* Unless your program is a filter that specifically performs line- or
+  character-oriented processing, using `printf` or one of the other related
+  functions described in this section is usually the easiest and most concise
+  way to perform output.
+* These functions are especially useful for printing error messages, tables of
+  data, and the like.
+
+==== 12.12.6 Other Output Conversions
+
+* This section describes miscellaneous conversions for `printf`.
+
+'''
+
+* If you accidentally pass a null pointer as the argument for a \'``%s``'
+  conversion, the GNU C Library prints it as \'``(null)``'.
+* We think this is more useful than crashing.
+* But it's not good practice to pass a null argument intentionally.
+
+
+* In the GNU C Library, non-null pointers are printed as unsigned integers, as
+  if a \'``%#x``' conversion were used.
+* Null pointers print as \'``(nil)``'.
+
+'''
+
+* You can supply the \'``-``' flag with the \'``%p``' conversion to specify
+  left-justification, but no other flags, precision, or type modifiers are
+  defined.
+
+* The \'``%%``' conversion prints a literal \'``%``' character.
+* This conversion doesn't use an argument, and no flags, field width,
+  precision, or type modifiers are permitted.
