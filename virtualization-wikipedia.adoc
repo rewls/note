@@ -1,0 +1,132 @@
+= Virtualization
+
+* In computing, *virtualization* (abbreviated *v12n*) is a series of technologies
+  that allows dividing of physical computing resources into a series of
+  virtual machines, operating systems, processes or containers.
+* Virtualization began in the 1960s with IBM CP/CMS.
+* The control program CP provided each user with a simulated stand-alone
+  System/360 computer.
+
+'''
+
+* In hardware virtualization, the _host machine_ is the machine that is used
+  by the virtualization and the _guest machine_ is the virtual machine.
+* The words _host_ and _guest_ are used to distinguish the software that runs
+  on the physical machine from the software that runs on the virtual machine.
+* The software or firmware that creates a virtual machine on the host hardware
+  is called a _hypervisor_ or _virtual machine monitor_.
+* Hardware virtualization is not the same as hardware emulation.
+* Hardware-assisted virtualization facilitates building a virtual machine
+  monitor and allows guest OSes to be run in isolation.
+
+'''
+
+* Desktop virtualization is the concept of separating the logical desktop from
+  the physical machine.
+
+'''
+
+* Operating-system-level virtualization, also known as containerization,
+  refers to an operating system feature in which the kernel allows the
+  existence of multiple isolated user-space instances.
+
+'''
+
+* The usual goal of virtualization is to centralize administrative tasks while
+  improving scalability and overall hardware-resource utilization.
+
+== Hardware virtualization
+
+* _Main article: Hardware virtualization_
+
+* _Hardware virtualization_ (or _platform virtualization_) pools computing
+  resources across one or more virtual machines.
+* A virtual machine implements functionality of a (physical) computer with an
+  operating system.
+* The software or firmware that creates a virtual machine on the host hardware
+  is called a _hypervisor_ or _virtual machine monitor_.
+
+'''
+
+* Software executed on these virtual machines is separated from the underlying
+  hardware resources.
+* For example, a computer that is running Arch Linux may host a virtual
+  machine that looks like a computer with the Microsoft Windows operating
+  system; Windows-based software can be run on the virtual machine.
+
+'''
+
+* Different types of hardware virtualization include:
+Full virtualization::
+** Almost complete virtualization of the actual hardware to allow software
+   environments, including a guest operating system and its apps, to run
+   unmodified.
+
+=== Full virtualization
+
+* Full virtualization employs techniques that pools physical computer
+  resources into one or more instances; each running a virtual environment
+  where any software or operating system capable of execution on the raw
+  hardware can be run in the virtual machine.
+* Two common full virtualization techniques are typically used: (a) binary
+  translation and (b) hardware-assisted full virtualization.
+* Binary translation automatically modifies the software on-the-fly to replace
+  instructions that "pierce the virtual machine" with a different, virtual
+  machine safe sequence of instructions.
+* Hardware-assisted virtualization allows guest operating systems to be run in
+  isolation with virtually no modification to the (guest) operating system.
+
+'''
+
+* Full virtualization requires that every salient feature of the hardware be
+  reflected into one of several virtual machines -- including the full
+  instruction set, input/output operations, interrupts, memory access, and
+  whatever other elements are used by the software that runs on the bare
+  machine, and that is intended to run in a virtual machine.
+
+'''
+
+* This approach was pioneered in 1966 with the IBM CP-40 and CP-67,
+  predecessors of the VM family.
+
+==== Binary translation
+
+* In binary translation, instructions are translated to match the emulated
+  hardware architecture.
+* A piece of hardware imitates another while in hardware assisted
+  virtualization, a hypervisor (a piece of software) imitates a particular
+  piece of computer hardware or the entire computer.
+* Furthermore, a hypervisor is not the same as an emulator; both are computer
+  programs that imitate hardware, but their domain of use in language differs.
+
+==== Hardware assisted
+
+* Hardware-assisted virtualization (or _accelerated virtualization; Xen calls
+  it hardware virtual machine (HVM), and Virtual Iron calls it native
+  virtualization_) is a way of improving overall efficiency of hardware
+  virtualization using help from the host processors.
+* A full virtualization is used to emulate a complete hardware environment, or
+  virtual machine, in which an unmodified guest operating system (using the
+  same instruction set as the host machine) effectively executes in complete
+  isolation.
+
+'''
+
+* Hardware-assisted virtualization was first introduced on the IBM 308X
+  processors in 1980, with the Start Interpretive Execution (SIE) instruction.
+* It was added to x86 processors (Intel VT-x, AMD-V or VIA VT) in 2005, 2006
+  and 2010 respectively.
+
+'''
+
+* IBM offers hardware virtualization for its IBM Power Systems hardware for
+  AIX, Linux and IBM i, and for its IBM Z mainframes.
+* IBM refers to its specific form of hardware virtualization as "logical
+  partition", or more commonly as LPAR.
+
+'''
+
+* Hardware-assisted virtualization reduces the maintenance overhead of
+  paravirtualization as it reduces (ideally, eliminates) the changes needed in
+  the guest operating system.
+* It is also considerably easier to obtain better performance.
