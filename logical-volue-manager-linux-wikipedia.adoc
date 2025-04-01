@@ -1,0 +1,30 @@
+= Logical Volume Manager (Linux)
+
+* In Linux, *Logical Volume Manager* (*LVM*) is a device mapper framework that
+  provides logical volume management for the Linux kernel.
+* Most modern Linux distributions are LVM-aware to the point of being able to
+  have their root file systems on a logical volume.
+
+'''
+
+* Heinz Mauelshagen wrote the original LVM code in 1998, when he was working
+  at Sistina Software, taking its primary design guidelines from the HP-UX's
+  volume manager.
+
+== Uses
+
+* LVM is used for the following purposes:
+** Creating single logical volumes of multiple physical volumes or entire hard
+   disks (somewhat similar to RAID 0, but more similar to JBOD), allowing for
+   dynamic volume resizing.
+** Managing large hard disk farms by allowing disks to be added and replaced
+   without downtime or service disruption, in combination with hot swapping.
+** On small systems (like a desktop), instead of having to estimate at
+   installation time how big a partition might need to be, LVM allows
+   filesystems to be easily resized as needed.
+** Performing consistent backups by taking snapshots of the logical volumes.
+** Encrypting multiple physical partitions with one password.
+
+* LVM can be considered as a thin software layer on top of the hard disks and
+  partitions, which creates an abstraction of continuity and ease-of-use for
+  managing hard drive replacement, repartitioning and backup.
