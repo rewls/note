@@ -1,0 +1,37 @@
+= Master boot record
+
+* A master boot record (MBR) is a type of boot sector in the first block of
+  partitioned computer mass storage devices like fixed disks or removable
+  drives intended for use with IBM PC-compatible systems and beyond.
+* The concept of MBRs was publicly introduced in 1983 with PC DOS 2.0.
+
+'''
+
+* The MBR holds the information on how the disc's sectors (A.K.A. "blocks")
+  are divided into partitions, each partition notionally containing a file
+  system.
+* The MBR also contains executable code to function as a loader for the
+  installed operating system -- usually by passing control over to the
+  loader's second stage, or in conjunction with each partition's volume boot
+  record (VBR).
+* This MBR code is usually referred to as a boot loader.
+
+'''
+
+* The organization of the partition table in the MBR limits the maximum
+  addressable storage space of a partitioned disk to 2 TiB (232 × 512 bytes).
+* Approaches to slightly raise this limit utilizing 32-bit arithmetic or
+  4096-byte sectors are not officially supported, as they fatally break
+  compatibility with existing boot loaders, most MBR-compliant operating
+  systems and associated system tools, and may cause serious data corruption
+  when used outside of narrowly controlled system environments.
+* Therefore, the MBR-based partitioning scheme is in the process of being
+  superseded by the GUID Partition Table (GPT) scheme in new computers.
+* A GPT can coexist with an MBR in order to provide some limited form of
+  backward compatibility for older systems.
+
+'''
+
+* MBRs are not present on non-partitioned media such as floppies,
+  superfloppies or other storage devices configured to behave as such, nor are
+  they necessarily present on drives used in non-PC platforms.
