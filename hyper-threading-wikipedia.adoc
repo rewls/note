@@ -1,0 +1,100 @@
+= Hyper-threading
+
+* *Hyper-threading* (officially called *Hyper-Threading Technology* or *HT
+  Technology* and abbreviated as *HTT* or *HT*) is Intel's proprietary
+  simultaneous multithreading (SMT) implementation used to improve
+  parallelization of computations (doing multiple tasks at once) performed on
+  x86 microprocessors.
+* It was introduced on Xeon server processors in February 2002 and on Pentium
+  4 desktop processors in November 2002.
+* Since then, Intel has included this technology in Itanium, Atom, and Core
+  'i' Series CPUs, among others.
+
+'''
+
+* For each processor core that is physically present, the operating system
+  addresses two virtual (logical) cores and shares the workload between them
+  when possible.
+* The main function of hyper-threading is to increase the number of
+  independent instructions in the pipeline; it takes advantage of superscalar
+  architecture, in which multiple instructions operate on separate data in
+  parallel.
+* With HTT, one physical core appears as two processors to the operating
+  system, allowing concurrent scheduling of two processes per core.
+* In addition, two or more processes can use the same resources: If resources
+  for one process are not available, then another process can continue if its
+  resources are available.
+
+'''
+
+* In addition to requiring simultaneous multithreading support in the
+  operating system, hyper-threading can be properly utilized only with an
+  operating system specifically optimized for it.
+
+== Overview
+
+* Hyper-Threading Technology is a form of simultaneous multithreading
+  technology introduced by Intel, while the concept behind the technology has
+  been patented by Sun Microsystems.
+* Architecturally, a processor with Hyper-Threading Technology consists of two logical processors per core, each of which has its own processor architectural state.
+* Each logical processor can be individually halted, interrupted or directed
+  to execute a specified thread, independently from the other logical
+  processor sharing the same physical core.
+
+'''
+
+* Unlike a traditional dual-processor configuration that uses two separate
+  physical processors, the logical processors in a hyper-threaded core share
+  the execution resources.
+* These resources include the execution engine, caches, and system bus
+  interface; the sharing of resources allows two logical processors to work
+  with each other more efficiently, and allows a logical processor to borrow
+  resources from a stalled logical core (assuming both logical cores are
+  associated with the same physical core).
+* A processor stalls when it must wait for data it has requested, in order to
+  finish processing the present thread.
+* The degree of benefit seen when using a hyper-threaded, or multi-core,
+  processor depends on the needs of the software, and how well it and the
+  operating system are written to manage the processor efficiently.
+
+'''
+
+* Hyper-threading works by duplicating certain sections of the processor --
+  those that store the architectural state -- but not duplicating the main
+  execution resources.
+* This allows a hyper-threading processor to appear as the usual "physical"
+  processor plus an extra "logical" processor to the host operating system
+  (HTT-unaware operating systems see two "physical" processors), allowing the
+  operating system to schedule two threads or processes simultaneously and
+  appropriately.
+* When execution resources in a hyper-threaded processor are not in use by the
+  current task, and especially when the processor is stalled, those execution
+  resources can be used to execute another scheduled task.
+* (The processor may stall due to a cache miss, branch misprediction, or data
+  dependency.)
+
+'''
+
+* This technology is transparent to operating systems and programs.
+* The minimum that is required to take advantage of hyper-threading is
+  symmetric multiprocessing (SMP) support in the operating system, since the
+  logical processors appear no different to the operating system than physical
+  processors.
+
+'''
+
+* It is possible to optimize operating system behavior on multi-processor,
+  hyper-threading capable systems.
+* For example, consider an SMP system with two physical processors that are
+  both hyper-threaded (for a total of four logical processors).
+* If the operating system's thread scheduler is unaware of hyper-threading, it
+  will treat all four logical processors the same.
+* If only two threads are eligible to run, it might choose to schedule those
+  threads on the two logical processors that happen to belong to the same
+  physical processor.
+* That processor would be extremely busy, and would share execution resources,
+  while the other processor would remain idle, leading to poorer performance
+  than if the threads were scheduled on different physical processors.
+* This problem can be avoided by improving the scheduler to treat logical
+  processors differently from physical processors, which is, in a sense, a
+  limited form of the scheduler changes required for NUMA systems.
