@@ -1,0 +1,335 @@
+= Running a full arm64 system stack under QEMU
+:toc: left
+
+* https://cdn.kernel.org/pub/linux/kernel/people/will/docs/qemu/qemu-arm64-howto.html
+
+Reply-to::
+* Will Deacon <will@kernel.org>
+* Quentin Perret <qperret@google.com>
+
+Credits::
+* Ard Biesheuvel for help with EFI and the Debian installer
+
+Revision history::
+* 28/11/19 - Initial draft
+* 29/11/19 - A couple of trivial typo fixes
+* 22/01/20 - Fix typo ("gic_version") in QEMU invocation
+* 16/10/20 - Remove "sve=off" parameter as it is no longer required
+* 16/12/20 - Configure with "--enable-virtfs" to enable 9pfs
+* 30/03/23 - A long overdue update fixing some paths and adding "pauth-impdef=on"
+* 07/11/23 - Fix syntax of '-virtfs' parameter by removing a stray hyphen
+
+====
+* This box describes an Arch Linux setup (as of 2025-07-17).
+====
+
+== Introduction
+
+* Although writing and executing arm64 Linux userspace applications on real
+  hardware is relatively straightforward, deploying changes to lower levels of
+  the system stack such as the kernel, hypervisor and firmware is considerably
+  more challenging.
+* This is largely thanks to the lack of accessible, affordable development
+  hardware being made available to system developers and the presence of
+  buggy, opaque, proprietary firmware on the limited offerings that can be
+  obtained.
+* Throw in the usual lack of technical documentation and it's practically
+  impossible to find a useful machine.
+
+'''
+
+* QEMU offers a partial solution to this problem and, whilst not a complete
+  substitute for executing systems code on real hardware, it provides a highly
+  functional development environment to facilitate rapid prototyping, basic
+  testing and integration of an entire software stack.
+
+'''
+
+* This document is intended as a guide to getting QEMU up and running on an
+  x86 machine so that it is possible to develop hypervisor code for arm64.
+* I'm assuming a Debian-based x86 system with everything running in the user's
+  home directory, but you probably want to tailor that to your own needs.
+
+== Install QEMU
+
+* Since we're going to be relying on some relatively recent QEMU features (and
+  bug fixes!), it's best to build QEMU from source:
+
+....
+:~$ sudo apt-get build-dep qemu
+:~$ git clone https://git.qemu.org/git/qemu.git
+:~$ cd qemu
+:~/qemu$ ./configure --target-list=aarch64-softmmu --enable-virtfs
+:~/qemu$ make -j`nproc`
+....
+
+====
+....
+:~$ sudo pacman -S git libglib2 dtc pixman zlib ninja
+:~$ git clone https://git.qemu.org/git/qemu.git
+:~$ cd qemu
+:~/qemu$ ./configure --target-list=aarch64-softmmu --enable-virtfs --disable-werror
+:~/qemu$ make -j`nproc`
+....
+====
+
+* If all goes well then you should have a shiny `qemu-system-aarch64` binary
+  sitting pretty in `~/qemu/build/aarch64-softmmu/`.
+
+====
+* In `~/qemu/build/`
+====
+
+== Grab some firmware
+
+* If you're a masochist, you may want to build this yourself.
+* For the rest of us, Debian helpfully provides some pre-packaged UEFI
+  firmware that we can use:
+
+....
+:~$ sudo apt-get install qemu-efi-aarch64
+....
+
+====
+....
+:~$ sudo pacman -S edk2-ovmf
+....
+====
+
+* This should place a `QEMU_EFI.fd` file in `/usr/share/qemu-efi-aarch64/`.
+* If you're not using Debian, then you can probably just download this file
+  directly from the repository.
+
+====
+* In `/usr/share/edk2-ovmf/aarch64/`
+====
+
+== Install the host
+
+* Installing the host requires us to boot our newly acquired firmware and
+  start the Debian installer from there.
+* We'll create the host environment in a new directory:
+
+....
+:~$ mkdir qemu-host
+:~$ cd qemu-host
+....
+
+* With that, let's go!
+
+=== Create a disk
+
+* Before we can dive into the installer, we'll need a disk on which to install
+  the new distribution.
+* The `qemu-img` utility makes this dead easy:
+
+....
+:~/qemu-host$ ~/qemu/build/qemu-img create -f qcow2 disk.img 16G
+....
+
+* Notice how the `qcow2` format allows the file to expand as necessary, so
+  don't be afraid to make the thing bigger if you want to.
+
+=== Prepare the firmware
+
+* We need a couple of flash partitions to hold the UEFI firmware we downloaded
+  earlier along with its variables to track things such as the boot partition
+  etc.:
+
+:~/qemu-host$ truncate -s 64m varstore.img
+:~/qemu-host$ truncate -s 64m efi.img
+:~/qemu-host$ dd if=/usr/share/qemu-efi-aarch64/QEMU_EFI.fd of=efi.img conv=notrunc
+
+[IMPORTANT]
+====
+* You must enter these commands exactly as shown, otherwise you will almost
+  certainly run into problems later on.
+====
+
+=== Grab some install media
+
+* We'll need some install media to boot into initially.
+* I just grabbed the latest stable Debian net installer:
+
+....
+:~/qemu-host$ wget https://cdimage.debian.org/debian-cd/current/arm64/iso-cd/debian-12.2.0-arm64-netinst.iso
+....
+
+====
+....
+:~/qemu-host$ wget https://cdimage.debian.org/debian-cd/current/arm64/iso-cd/debian-12.11.0-arm64-netinst.iso ....
+====
+
+* (you may need to adjust the "12.2.0" in the image name to match the version
+  available)
+
+=== Boot the sucker
+
+* It can be a bit daunting driving QEMU, so I usually wrap this one up in a
+  script:
+
+....
+:~/qemu-host$ ~/qemu/build/aarch64-softmmu/qemu-system-aarch64 -M virt  \
+      -machine virtualization=true -machine virt,gic-version=3  \
+      -cpu max,pauth-impdef=on -smp 2 -m 4096           \
+      -drive if=pflash,format=raw,file=efi.img,readonly=on      \
+      -drive if=pflash,format=raw,file=varstore.img         \
+      -drive if=virtio,format=qcow2,file=disk.img           \
+      -device virtio-scsi-pci,id=scsi0              \
+      -object rng-random,filename=/dev/urandom,id=rng0      \
+      -device virtio-rng-pci,rng=rng0               \
+      -device virtio-net-pci,netdev=net0                \
+      -netdev user,id=net0,hostfwd=tcp::8022-:22            \
+      -nographic                            \
+      -drive if=none,id=cd,file=debian-12.2.0-arm64-netinst.iso \
+      -device scsi-cd,drive=cd
+....
+
+====
+....
+:~/qemu-host$ ~/qemu/build/qemu-system-aarch64 -M virt  \
+      -machine virtualization=true -machine virt,gic-version=3  \
+      -cpu max,pauth-impdef=on -smp 2 -m 4096           \
+      -drive if=pflash,format=raw,file=efi.img,readonly=on      \
+      -drive if=pflash,format=raw,file=varstore.img         \
+      -drive if=virtio,format=qcow2,file=disk.img           \
+      -device virtio-scsi-pci,id=scsi0              \
+      -object rng-random,filename=/dev/urandom,id=rng0      \
+      -device virtio-rng-pci,rng=rng0               \
+      -device virtio-net-pci,netdev=net0                \
+      -netdev user,id=net0,hostfwd=tcp::8022-:22            \
+      -nographic                            \
+      -drive if=none,id=cd,file=debian-12.11.0-arm64-netinst.iso \
+      -device scsi-cd,drive=cd
+....
+====
+
+* (again, you'll need to adjust the .iso filename if you downloaded something
+  more recent)
+
+'''
+
+* I've gone for two virtual CPUs (`-smp 2`) and four gigabytes of memory (`-m
+  4096`), but you can choose whatever you like.
+* With any luck, the Debian installer will pop up and you can proceed to
+  follow its instructions.
+* Don't worry about the warning that pops up earlier on (something about
+  'probing guessed raw'); it's just QEMU trying to make friends.
+
+'''
+
+* Eventually, the installer will complete and prompt you to reboot the system.
+* There used to be some problems with the secure boot shim which required
+  attention at this point, but since they appear to have been fixed, you can
+  go ahead and continue.
+
+=== Using the installed system
+
+* Before re-launching QEMU, it's a good idea to remove the Debian `.iso` so
+  that we don't end up back in the installer if we boot from the CDROM again.
+* The easiest way is simply to remove the last two lines from the QEMU
+  invocation, which gets rid of the emulated CDROM drive entirely.
+* With that gone, you should be able to boot the new system and log in with
+  the credentials you specified during installation.
+* You can also SSH in from your x86 machine on port 8022:
+
+....
+:~$ ssh -p 8022 localhost
+....
+
+* Enjoy.
+
+=== Cool tricks
+
+==== Booting with a custom kernel
+
+* Replacing the host kernel can be done by building a Debian kernel package
+  using the `bindeb-pkg` target exposed by the upstream kernel `Makefile`.
+* However, this can be a bit of a pain because you have to boot up the old
+  host in order to install the package.
+* For quick prototyping, it's possible to pass a kernel Image directly to QEMU
+  and bypass GRUB entirely:
+
+....
+-kernel /path/to/custom/Image -append "earlycon root=/dev/vda2"
+....
+
+* Isn't that magical?
+
+==== Booting with a custom devicetree blob
+
+* If you're hacking on devicetree, you can get QEMU to pass your own
+  devicetree blob (DTB) to the kernel instead of generating its own or even
+  passing a set of dreaded ACPI tables.
+* This is accomplished using the `-dtb` parameter.
+
+'''
+
+* Rather than write the thing from scratch, the easiest solution is to ask
+  QEMU to dump its generated DTB and to use that as a base.
+* In order to dump the DTB, add `-machine dumpdtb=virt.dtb` to your QEMU
+  invocation.
+* You can then disassemble the `.dtb` file into a `.dts` file:
+
+....
+:~$ sudo apt-get install device-tree-compiler
+:~$ dtc -o virt.dts -O dts -I dtb virt.dtb
+....
+
+* Then, modify the `.dts` as you like, and recompile it:
+
+....
+:~$ dtc -o virt.dtb -O dtb -I dts virt.dts
+....
+
+* Once you have recompiled your `.dtb` file, you can pass it to QEMU by adding
+  `-dtb virt.dtb` to the invocation command.
+
+[NOTE]
+====
+* for some reason, the raw dumped `.dtb` file cannot be passed back to QEMU
+  as-is, it is too large.
+* You must disassemble and recompile it before being able to use it, even if
+  you don't modify it.
+====
+
+[NOTE]
+====
+* QEMU does not parse the DTB to create the right number of CPUs and so on.
+* All the QEMU parameters must still be specified (`-smp`, `-m`, `-cpu`, ...)
+  to describe the hardware.
+* Specifying `-dtb` simply replaces the QEMU-generated DTB passed to the
+  kernel with a user-provided one, and that is all it does.
+====
+
+==== Sharing files with 9pfs
+
+* Although you can use `scp` to transfer files to and from the emulated
+  environment, it's sometimes handy to share a directory on your x86 machine
+  directly.
+* This can be achieved using `9pfs` by adding the following options to your
+  QEMU invocation:
+
+....
+-virtfs local,path=/path/to/shared/dir,mount_tag=host0,security_model=mapped,id=host0
+....
+
+* This can then be mounted from within the arm64 host using the following
+  command:
+
+....
+:~# mount -t 9p -o trans=virtio,version=9p2000.L host0 /path/to/mount/point
+....
+
+==== Debugging with GDB
+
+* QEMU exposes a GDB interface to an internal stub implementation, which
+  allows you to debug the `arm64` host!
+* Invoking QEMU with `-S -s` will cause it to pause during startup, awaiting a
+  GDB connection on port 1234.
+* From another terminal on your x86 machine, you can do:
+
+....
+:~$ aarch64-linux-gdb vmlinux
+(gdb) target remote :1234
+....
