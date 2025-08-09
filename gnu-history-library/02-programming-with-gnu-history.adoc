@@ -1,0 +1,47 @@
+= 2 Programming with GNU History
+:toc: left
+
+* This chapter describes how to interface programs that you write with the GNU
+  History Library.
+* It should be considered a technical guide.
+* For information on the interactive use of GNU History, see Using History
+  Interactively.
+
+== 2.1 Introduction to History
+
+* Many programs read input from the user a line at a time.
+* The GNU History library is able to keep track of those lines, associate
+  arbitrary data with each line, and utilize information from previous lines
+  when composing new ones.
+
+'''
+
+* A programmer using the History library can use functions to save commands on
+  a history list, associate arbitrary data with history list entries, remove
+  entries from the list, search through the list for a line containing an
+  arbitrary text string, reference any entry in the list directly, and read
+  and write the history list from and to a file.
+* In addition, a history expansion function is available which provides for a
+  consistent user interface across different programs.
+
+'''
+
+* Someone using programs written with the History library has the benefit of a
+  consistent user interface with a set of well-known commands for manipulating
+  the text of previous lines and using that text in new commands.
+* The basic history manipulation commands are similar to the history
+  substitution provided by `csh`.
+
+'''
+
+* The programmer can also use the Readline library, which includes some
+  history manipulation by default, and has the added advantage of command line
+  editing.
+
+'''
+
+* Before declaring any functions using any functionality the History library
+  provides in other code, an application writer should include the file
+  `<readline/history.h>` in any file that uses the History library's features.
+* It supplies declarations for all of the library's public functions and
+  variables, and declares all of the public data structures.

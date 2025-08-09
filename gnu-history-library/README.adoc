@@ -7,8 +7,8 @@
 
 == Table of Contents
 
-* 2 Programming with GNU History 5
-** 2.1 Introduction to History 5
+* link:02-programming-with-gnu-history.adoc[2 Programming with GNU History 5]
+** [x] 2.1 Introduction to History 5
 ** 2.2 History Storage 6
 ** 2.3 History Functions 6
 *** ... 7
