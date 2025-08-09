@@ -129,3 +129,15 @@ rl_bind_key ('\t', rl_insert);
   write a function called `initialize_readline()` which performs this and
   other desired initializations, such as installing custom completers (see
   Custom Completers).
+
+== 2.4 Readline Convenience Functions
+
+=== 2.4.6 Redisplay
+
+.Function: `void *rl_redisplay* (void)`
+* Change what's displayed on the screen to reflect the current contents of
+  `rl_line_buffer`.
+
+.Function: `int *rl_on_new_line* (void)`
+* Tell the update functions that we have moved onto a new (empty) line,
+  usually after outputting a newline.
