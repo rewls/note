@@ -105,3 +105,12 @@ typedef struct _hist_state {
 
 .Function: `void *clear_history* (void)`
 * Clear the history list by deleting all the entries.
+
+== 2.5 History Programming Example
+
+* The following program demonstrates simple use of the GNU History Library.
+
+[,c]
+----
+include::history.c[]
+----

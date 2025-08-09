@@ -15,5 +15,5 @@
 *** [x] 2.3.2 History List Management 7
 *** ... 8
 ** 2.4 History Variables 11
-** 2.5 History Programming Example 13
+** [x] 2.5 History Programming Example 13
 ** ... 14
