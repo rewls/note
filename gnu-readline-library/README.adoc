@@ -1,0 +1,21 @@
+= GNU Readline Library
+:toc: left
+
+* This document describes the GNU Readline Library, a utility which aids in
+  the consistency of user interface across discrete programs which provide a
+  command line interface.
+* The Readline home page is http://www.gnu.org/software/readline/.
+
+== Table of Contents
+
+* 2 Programming with GNU Readline 28
+** 2.1 Basic Behavior 29
+** ... 30
+** 2.3 Readline Variables 32
+** 2.4 Readline Convenience Functions 38
+*** ...
+*** 2.4.6 Redisplay 44
+*** 2.4.7 Modifying Text 45
+*** ... 46
+*** 2.4.13 A Readline Example 51
+*** ... 52
