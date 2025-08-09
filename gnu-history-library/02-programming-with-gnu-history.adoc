@@ -45,3 +45,43 @@
   `<readline/history.h>` in any file that uses the History library's features.
 * It supplies declarations for all of the library's public functions and
   variables, and declares all of the public data structures.
+
+== 2.2 History Storage
+
+* The history list is an array of history entries.
+* A history entry is declared as follows:
++
+[,c]
+----
+typedef void *histdata_t;
+
+typedef struct _hist_entry {
+  char *line;
+  char *timestamp;
+  histdata_t data;
+} HIST_ENTRY;
+----
+
+* The history list itself might therefore be declared as
++
+[source,c]
+HIST_ENTRY **the_history_list;
+
+* The state of the History library is encapsulated into a single structure:
+
+[,c]
+----
+/*
+ * A structure used to pass around the current state of the history.
+ */
+typedef struct _hist_state {
+  HIST_ENTRY **entries; /* Pointer to the entries themselves. */
+  int offset;           /* The location pointer within this array. */
+  int length;           /* Number of elements within this array. */
+  int size;             /* Number of slots allocated to this array. */
+  int flags;
+} HISTORY_STATE;
+----
+
+* If the flags member includes `HS_STIFLED`, the history has been stifled
+  (limited to a maximum number of entries).
