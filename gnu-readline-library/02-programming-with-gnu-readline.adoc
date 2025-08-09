@@ -130,6 +130,17 @@ rl_bind_key ('\t', rl_insert);
   other desired initializations, such as installing custom completers (see
   Custom Completers).
 
+== 2.3 Readline Variables
+
+* These variables are available to function writers.
+
+.Variable: `char * *rl_line_buffer*`
+* This is the line gathered so far.
+* You are welcome to modify the contents of the line, but see Allowing
+  Undoing.
+* The function `rl_extend_line_buffer` will increase the memory allocated to
+  `rl_line_buffer`.
+
 == 2.4 Readline Convenience Functions
 
 === 2.4.6 Redisplay
