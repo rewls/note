@@ -160,3 +160,66 @@ rl_bind_key ('\t', rl_insert);
 * This preserves the point and mark, if possible.
 * If `clear_undo` is non-zero, this clears the undo list associated with the
   current line.
+
+=== 2.4.13 A Readline Example
+
+* Here is a function which changes lowercase characters to their uppercase
+  equivalents, and uppercase characters to lowercase.
+* If this function was bound to '```M-c```', then typing '```M-c```' would
+  change the case of the character under point.
+* Typing '```M-1 0 M-c```' would change the case of the following 10
+  characters, leaving the cursor on the last character changed.
+
+[,c]
+----
+/* Invert the case of the COUNT following characters. */
+int
+invert_case_line (count, key)
+     int count, key;
+{
+  int start, end, i;
+
+  start = rl_point;
+
+  if (rl_point >= rl_end)
+    return (0);
+
+  /* Find the end of the range to modify. */
+  end = start + count;
+
+  /* Force it to be within range. */
+  if (end > rl_end)
+    end = rl_end;
+  else if (end < 0)
+    end = 0;
+
+  if (start == end)
+    return (0);
+
+  /* For positive arguments, put point after the last changed character. For
+     negative arguments, put point before the last changed character. */
+  rl_point = end;
+
+  /* Swap start and end if we are moving backwards */
+  if (start > end)
+    {
+      int temp = start;
+      start = end;
+      end = temp;
+    }
+
+  /* Tell readline that we are modifying the line,
+     so it will save the undo information. */
+  rl_modifying (start, end);
+
+  for (i = start; i != end; i++)
+    {
+      if (_rl_uppercase_p (rl_line_buffer[i]))
+        rl_line_buffer[i] = _rl_to_lower (rl_line_buffer[i]);
+      else if (_rl_lowercase_p (rl_line_buffer[i]))
+        rl_line_buffer[i] = _rl_to_upper (rl_line_buffer[i]);
+    }
+
+  return (0);
+}
+----
