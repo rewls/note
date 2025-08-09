@@ -12,7 +12,7 @@
 ** [x] 2.2 History Storage 6
 ** 2.3 History Functions 6
 *** ... 7
-*** 2.3.2 History List Management 7
+*** [x] 2.3.2 History List Management 7
 *** ... 8
 ** 2.4 History Variables 11
 ** 2.5 History Programming Example 13

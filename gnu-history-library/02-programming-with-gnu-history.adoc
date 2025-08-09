@@ -85,3 +85,23 @@ typedef struct _hist_state {
 
 * If the flags member includes `HS_STIFLED`, the history has been stifled
   (limited to a maximum number of entries).
+
+== 2.3 History Functions
+
+* This section describes the calling sequence for the various functions
+  exported by the GNU History library.
+
+=== 2.3.2 History List Management
+
+* These functions manage individual entries on the history list, or set
+  parameters managing the list itself.
+
+.Function: `void *add_history* (const char *string)`
+* Add _string_ to the end of the history list, and set the associated data
+  field (if any) to `NULL`.
+* If the maximum number of history entries has been set using
+  `stifle_history()`, and the new number of history entries would exceed that
+  maximum, this removes the oldest history entry.
+
+.Function: `void *clear_history* (void)`
+* Clear the history list by deleting all the entries.
