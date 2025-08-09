@@ -141,3 +141,11 @@ rl_bind_key ('\t', rl_insert);
 .Function: `int *rl_on_new_line* (void)`
 * Tell the update functions that we have moved onto a new (empty) line,
   usually after outputting a newline.
+
+=== 2.4.7 Modifying Text
+
+.Function: `void *rl_replace_line* (const char *text, int clear_undo)`
+* Replace the contents of `rl_line_buffer` with text.
+* This preserves the point and mark, if possible.
+* If `clear_undo` is non-zero, this clears the undo list associated with the
+  current line.

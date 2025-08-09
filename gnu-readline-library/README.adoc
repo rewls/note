@@ -16,7 +16,7 @@
 ** 2.4 Readline Convenience Functions 38
 *** ...
 *** [x] 2.4.6 Redisplay 44
-*** 2.4.7 Modifying Text 45
+*** [x] 2.4.7 Modifying Text 45
 *** ... 46
 *** 2.4.13 A Readline Example 51
 *** ... 52
