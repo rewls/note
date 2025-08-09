@@ -1,0 +1,131 @@
+= 2 Programming with GNU Readline
+:source-highlighter: rouge
+:tabsize: 8
+:toc: left
+
+* This chapter describes the interface between the GNU Readline Library and
+  other programs.
+* If you are a programmer, and you wish to include the features found in GNU
+  Readline such as completion, line editing, and interactive history
+  manipulation in your own programs, this section is for you.
+
+== 2.1 Basic Behavior
+
+* Many programs provide a command line interface, such as mail, ftp, and sh.
+* For such programs, the default behavior of Readline is sufficient.
+* This section describes how to use Readline in the simplest way possible,
+  perhaps to replace calls in your code to `fgets()`.
+
+'''
+
+* The function `readline()` prints a prompt _prompt_ and then reads and
+  returns a single line of text from the user.
+* Since it's possible to enter characters into the line while quoting them to
+  disable any Readline editing function they might normally have, this line
+  may include embedded newlines and other special characters.
+* If _prompt_ is `NULL` or the empty string, `readline()` does not display a
+  prompt.
+* The line `readline()` returns is allocated with `malloc()`; the caller
+  should `free()` the line when it has finished with it.
+* The declaration for `readline` in ANSI C is
++
+[source,c,subs="macros+"]
+char *readline (const char *pass:q[_prompt_]);
+
+* So, one might say
++
+[source,c]
+char *line = readline ("Enter a line: ");
++
+in order to read a line of text from the user.
+* The line returned has the final newline removed, so only the text remains.
+* This means that lines consisting of a newline return the empty string.
+
+'''
+
+* If Readline encounters an `EOF` while reading the line, and the line is
+  empty at that point, then `readline()` returns `(char *)NULL`.
+* Otherwise, the line is ended just as if a newline had been typed.
+
+'''
+
+* Readline performs some expansion on the prompt before it is displayed on the
+  screen.
+* See the description of `rl_expand_prompt` (see Redisplay) for additional
+  details, especially if _prompt_ will contain characters that do not consume
+  physical screen space when displayed.
+
+'''
+
+* If you want the user to be able to get at the line later, (with `C-p` for
+  example), you must call `add_history()` to save the line away in a history
+  list of such lines.
+
+[source,c]
+add_history (line);
+
+* For full details on the GNU History Library, see the associated manual.
+
+'''
+
+* It is preferable to avoid saving empty lines on the history list, since
+  users rarely have a burning need to reuse a blank line.
+* Here is a function which usefully replaces the standard `gets()` library
+  function, and has the advantage of no static buffer to overflow:
+
+[,c]
+----
+/* A static variable for holding the line. */
+static char *line_read = (char *)NULL;
+
+/* Read a string, and return a pointer to it.
+   Returns NULL on EOF. */
+char *
+rl_gets ()
+{
+  /* If the buffer has already been allocated,
+     return the memory to the free pool. */
+  if (line_read)
+    {
+      free (line_read);
+      line_read = (char *)NULL;
+    }
+
+  /* Get a line from the user. */
+  line_read = readline ("");
+
+  /* If the line has any text in it,
+     save it on the history. */
+  if (line_read && *line_read)
+    add_history (line_read);
+
+  return (line_read);
+}
+----
+
+* This function gives the user the default behavior of `TAB` completion:
+  filename completion.
+* If you do not want Readline to complete filenames, you can change the
+  binding of the `TAB` key with `rl_bind_key()`.
+
+[source,c,subs="macros+"]
+int rl_bind_key (int pass:q[_key_], rl_command_func_t *pass:q[_function_]);
+
+* `rl_bind_key()` takes two arguments: _key_ is the character that you want to
+  bind, and _function_ is the address of the function to call when _key_ is
+  pressed.
+* Binding `TAB` to `rl_insert()` makes `TAB` insert itself.
+* `rl_bind_key()` returns non-zero if key is not a valid ASCII character code
+  (between 0 and 255).
+
+'''
+
+* Thus, to disable the default `TAB` behavior, the following suffices:
++
+[source,c]
+rl_bind_key ('\t', rl_insert);
+
+* This code should be executed once at the start of your program; you might
+  write a function called `initialize_readline()` which performs this and
+  other desired initializations, such as installing custom completers (see
+  Custom Completers).

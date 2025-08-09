@@ -8,8 +8,9 @@
 
 == Table of Contents
 
-* 2 Programming with GNU Readline 28
-** 2.1 Basic Behavior 29
+* link:02-programming-with-gnu-readline.adoc[2 Programming with GNU Readline
+  28]
+** [x] 2.1 Basic Behavior 29
 ** ... 30
 ** 2.3 Readline Variables 32
 ** 2.4 Readline Convenience Functions 38
