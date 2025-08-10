@@ -161,6 +161,14 @@ rl_bind_key ('\t', rl_insert);
 * If `clear_undo` is non-zero, this clears the undo list associated with the
   current line.
 
+=== 2.4.11 Miscellaneous Functions
+
+.Function: `void *rl_clear_history*(void)`
+* Clear the history list by deleting all of the entries, in the same manner as
+  the History library's `clear_history()` function.
+* This differs from `clear_history` because it frees private data Readline
+  saves in the history list.
+
 === 2.4.13 A Readline Example
 
 * Here is a function which changes lowercase characters to their uppercase

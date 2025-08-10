@@ -18,5 +18,7 @@
 *** [x] 2.4.6 Redisplay 44
 *** [x] 2.4.7 Modifying Text 45
 *** ... 46
+*** [x] 2.4.11 Miscellaneous Functions 49
+*** ... 50
 *** [x] 2.4.13 A Readline Example 51
 *** ... 52
