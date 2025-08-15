@@ -231,3 +231,82 @@ invert_case_line (count, key)
   return (0);
 }
 ----
+
+== 2.5 Readline Signal Handling
+
+* Signals are asynchronous events sent to a process by the Unix kernel,
+  sometimes on behalf of another process.
+* They are intended to indicate exceptional events, like a user pressing the
+  terminal's interrupt key, or a network connection being broken.
+* There is a class of signals that can be sent to the process currently
+  reading input from the keyboard.
+* Since Readline changes the terminal attributes when it is called, it needs
+  to perform special processing when such a signal is received in order to
+  restore the terminal to a sane state, or provide applications using Readline
+  with functions to do so manually.
+
+'''
+
+* Readline contains an internal signal handler that is installed for a number
+  of signals (`SIGINT`, `SIGQUIT`, `SIGTERM`, `SIGHUP`, `SIGALRM`, `SIGTSTP`,
+  `SIGTTIN`, and `SIGTTOU`).
+* When Readline receives one of these signals, the signal handler will reset
+  the terminal attributes to those that were in effect before `readline()` was
+  called, reset the signal handling to what it was before `readline()` was
+  called, and resend the signal to the calling application.
+* If and when the calling application's signal handler returns, Readline will
+  reinitialize the terminal and continue to accept input.
+* When a `SIGINT` is received, the Readline signal handler performs some
+  additional work, which will cause any partially-entered line to be aborted
+  (see the description of `rl_free_line_state()` below).
+
+'''
+
+* There is an additional Readline signal handler, for `SIGWINCH`, which the
+  kernel sends to a process whenever the terminal's size changes (for example,
+  if a user resizes an `xterm`).
+* The Readline `SIGWINCH` handler updates Readline's internal screen size
+  information, and then calls any `SIGWINCH` signal handler the calling
+  application has installed.
+* Readline calls the application's `SIGWINCH` signal handler without resetting
+  the terminal to its original state.
+* If the application's signal handler does more than update its idea of the
+  terminal size and return (for example, a `longjmp` back to a main processing
+  loop), it must call `rl_cleanup_after_signal()` (described below), to restore
+  the terminal state.
+
+'''
+
+* When an application is using the callback interface (see Alternate
+  Interface), Readline installs signal handlers only for the duration of the
+  call to `rl_callback_read_char`.
+* Applications using the callback interface should be prepared to clean up
+  Readline's state if they wish to handle the signal before the line handler
+  completes and restores the terminal state.
+
+'''
+
+* If an application using the callback interface wishes to have Readline
+  install its signal handlers at the time the application calls
+  `rl_callback_handler_install` and remove them only when a complete line of
+  input has been read, it should set the `rl_persistent_signal_handlers`
+  variable to a non-zero value.
+* This allows an application to defer all of the handling of the signals
+  Readline catches to Readline.
+* Applications should use this variable with care; it can result in Readline
+  catching signals and not acting on them (or allowing the application to
+  react to them) until the application calls `rl_callback_read_char`.
+* This can result in an application becoming less responsive to keyboard
+  signals like `SIGINT`.
+* If an application does not want or need to perform any signal handling, or
+  does not need to do any processing between calls to `rl_callback_read_char`,
+  setting this variable may be appropriate.
+
+'''
+
+* Readline provides two variables that allow application writers to control
+  whether or not it will catch certain signals and act on them when they are
+  received.
+* It is important that applications change the values of these variables only
+  when calling `readline()`, not in a signal handler, so Readline's internal
+  signal state is not corrupted.

@@ -22,3 +22,5 @@
 *** ... 50
 *** [x] 2.4.13 A Readline Example 51
 *** ... 52
+** [x] 2.5 Readline Signal Handling 54
+** ... 57
