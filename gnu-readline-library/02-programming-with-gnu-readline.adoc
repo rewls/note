@@ -162,6 +162,12 @@ rl_bind_key ('\t', rl_insert);
 * By default, this will be called at most ten times a second if there is no
   keyboard input.
 
+.Variable: `rl_voidfunc_t * *rl_redisplay_function*`
+* Readline will call indirectly through this pointer to update the display
+  with the current contents of the editing buffer.
+* By default, it is set to `rl_redisplay`, the default Readline redisplay
+  function (see Redisplay).
+
 == 2.4 Readline Convenience Functions
 
 === 2.4.6 Redisplay
