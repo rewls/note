@@ -1,0 +1,36 @@
+= Broadcast address
+:toc: left
+
+[quote]
+____
+Wikipedia, https://en.wikipedia.org/wiki/Broadcast_address#cite_note-rfc922-3
+____
+
+* A broadcast address is a network address used to transmit to all devices
+  connected to a multiple-access communications network.
+* A message sent to a broadcast address may be received by all
+  network-attached hosts.
+
+'''
+
+* In contrast, a multicast address is used to address a specific group of
+  devices, and a unicast address is used to address a single device.
+
+'''
+
+* For network layer communications, a broadcast address may be a specific IP
+  address.
+* At the data link layer on Ethernet networks, it is a specific MAC address.
+
+== IP networking
+
+* In Internet Protocol version 4 (IPv4) networks, broadcast addresses are
+  special values in the host-identification part of an IP address.
+* The all-ones value was established as the standard broadcast address for
+  networks that support broadcast.
+* This method of using the all-ones address was first proposed by R. Gurwitz
+  and R. Hinden in 1982.
+* The later introduction of subnets and Classless Inter-Domain Routing changed
+  this slightly, so that the all-ones value becomes the local broadcast
+  address and the all-ones host address of each subnet is that subnet's
+  directed broadcast address.
