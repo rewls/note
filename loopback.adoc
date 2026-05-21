@@ -1,0 +1,39 @@
+= Loopback
+
+[quote]
+____
+Wikipedia, https://en.wikipedia.org/wiki/Loopback
+____
+
+* *Loopback* (also written *loop-back*) is the routing of electronic signals
+  or digital data streams back to their source without intentional processing
+  or modification.
+* It is primarily a means of testing the communications infrastructure.
+
+'''
+
+* Loopback can take the form of communication channels with only one
+  communication endpoint.
+* Any message transmitted by such a channel is immediately and only received
+  by that same channel.
+
+== Virtual loopback interface
+
+* Implementations of the Internet protocol suite include a virtual network
+  interface through which network applications can communicate when executing
+  on the same machine.
+* It is implemented entirely within the operating system's networking software
+  and passes no packets to any network interface controller.
+* Any traffic that a computer program sends to a loopback IP address is simply
+  and immediately passed back up the network software stack as if it had been
+  received from another device.
+* Unix-like systems usually name this loopback interface `lo` or `lo0`.
+
+'''
+
+* Various Internet Engineering Task Force (IETF) standards reserve the IPv4
+  address block _127.0.0.0/8_, in CIDR notation and the IPv6 address _::1/128_
+  for this purpose.
+* The most common IPv4 address used is _127.0.0.1_.
+* Commonly these loopback addresses are mapped to the hostnames localhost or
+  loopback.
