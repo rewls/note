@@ -56,3 +56,18 @@
   symbol (represented as an empty alternative, e.g., `<item> ::= <thing> | `),
   enabling the removal of certain elements while maintaining syntactic
   validity.[1]
+
+== Variants
+
+=== Others
+
+* Many BNF specifications found online today are intended to be human-readable
+  and are non-formal.
+* These often include many of the following syntax rules and extensions:
+
+'''
+
+* Optional items enclosed in square brackets: `[<item-x>]`.
+* Items existing 0 or more times are enclosed in curly brackets or suffixed
+  with an asterisk (`*`) such as `<word> ::= <letter> {<letter>}` or `<word>
+  ::= <letter> <letter>*` respectively.
