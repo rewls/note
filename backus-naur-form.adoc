@@ -1,0 +1,58 @@
+= Backus-Naur form
+:toc: left
+
+* In computer science, *Backus-Naur form* or *Pāṇini-Backus Form* (*BNF* or
+  *PBF*, pronounced /ˌbækəs ˈnaʊər/), also known as *Backus normal form*, is a
+  notation system for defining the syntax of programming languages and other
+  formal languages, developed by John Backus and Peter Naur.
+* It is a metasyntax for context-free grammars, providing a precise way to
+  outline the rules of a language's structure.
+
+'''
+
+* It has been widely used in official specifications, manuals, and textbooks
+  on programming language theory, as well as to describe document formats,
+  instruction sets, and communication protocols.
+* Over time, variations such as extended Backus-Naur form (EBNF) and augmented
+  Backus-Naur form (ABNF) have emerged, building on the original framework
+  with added features.
+
+== Structure
+
+* BNF specifications outline how symbols are combined to form syntactically
+  valid sequences.
+* Each BNF consists of three core components: a set of non-terminal symbols, a
+  set of terminal symbols, and a series of derivation rules.[1]
+* Non-terminal symbols represent categories or variables that can be replaced,
+  while terminal symbols are the fixed, literal elements (such as keywords or
+  punctuation) that appear in the final sequence.
+* Derivation rules provide the instructions for replacing non-terminal symbols
+  with specific combinations of symbols.
+
+'''
+
+* A derivation rule is written in the format: `<symbol> ::= __expression__`
+  where:
+** `<symbol>`[2] is a non-terminal symbol, enclosed in angle brackets (<>),
+   identifying the category to be replaced
+** `::=` is a metasymbol meaning "is replaced by,"
+** `__expression__` is the replacement, consisting of one or more sequences of
+   symbols -- either terminal symbols (e.g., literal text like "Sr." or ",")
+   or non-terminal symbols (e.g., `<last-name>`) -- with options separated by
+   a vertical bar (|) to indicate alternatives.
+
+'''
+
+* For example, in the rule <opt-suffix-part> ::= "Sr." | "Jr." | "", the
+  entire line is the derivation rule, "Sr.", "Jr.", and "" (an empty string)
+  are terminal symbols, and <opt-suffix-part> is a non-terminal symbol.
+
+'''
+
+* Generating a valid sequence involves starting with a designated start symbol
+  and iteratively applying the derivation rules.[1]
+* This process can extend sequences incrementally.
+* To allow flexibility, some BNF definitions include an optional "delete"
+  symbol (represented as an empty alternative, e.g., `<item> ::= <thing> | `),
+  enabling the removal of certain elements while maintaining syntactic
+  validity.[1]
