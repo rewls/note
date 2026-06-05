@@ -1,0 +1,34 @@
+= RFC 1459: Internet Relay Chat Protocol
+:toc: left
+
+Network Working Group                                      J. Oikarinen
+Request for Comments: 1459                                      D. Reed
+                                                               May 1993
+
+== Status of This Memo
+
+* This memo defines an Experimental Protocol for the Internet community.
+* Discussion and suggestions for improvement are requested.
+* Please refer to the current edition of the "IAB Official Protocol Standards"
+  for the standardization state and status of this protocol.
+* Distribution of this memo is unlimited.
+
+== Abstract
+
+* The IRC protocol was developed over the last 4 years since it was first
+  implemented as a means for users on a BBS to chat amongst themselves.
+* Now it supports a world-wide network of servers and clients, and is
+  stringing to cope with growth.
+* Over the past 2 years, the average number of users connected to the main IRC
+  network has grown by a factor of 10.
+
+'''
+
+* The IRC protocol is a text-based protocol, with the simplest client being
+  any socket program capable of connecting to the server.
+
+== Table of Contents
+
+* [ ] 1. INTRODUCTION 4
+* [ ] 2. THE IRC SPECIFICATION 7
+* [ ] 3. IRC Concepts 10
