@@ -1,0 +1,65 @@
+= IRC
+
+[quote]
+____
+Wikipedia, https://en.wikipedia.org/wiki/IRC#Technical_information
+____
+
+* *IRC* (*Internet Relay Chat*) is a text-based chat system for instant
+  messaging.
+* IRC is designed for group communication in discussion forums, called
+  _channels_, but also allows one-on-one communication via private messages as
+  well as chat and data transfer, including file sharing.
+
+'''
+
+* Internet Relay Chat is implemented as an application layer protocol to
+  facilitate communication in the form of text.
+* The chat process works on a client -- server networking model.
+* Users connect, using a client -- which may be a web app, a standalone
+  desktop program, or embedded into part of a larger program -- to an IRC
+  server, which may be part of a larger IRC network.
+* Examples of ways used to connect include the programs Mibbit, KiwiIRC, and
+  mIRC.
+
+'''
+
+* IRC usage has been declining steadily since 2003, losing 60 percent of its
+  users by 2012.
+* In April 2026, the top 100 IRC networks served more than 162,000 users at a
+  time.
+
+== Technical information
+
+* IRC is an open protocol that uses TCP and, optionally, TLS.
+* An IRC server can connect to other IRC servers to expand the IRC network.
+* Users access IRC networks by connecting a client to a server.
+* There are many client implementations, such as mIRC, HexChat and irssi, and
+  server implementations, e.g. the original IRCd.
+* Most IRC servers do not require users to register an account but a nickname
+  is required before being connected.
+
+'''
+
+* IRC was originally a plain text protocol (although later extended), which on
+  request was assigned port 194/TCP by IANA.
+* However, the de facto standard has always been to run IRC on 6667/TCP and
+  nearby port numbers (for example TCP ports 6660-6669, 7000) to avoid having
+  to run the IRCd software with root privileges.
+
+'''
+
+* The protocol specified that characters were 8-bit but did not specify the
+  character encoding the text was supposed to use.
+* This can cause problems when users using different clients and/or different
+  platforms want to converse.
+
+'''
+
+* All client-to-server IRC protocols in use today are descended from the
+  protocol implemented in the irc2.4.0 version of the IRC2 server, and
+  documented in RFC 1459.
+* Since RFC 1459 was published, the new features in the irc2.10 implementation
+  led to the publication of several revised protocol documents (RFC 2810, RFC
+  2811, RFC 2812 and RFC 2813); however, these protocol changes have not been
+  widely adopted among other implementations.
