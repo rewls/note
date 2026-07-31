@@ -1,0 +1,69 @@
+= Chapter 17. Debug Mode
+:toc: left
+
+[quote]
+____
+https://gcc.gnu.org/onlinedocs/gcc-16.1.0/libstdc++/manual/manual/debug_mode_using.html
+____
+
+== Intro
+
+* By default, libstdc++ is built with efficiency in mind, and therefore
+  performs little or no error checking that is not required by the C++
+  standard.
+* This means that programs that incorrectly use the C++ standard library will
+  exhibit behavior that is not portable and may not even be predictable,
+  because they tread into implementation-specific or undefined behavior.
+* To detect some of these errors before they can become problematic, libstdc++
+  offers a debug mode that provides additional checking of library facilities,
+  and will report errors in the use of libstdc++ as soon as they can be
+  detected by emitting a description of the problem to standard error and
+  aborting the program.
+* This debug mode is available with GCC 3.4.0 and later versions.
+
+'''
+
+* The libstdc++ debug mode performs checking for many areas of the C++
+  standard, but the focus is on checking interactions among standard
+  iterators, containers, and algorithms, including:
+
+'''
+
+Safe iterators::
+* Iterators keep track of the container whose elements they reference, so
+  errors such as incrementing a past-the-end iterator or dereferencing an
+  iterator that points to a container that has been destructed are diagnosed
+  immediately.
+Algorithm preconditions::
+* Algorithms attempt to validate their input parameters to detect errors as
+  early as possible.
+* For instance, the `set_intersection` algorithm requires that its iterator
+  parameters `first1` and `last1` form a valid iterator range, and that the
+  sequence `[first1, last1)` is sorted according to the same predicate that
+  was passed to `set_intersection`; the libstdc++ debug mode will detect an
+  error if the sequence is not sorted or was sorted by a different predicate.
+
+== Using
+
+=== Using the Debug Mode
+
+* To use the libstdc++ debug mode, compile your application with the compiler
+  flag `-D_GLIBCXX_DEBUG`.
+* Note that this flag changes the sizes and behavior of standard class
+  templates such as `std::vector`, and therefore you can only link code compiled
+  with debug mode and code compiled without debug mode if no instantiation of
+  a container is passed between the two translation units.
+
+'''
+
+* By default, error messages are formatted to fit on lines of about 78
+  characters.
+* The environment variable `GLIBCXX_DEBUG_MESSAGE_LENGTH` can be used to
+  request a different length.
+
+'''
+
+* Note that libstdc++ is able to produce backtraces on error.
+* To enable these, compile with `-D_GLIBCXX_DEBUG_BACKTRACE` and then link
+  with `-lstdc++exp`.
+* These backtraces are not supported on all platforms.
