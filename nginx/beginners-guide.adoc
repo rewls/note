@@ -1,0 +1,127 @@
+= Beginner's Guide
+:toc: left
+
+* The way nginx and its modules work is determined in the configuration file.
+* By default, the configuration file is named `nginx.conf` and placed in the
+  directory `/usr/local/nginx/conf`, `/etc/nginx`, or `/usr/local/etc/nginx`.
+
+== Configuration File's Structure
+
+* nginx consists of modules which are controlled by directives specified in
+  the configuration file.
+* Directives are divided into simple directives and block directives.
+* A simple directive consists of the name and parameters separated by spaces
+  and ends with a semicolon (;).
+* A block directive has the same structure as a simple directive, but instead
+  of the semicolon it ends with a set of additional instructions surrounded by
+  braces ({ and }).
+* If a block directive can have other directives inside braces, it is called a
+  context (examples: events, http, server, and location).
+
+'''
+
+* Directives placed in the configuration file outside of any contexts are
+  considered to be in the main context.
+* The `events` and `http` directives reside in the main context, `server` in
+  `http`, and `location` in `server`.
+
+'''
+
+* The rest of a line after the `#` sign is considered a comment.
+
+== Serving Static Content
+
+* An important web server task is serving out files (such as images or static
+  HTML pages).
+
+'''
+
+* Generally, the configuration file may include several `server` blocks
+  distinguished by ports on which they `listen` to and by server names.
+* Once nginx decides which server processes a request, it tests the URI
+  specified in the request's header against the parameters of the `location`
+  directives defined inside the server block.
+
+'''
+
+* For matching requests, the URI will be added to the path specified in the
+  `root` directive, that is, to `/data/www`, to form the path to the requested
+  file on the local file system.
+
+== Setting Up a Simple Proxy Server
+
+* One of the frequent uses of nginx is setting it up as a proxy server, which
+  means a server that receives requests, passes them to the proxied servers,
+  retrieves responses from them, and sends them to the clients.
+
+----
+server {
+    listen 8080;
+    root /data/up1;
+
+    location / {
+    }
+}
+----
+
+* This will be a simple server that listens on the port 8080 (previously, the
+  `listen` directive has not been specified since the standard port 80 was
+  used).
+* Create this directory and put the `index.html` file into it.
+
+'''
+
+* Next, use the server configuration from the previous section and modify it
+  to make it a proxy server configuration.
+* In the first `location` block, put the `proxy_pass` directive with the
+  protocol, name and port of the proxied server specified in the parameter (in
+  our case, it is `http://localhost:8080`):
+
+----
+server {
+    location / {
+        proxy_pass http://localhost:8080;
+    }
+
+    location /images/ {
+        root /data;
+    }
+}
+----
+
+== Setting Up FastCGI Proxying
+
+* nginx can be used to route requests to FastCGI servers which run
+  applications built with various frameworks and programming languages such as
+  PHP.
+
+'''
+
+* The most basic nginx configuration to work with a FastCGI server includes
+  using the `fastcgi_pass` directive instead of the `proxy_pass` directive,
+  and `fastcgi_param` directives to set parameters passed to a FastCGI server.
+* Suppose the FastCGI server is accessible on `localhost:9000`.
+* Taking the proxy configuration from the previous section as a basis, replace
+  the `proxy_pass` directive with the `fastcgi_pass` directive and change the
+  parameter to `localhost:9000`.
+* In PHP, the `SCRIPT_FILENAME` parameter is used for determining the script
+  name, and the `QUERY_STRING` parameter is used to pass request parameters.
+* The resulting configuration would be:
+
+----
+server {
+    location / {
+        fastcgi_pass  localhost:9000;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param QUERY_STRING    $query_string;
+    }
+
+    location ~ \.(gif|jpg|png)$ {
+        root /data/images;
+    }
+}
+----
+
+* This will set up a server that will route all requests except for requests
+  for static images to the proxied server operating on `localhost:9000`
+  through the FastCGI protocol.
